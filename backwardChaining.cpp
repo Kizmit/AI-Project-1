@@ -1,9 +1,9 @@
+/*
 Enclosed a program, which comprises the inference engine based on backward chaining.  You need it for your 
 project #1.  The program contains some errors and it is not designed to be efficient. 
 Modify the program to make it better and efficient.  Explain in your report how you have modified the
 program to make it better.
-
-
+*/
 
 /*****backward chaining *******/ 
 /* Install your IF clauses in sequence in the first case 
@@ -15,7 +15,9 @@ program to make it better.
    install your the clauses in sequence in the second 
    case statement of the main program 
    example strcpy(po,"YES"); 
-
+*/
+#include <stdio.h>
+#include <cstring>
 
 /*  conclusion list */ 
 char conclt[10][3]; 
