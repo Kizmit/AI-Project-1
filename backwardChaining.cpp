@@ -14,29 +14,23 @@ program to make it better.
    contains s=1; 
    install your the clauses in sequence in the second 
    case statement of the main program 
-   example strcpy(po,"YES"); 
+   example strcpy(position,"YES"); 
 */
 #include <stdio.h>
 #include <cstring>
 
-/*  conclusion list */
-char conclt[10][3];
-/*  variable list */
-char varlt[10][3];
-/*  clause vairable list */
-char clvarlt[40][3];
-char varble[3];
-char /* qualify */ qu[4], /* degree*/ de[4];
-char /* discovery */ di[4], /* position */ po[4];
+char conclusionList[10][3];
+char variableList[10][3];
+char variable[3];
+char qualify[4], degree[4];
+char discovery[4], position[4];
 char buff[128];
 
-/* instantiated list */
-int instlt[11];
-/* statement stack */
-int statsk[11];
-int /* clause stack */ clausk[11], sn, f, i, j, s, k, /*stack pointer */ sp;
+int instantiatedList[11];
+int statementStack[11];
+int clauseStack[11], sn, f, i, j, s, k, /*stack pointer */ sp;
 
-float /* grade */ gr, /*experience */ ex;
+float grade, experience;
 
 void determine_member_concl_list(void);
 void push_on_stack(void);
@@ -49,29 +43,29 @@ main()
   sp = 11;
   for (i = 1; i < 11; i++)
   {
-    strcpy(conclt[i], "");
-    strcpy(varlt[i], "");
-    instlt[i] = 0;
-    statsk[i] = 0;
-    clausk[i] = 0;
+    strcpy(conclusionList[i], "");
+    strcpy(variableList[i], "");
+    instantiatedList[i] = 0;
+    statementStack[i] = 0;
+    clauseStack[i] = 0;
   }
   for (i = 1; i < 41; i++)
-    strcpy(clvarlt[i], "");
+    strcpy(clauseVariableList[i], "");
   /* enter conclusions which are the variables in the then part, 1 at 
     a time.  enter the conclusions in exact order starting at the 1st 
     if-then.  after last conclusion hit return key for rest of 
     conclusions */
 
   /*** comment 305 *****/
-  strcpy(conclt[1], "PO");
-  strcpy(conclt[2], "QU");
-  strcpy(conclt[3], "PO");
-  strcpy(conclt[4], "PO");
-  strcpy(conclt[5], "PO");
-  strcpy(conclt[6], "PO");
+  strcpy(conclusionList[1], "PO");
+  strcpy(conclusionList[2], "QU");
+  strcpy(conclusionList[3], "PO");
+  strcpy(conclusionList[4], "PO");
+  strcpy(conclusionList[5], "PO");
+  strcpy(conclusionList[6], "PO");
   printf("*** CONCLUSION LIST ***\n");
   for (i = 1; i < 11; i++)
-    printf("CONCLUSION %d %s\n", i, conclt[i]);
+    printf("CONCLUSION %d %s\n", i, conclusionList[i]);
 
   printf("HIT RETURN TO CONTINUE");
   gets(buff);
@@ -81,37 +75,37 @@ main()
     more variables left just hit return key. */
   printf("*** VARIABLE LIST *\n");
   /**** comment 367 *****/
-  strcpy(varlt[1], "DE");
-  strcpy(varlt[2], "DI");
-  strcpy(varlt[3], "EX");
-  strcpy(varlt[4], "GR");
+  strcpy(variableList[1], "DE");
+  strcpy(variableList[2], "DI");
+  strcpy(variableList[3], "EX");
+  strcpy(variableList[4], "GR");
   for (i = 1; i < 11; i++)
-    printf("VARIABLE %d %s\n", i, varlt[i]);
+    printf("VARIABLE %d %s\n", i, variableList[i]);
   printf("HIT RETURN KEY TO CONTINUE");
   gets(buff);
   /* enter variables as they appear in the if clauses.  a maximum of 3 
     variables per if statement.  if no more variables hit return key. */
   printf("*** CLAUSE VARIABLE LIST ***\n");
   /***** comment 407 through 409 ***/
-  strcpy(clvarlt[1], "DE");
-  strcpy(clvarlt[5], "DE");
-  strcpy(clvarlt[9], "DE");
-  strcpy(clvarlt[10], "DI");
-  strcpy(clvarlt[13], "QU");
-  strcpy(clvarlt[14], "GR");
-  strcpy(clvarlt[15], "EX");
-  strcpy(clvarlt[17], "QU");
-  strcpy(clvarlt[18], "GR");
-  strcpy(clvarlt[19], "EX");
-  strcpy(clvarlt[21], "QU");
-  strcpy(clvarlt[22], "GR");
+  strcpy(clauseVariableList[1], "DE");
+  strcpy(clauseVariableList[5], "DE");
+  strcpy(clauseVariableList[9], "DE");
+  strcpy(clauseVariableList[10], "DI");
+  strcpy(clauseVariableList[13], "QU");
+  strcpy(clauseVariableList[14], "GR");
+  strcpy(clauseVariableList[15], "EX");
+  strcpy(clauseVariableList[17], "QU");
+  strcpy(clauseVariableList[18], "GR");
+  strcpy(clauseVariableList[19], "EX");
+  strcpy(clauseVariableList[21], "QU");
+  strcpy(clauseVariableList[22], "GR");
   for (i = 1; i < 9; i++)
   {
     printf("** CLAUSE %d\n", i);
     for (j = 1; j < 5; j++)
     {
       k = 4 * (i - 1) + j;
-      printf("VARIABLE %d  %s\n", j, clvarlt[k]);
+      printf("VARIABLE %d  %s\n", j, clauseVariableList[k]);
     }
     if (i == 4)
     {
@@ -121,8 +115,8 @@ main()
   }
   /****** inference section *****/
   printf("** ENTER CONCLUSION ? ");
-  gets(varble);
-  /* get conclusion statement number (sn) from the conclusion list (conclt) */
+  gets(variable);
+  /* get conclusion statement number (sn) from the conclusion list (conclusionList) */
   /* first statement starts search */
 b520:
   f = 1;
@@ -131,18 +125,18 @@ b520:
   {
     /* if sn = 0 then no conclusion of that name */ do
     /* push statement number (sn) and clause number=1 on goal 
-      stack which is composed of the statement stack (statsk) 
-      and clause stack (clausk) */
+      stack which is composed of the statement stack (statementStack) 
+      and clause stack (clauseStack) */
     {
       push_on_stack();
       do
       {
         /* calculate clause location in clause-variable list */
       b545:
-        i = (statsk[sp] - 1) * 4 + clausk[sp];
+        i = (statementStack[sp] - 1) * 4 + clauseStack[sp];
         /* clause variable */
-        strcpy(varble, clvarlt[i]);
-        if (strcmp(varble, "") != 0)
+        strcpy(variable, clauseVariableList[i]);
+        if (strcmp(variable, "") != 0)
         {
           /*is this clause variable a conclusion? */
           f = 1;
@@ -152,11 +146,11 @@ b520:
             goto b520;
           /* check instantiation of this clause */
           instantiate();
-          clausk[sp] = clausk[sp] + 1;
+          clauseStack[sp] = clauseStack[sp] + 1;
         }
-      } while (strcmp(varble, "") != 0); /*do-while*/
+      } while (strcmp(variable, "") != 0); /*do-while*/
       /*no more clauses check if part of statement */
-      sn = statsk[sp];
+      sn = statementStack[sp];
       s = 0;
       /**** if then statements ****/
       /* sample if parts of if then statements from the position knowledge base */
@@ -165,39 +159,39 @@ b520:
         /* if part of statement 1 */
         /****** comment 1500 ****/
       case 1:
-        if (strcmp(de, "NO") == 0)
+        if (strcmp(degree, "NO") == 0)
           s = 1;
         break;
         /* if part of statement 2 */
         /***** comment 1510 ******/
       case 2:
-        if (strcmp(de, "YES") == 0)
+        if (strcmp(degree, "YES") == 0)
           s = 1;
         break;
         /* if part of statement 3 */
       case 3:
-        if ((strcmp(de, "YES") == 0) &&
-            (strcmp(di, "YES") == 0))
+        if ((strcmp(degree, "YES") == 0) &&
+            (strcmp(discovery, "YES") == 0))
           s = 1;
         break;
         /* if part of statement 4 */
         /******** comment 1560 ******/
       case 4:
-        if ((strcmp(qu, "YES") == 0) &&
-            (gr < 3.5) && (ex >= 2))
+        if ((strcmp(qualify, "YES") == 0) &&
+            (grade < 3.5) && (experience >= 2))
           s = 1;
         break;
         /******** comment 1570 ********/
         /* if part of statement 5 */
       case 5:
-        if ((strcmp(qu, "YES") == 0) &&
-            (gr < 3) && (ex < 2))
+        if ((strcmp(qualify, "YES") == 0) &&
+            (grade < 3) && (experience < 2))
           s = 1;
         break;
         /* if part of statement 6 */
       case 6:
-        if ((strcmp(qu, "YES") == 0) &&
-            (gr >= 3.5))
+        if ((strcmp(qualify, "YES") == 0) &&
+            (grade >= 3.5))
           s = 1;
 
         break;
@@ -208,10 +202,10 @@ b520:
       {
         /* failed..search rest of statements for same conclusion */
         /* get conclusion */
-        i = statsk[sp];
-        strcpy(varble, conclt[i]);
+        i = statementStack[sp];
+        strcpy(variable, conclusionList[i]);
         /* search for conclusion starting at the next statement number */
-        f = statsk[sp] + 1;
+        f = statementStack[sp] + 1;
         determine_member_concl_list();
         sp = sp + 1;
       }
@@ -226,35 +220,35 @@ b520:
         /* then part of statement 1 */
         /******* comment 1500 *******/
       case 1:
-        strcpy(po, "NO");
+        strcpy(position, "NO");
         printf("PO=NO\n");
         break;
         /* then part of statement 2 */
         /****** comment 1510 ******/
       case 2:
-        strcpy(qu, "YES");
+        strcpy(qualify, "YES");
         printf("QU=YES\n");
         break;
         /* then part of statement 3 */
       case 3:
-        strcpy(po, "YES");
+        strcpy(position, "YES");
         printf("PO=RESEARCH\n");
         break;
         /* then part of statement 4 */
         /******** comment 1560 ******/
       case 4:
-        strcpy(po, "YES");
+        strcpy(position, "YES");
         printf("PO=SERVICE ENGINEER\n");
         break;
         /* then part of statement 5 */
         /****** comment 1570 *****/
       case 5:
-        strcpy(po, "NO");
+        strcpy(position, "NO");
         printf("PO=NO");
         break;
         /* then part of statement 6 */
       case 6:
-        strcpy(po, "YES");
+        strcpy(position, "YES");
         printf("PO=PRODUCT ENGINEER\n");
         break;
         /****** comment 1680 ********/
@@ -268,7 +262,7 @@ b520:
       {
         /* stack is not empty */
         /* get next clause then continue */
-        clausk[sp] = clausk[sp] + 1;
+        clauseStack[sp] = clauseStack[sp] + 1;
         goto b545;
       }
     }
@@ -277,44 +271,44 @@ b520:
 
 void determine_member_concl_list()
 {
-  /* routine to determine if a variable (varble) is a member of the 
-   conclusion list (conclt).  if yes return sn != 0. 
+  /* routine to determine if a variable (variable) is a member of the 
+   conclusion list (conclusionList).  if yes return sn != 0. 
    if not a member sn=0; 
 */
   /* initially set to not a member */
   sn = 0;
   /* member of conclusion list to be searched is f */
   i = f;
-  while ((strcmp(varble, conclt[i]) != 0) && (i < 8))
+  while ((strcmp(variable, conclusionList[i]) != 0) && (i < 8))
     /* test for membership */
     i = i + 1;
-  if (strcmp(varble, conclt[i]) == 0)
+  if (strcmp(variable, conclusionList[i]) == 0)
     sn = i; /* a member */
 }
 
 void push_on_stack()
 /* routine to push statement number (sn) and a clause number of 1 onto the 
-conclusion stack which consists of the statement stack (statsk) and the 
-clause stack (clausk)..to push decrement stack pointer (sp) */
+conclusion stack which consists of the statement stack (statementStack) and the 
+clause stack (clauseStack)..to push decrement stack pointer (sp) */
 {
   sp = sp - 1;
-  statsk[sp] = sn;
-  clausk[sp] = 1;
+  statementStack[sp] = sn;
+  clauseStack[sp] = 1;
 }
 
 void instantiate()
-/* routine to instantiate a variable (varble) if it isn't already.  the 
-instantiate indication (instlt) is a 0 if not, a 1 if it is.  the 
-variable list (varlt) contains the variable (varble). */
+/* routine to instantiate a variable (variable) if it isn't already.  the 
+instantiate indication (instantiatedList) is a 0 if not, a 1 if it is.  the 
+variable list (variableList) contains the variable (variable). */
 {
   i = 1;
   /* find variable in the list */
-  while ((strcmp(varble, varlt[i]) != 0) && (i < 10))
+  while ((strcmp(variable, variableList[i]) != 0) && (i < 10))
     i = i + 1;
-  if ((strcmp(varble, varlt[i]) == 0) && (instlt[i] != 1))
+  if ((strcmp(variable, variableList[i]) == 0) && (instantiatedList[i] != 1))
   /*found variable and not already instantiated */
   {
-    instlt[i] = 1; /*mark instantiated */
+    instantiatedList[i] = 1; /*mark instantiated */
     /* the designer of the 
       knowledge base places the input statements to 
       instantiate the variables below in the case statement */
@@ -325,19 +319,19 @@ variable list (varlt) contains the variable (varble). */
       /***** comment 1700 ******/
     case 1:
       printf("INPUT YES OR NOW FOR DE-? ");
-      gets(de);
+      gets(degree);
       break;
     case 2:
       printf("INPUT YES OR NO FOR DI-? ");
-      gets(di);
+      gets(discovery);
       break;
     case 3:
       printf("INPUT A REAL NUMBER FOR EX-? ");
-      scanf("%f", &ex);
+      scanf("%f", &experience);
       break;
     case 4:
       printf("INPUT A REAL NUMBER FOR GR-? ");
-      scanf("%f", &gr);
+      scanf("%f", &grade);
       break;
       /***** comment 1715 ****/
     }
