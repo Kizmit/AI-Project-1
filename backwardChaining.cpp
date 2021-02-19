@@ -21,6 +21,7 @@ program to make it better.
 
 char conclusionList[10][3];
 char variableList[10][3];
+char clauseVariableList[40][3];
 char variable[3];
 char qualify[4], degree[4];
 char discovery[4], position[4];
@@ -28,7 +29,7 @@ char buff[128];
 
 int instantiatedList[11];
 int statementStack[11];
-int clauseStack[11], sn, f, i, j, s, k, /*stack pointer */ sp;
+int clauseStack[11], sn, f, i, j, s, k, stackPointer;
 
 float grade, experience;
 
@@ -40,7 +41,7 @@ main()
 {
   /***** initialization section ******/
   /* stack space is 10 we initially place stack space at 10+1 */
-  sp = 11;
+  stackPointer = 11;
   for (i = 1; i < 11; i++)
   {
     strcpy(conclusionList[i], "");
@@ -133,7 +134,7 @@ b520:
       {
         /* calculate clause location in clause-variable list */
       b545:
-        i = (statementStack[sp] - 1) * 4 + clauseStack[sp];
+        i = (statementStack[stackPointer] - 1) * 4 + clauseStack[stackPointer];
         /* clause variable */
         strcpy(variable, clauseVariableList[i]);
         if (strcmp(variable, "") != 0)
@@ -146,11 +147,11 @@ b520:
             goto b520;
           /* check instantiation of this clause */
           instantiate();
-          clauseStack[sp] = clauseStack[sp] + 1;
+          clauseStack[stackPointer] = clauseStack[stackPointer] + 1;
         }
       } while (strcmp(variable, "") != 0); /*do-while*/
       /*no more clauses check if part of statement */
-      sn = statementStack[sp];
+      sn = statementStack[stackPointer];
       s = 0;
       /**** if then statements ****/
       /* sample if parts of if then statements from the position knowledge base */
@@ -202,12 +203,12 @@ b520:
       {
         /* failed..search rest of statements for same conclusion */
         /* get conclusion */
-        i = statementStack[sp];
+        i = statementStack[stackPointer];
         strcpy(variable, conclusionList[i]);
         /* search for conclusion starting at the next statement number */
-        f = statementStack[sp] + 1;
+        f = statementStack[stackPointer] + 1;
         determine_member_concl_list();
-        sp = sp + 1;
+        stackPointer = stackPointer + 1;
       }
       /* pop old conclusion and put on new one */
     } while ((s != 1) && (sn != 0)); /* outer do-while loop */
@@ -254,15 +255,15 @@ b520:
         /****** comment 1680 ********/
       }
       /* pop the stack */
-      sp = sp + 1;
-      if (sp >= 11)
+      stackPointer = stackPointer + 1;
+      if (stackPointer >= 11)
         /* finished */
         printf("*** SUCCESS\n");
       else
       {
         /* stack is not empty */
         /* get next clause then continue */
-        clauseStack[sp] = clauseStack[sp] + 1;
+        clauseStack[stackPointer] = clauseStack[stackPointer] + 1;
         goto b545;
       }
     }
@@ -289,11 +290,11 @@ void determine_member_concl_list()
 void push_on_stack()
 /* routine to push statement number (sn) and a clause number of 1 onto the 
 conclusion stack which consists of the statement stack (statementStack) and the 
-clause stack (clauseStack)..to push decrement stack pointer (sp) */
+clause stack (clauseStack)..to push decrement stack pointer (stackPointer) */
 {
-  sp = sp - 1;
-  statementStack[sp] = sn;
-  clauseStack[sp] = 1;
+  stackPointer = stackPointer - 1;
+  statementStack[stackPointer] = sn;
+  clauseStack[stackPointer] = 1;
 }
 
 void instantiate()
