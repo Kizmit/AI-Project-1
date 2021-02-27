@@ -14,11 +14,10 @@ using namespace std;
 
 int Patient_Age;
 
-string conclusionList[CONCLUSIONS_AMOUNT][LIST_WIDTH];
-string variableList[VARIABLE_AMOUNT][LIST_WIDTH];
+// Will be Instantiated in main() - See Below
+string conclusionList[CONCLUSION_LIST_SIZE][LIST_WIDTH];
+string variableList[VARIABLE_LIST_SIZE][LIST_WIDTH];
 string clauseVariableList[CLAUSE_VAR_LIST_SIZE];
-
-
 
 // TODO: define these functions below main (return types are just placeholder, change if needed)
 void diagnosis();
@@ -28,11 +27,19 @@ int main() {
 
   cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
   cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
+  cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
 
   cout<< "Enter the Age of the Patient:  ";
   cin >> Patient_Age; 
-  
 
+  //TODO: Agree on the Structure List Google Doc, then do the below items.
+
+  //TODO: Manually Instantiate conclusionList.
+
+  //TODO: Manually Instantiate variableList.
+
+  //TODO: Manually Instantiate clauseVariableList.
+  
   diagnosis();
   treatment();
 

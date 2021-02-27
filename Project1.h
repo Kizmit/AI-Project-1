@@ -1,6 +1,13 @@
 #include <string>
 
+// Actual Amount of Entries each list will contain. Useful for parsing more efficiently.
 #define VARIABLE_AMOUNT 43
 #define CONCLUSIONS_AMOUNT 37
-#define CLAUSE_VAR_LIST_SIZE 172 // VARIABLE_AMOUNT * 4
+#define CLAUSE_VAR_LIST_ENTIRES 172 // VARIABLE_AMOUNT * 4
+
+// Create the Structures with some overheard, based off the amount of variables. (Per example .cpp files)
+#define VARIABLE_LIST_SIZE 50
+#define CONCLUSION_LIST_SIZE 40
+#define CLAUSE_VAR_LIST_SIZE 200
+
 #define LIST_WIDTH 3
