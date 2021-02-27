@@ -1,0 +1,6 @@
+#include <string>
+
+#define VARIABLE_AMOUNT 43
+#define CONCLUSIONS_AMOUNT 37
+#define CLAUSE_VAR_LIST_SIZE 172 // VARIABLE_AMOUNT * 4
+#define LIST_WIDTH 3
