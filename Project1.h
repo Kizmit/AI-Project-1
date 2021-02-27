@@ -1,5 +1,7 @@
 #include <string>
 
+#include "Symptom.h"
+
 // Actual Amount of Entries each list will contain. Useful for parsing more efficiently.
 #define VARIABLE_AMOUNT 43
 #define CONCLUSIONS_AMOUNT 37
@@ -9,5 +11,6 @@
 #define VARIABLE_LIST_SIZE 50
 #define CONCLUSION_LIST_SIZE 40
 #define CLAUSE_VAR_LIST_SIZE 200
+#define CONC_STACK_SIZE 20
 
 #define LIST_WIDTH 3
