@@ -220,6 +220,8 @@ void testPrintLists()
   for(int i = 1; i < 9; i++){
     cout << i << " Name: " << variableList[i].name << endl;
     cout << i << " Print Name: " << variableList[i].print << endl;
+    cout << i << " Instantiated: (0 = False, 1 = True) " << variableList[i].instantiated << endl;
+    cout << i << " Experiencing: (0 = False, 1 = True) " << variableList[i].experiencing << endl;
   }
   cout << endl;
   cout << "--- Conclusion List ---" << endl;
