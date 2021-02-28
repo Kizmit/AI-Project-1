@@ -217,13 +217,13 @@ void treatment(){
 void testPrintLists()
 {
   cout << "--- Varaible List --- " << endl;
-  for(int i = 1; i < VARIABLE_LIST_SIZE; i++){
+  for(int i = 1; i < 9; i++){
     cout << i << " Name: " << variableList[i].name << endl;
     cout << i << " Print Name: " << variableList[i].print << endl;
   }
   cout << endl;
   cout << "--- Conclusion List ---" << endl;
-  for(int i = 1; i < CONCLUSION_LIST_SIZE; i++){
+  for(int i = 1; i < 9; i++){
     cout << i << " Name: " << conclusionList[i].name << endl;
     cout << i << " Final Conclusion: " << conclusionList[i].finalConclusion << endl;
     cout << i << " Rule Number: " << conclusionList[i].ruleNumber << endl;
