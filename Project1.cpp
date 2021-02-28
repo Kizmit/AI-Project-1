@@ -9,19 +9,23 @@
 
 
 #include "Project1.h"
+
 using namespace std;
 
 // Will be Instantiated in main() - See Below **** Will probably be changed
-struct conclusionList[CONCLUSION_LIST_SIZE]//[LIST_WIDTH]; commented this out for now; I think we don't need 2D here
-struct variableList[VARIABLE_LIST_SIZE]//[LIST_WIDTH];
+Conclusion conclusionList[CONCLUSION_LIST_SIZE];//[LIST_WIDTH]; commented this out for now; I think we don't need 2D here
+Clause variableList[VARIABLE_LIST_SIZE];//[LIST_WIDTH];
 string clauseVariableList[CLAUSE_VAR_LIST_SIZE];
-stack<struct> conclusionStack;
-stack<struct> clauseStack;
+stack<Conclusion> conclusionStack;
+stack<Clause> clauseStack;
 
 
 // TODO: define these functions below main (return types are just placeholder, change if needed)
 void diagnosis();
 void treatment();
+int searchConclusionList(string);
+void instantiate(string);
+void testPrintLists();
 
 int main() {
   cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
@@ -47,15 +51,27 @@ int main() {
   conclusionList[3][1] = "pos_thy_canc"
   conclusionList[3][2] = "pos_canc, fat_wl"*/
 
-  conclusionList[1] = struct Conclusion("cancer", "NONE", 1);
-  conclusionList[2] = struct Conclusion("pos_cancer", "SUB", 2);
-  conclusionList[3] = struct Conclusion("pos_thy_cancer", "SUB", 3);
-  conclusionList[4] = struct Conclusion("cant_diag", "SUB", 4);
-  conclusionList[5] = struct Conclusion("thy_cancer", "SUB", 5);
-  conclusionList[6] = struct Conclusion("cancer", "MEDULLARY THYROID", 6);
-  conclusionList[7] = struct Conclusion("cancer", "PAPILLARY THYROID", 7);
-  conclusionList[8] = struct Conclusion("cancer", "FOLLICULAR THYROID", 8);
-  conclusionList[9] = struct Conclusion("cancer", "ANAPLASTIC THYROID", 9);
+/*
+  conclusionList[1] = Conclusion("cancer", "NONE", 1);
+  conclusionList[2] = Conclusion("pos_cancer", "SUB", 2);
+  conclusionList[3] = Conclusion("pos_thy_cancer", "SUB", 3);
+  conclusionList[4] = Conclusion("cant_diag", "SUB", 4);
+  conclusionList[5] = Conclusion("thy_cancer", "SUB", 5);
+  conclusionList[6] = Conclusion("cancer", "MEDULLARY THYROID", 6);
+  conclusionList[7] = Conclusion("cancer", "PAPILLARY THYROID", 7);
+  conclusionList[8] = Conclusion("cancer", "FOLLICULAR THYROID", 8);
+  conclusionList[9] = Conclusion("cancer", "ANAPLASTIC THYROID", 9);
+  */
+
+  conclusionList[1].setConcInitialValues("cancer", "NONE", 1);
+  conclusionList[2].setConcInitialValues("pos_cancer", "SUB", 2);
+  conclusionList[3].setConcInitialValues("pos_thy_cancer", "SUB", 3);
+  conclusionList[4].setConcInitialValues("cant_diag", "SUB", 4);
+  conclusionList[5].setConcInitialValues("thy_cancer", "SUB", 5);
+  conclusionList[6].setConcInitialValues("cancer", "MEDULLARY THYROID", 6);
+  conclusionList[7].setConcInitialValues("cancer", "PAPILLARY THYROID", 7);
+  conclusionList[8].setConcInitialValues("cancer", "FOLLICULAR THYROID", 8);
+  conclusionList[9].setConcInitialValues("cancer", "ANAPLASTIC THYROID", 9);
 
   //TODO: Manually Instantiate variableList.
   //index 2 of each variables index in the list would be the value of the variable; update with user input as program goes
@@ -75,12 +91,20 @@ int main() {
   variableList[7][1] = "NI";
   variableList[8][0] = "age"; 
   variableList[8][1] = "NI";*/
+  /*
 
-  variableList[1] = struct Clause("symptoms", "symptoms");
-  variableList[2] = struct Clause("fat_wl", "fatigue or weight loss");
-  variableList[3] = struct Clause("neLu_difBre_swNeGl", "any of the following: neck lump, difficulty breathing, or swollen neck glands");
-  variableList[4] = struct Clause("high_calc", "high calcitonin levels");
-  variableList[5] = struct Clause("age");
+  variableList[1] = Clause("symptoms", "symptoms");
+  variableList[2] = Clause("fat_wl", "fatigue or weight loss");
+  variableList[3] = Clause("neLu_difBre_swNeGl", "any of the following: neck lump, difficulty breathing, or swollen neck glands");
+  variableList[4] = Clause("high_calc", "high calcitonin levels");
+  variableList[5] = Clause("age");
+  */
+
+  variableList[1].setClauseInitialValues("symptoms", "symptoms");
+  variableList[2].setClauseInitialValues("fat_wl", "fatigue or weight loss");
+  variableList[3].setClauseInitialValues("neLu_difBre_swNeGl", "any of the following: neck lump, difficulty breathing, or swollen neck glands");
+  variableList[4].setClauseInitialValues("high_calc", "high calcitonin levels");
+  variableList[5].setClauseInitialValues("age", "AGE");
   
   
   //TODO: Manually Instantiate clauseVariableList.
@@ -103,9 +127,11 @@ int main() {
   clauseVariableList[49] = "thy_canc";
   clauseVariableList[50] = "age";
   clauseVariableList[51] = "high_calc"; 
+
+  testPrintLists();
  
-  diagnosis();
-  treatment();
+  //diagnosis();
+  //treatment();
 
   return 0;
 }
@@ -133,10 +159,10 @@ void diagnosis(){
     conclusionStack.push(conclusionList[index]);
     count++;
     do{
-      i = conlusionStack.top().clauseNumber;
+      i = conclusionStack.top().clauseNumber;
       if (clauseVariableList[i] != "")
       {
-        index = searchConclusionList(clauseVariableList[i])
+        index = searchConclusionList(clauseVariableList[i]);
         if (index != 0)
         {
           flag = true;
@@ -154,9 +180,9 @@ void diagnosis(){
 int searchConclusionList(string conc)
 {
   int index = 0;
-  for(int i = 1; i <= conclusionList.size(); i++)
+  for(int i = 1; i <= CONCLUSION_LIST_SIZE; i++)
   {
-    if(conc = conclusionList[i].name)
+    if(conc == conclusionList[i].name)
     {
       index = i;
       break;
@@ -169,7 +195,7 @@ int searchConclusionList(string conc)
 void instantiate(string str)
 {
   string answer;
-  for(int i = 1; i <= variableList.size(); i++)
+  for(int i = 1; i <= VARIABLE_LIST_SIZE; i++)
   {
     if (variableList[i].name == str && !variableList[i].instantiated)
     {
@@ -186,4 +212,21 @@ void instantiate(string str)
 
 void treatment(){
   cout << "Use Forward Chaining Here!" << endl;
+}
+
+void testPrintLists()
+{
+  cout << "--- Varaible List --- " << endl;
+  for(int i = 1; i < VARIABLE_LIST_SIZE; i++){
+    cout << i << " Name: " << variableList[i].name << endl;
+    cout << i << " Print Name: " << variableList[i].print << endl;
+  }
+  cout << endl;
+  cout << "--- Conclusion List ---" << endl;
+  for(int i = 1; i < CONCLUSION_LIST_SIZE; i++){
+    cout << i << " Name: " << conclusionList[i].name << endl;
+    cout << i << " Final Conclusion: " << conclusionList[i].finalConclusion << endl;
+    cout << i << " Rule Number: " << conclusionList[i].ruleNumber << endl;
+  }
+  
 }

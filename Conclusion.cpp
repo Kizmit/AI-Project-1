@@ -1,8 +1,21 @@
 #include "Conclusion.h"
-struct Conclusion::Conclusion(string n, string finalConclusion, int ruleNumber)
+
+using namespace std;
+
+/*
+Conclusion::Conclusion(string pass_n, string pass_finalConclusion, int pass_ruleNumber)
 {
-    name = n;    
-    this.finalConclusion = finalConclusion;
-    this.ruleNumber = ruleNumber;
-    clauseNumber = (ruleNumber * 6) - 5;
+    name = pass_n;    
+    finalConclusion = pass_finalConclusion;
+    ruleNumber = pass_ruleNumber;
+    clauseNumber = (pass_ruleNumber * 6) - 5;
+}
+*/
+
+Conclusion::setConcInitialValues(string pass_n, string pass_finalConclusion, int pass_ruleNumber)
+{
+    name = pass_n;    
+    finalConclusion = pass_finalConclusion;
+    ruleNumber = pass_ruleNumber;
+    clauseNumber = (pass_ruleNumber * 6) - 5;
 }

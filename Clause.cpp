@@ -1,6 +1,19 @@
 #include "Clause.h"
 
-struct Clause::Clause(string n, string p)
+/*
+Clause::Clause(string n, string p)
+{
+    name = n;  
+    print = p;
+}
+
+Clause::Clause()
+{
+    
+}
+*/
+
+Clause::setClauseInitialValues(string n, string p)
 {
     name = n;  
     print = p;

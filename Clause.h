@@ -1,5 +1,7 @@
 #include <string>
 
+using namespace std;
+
 struct Clause{
     public:
         string name, print;
@@ -7,5 +9,9 @@ struct Clause{
         bool instantiated = false;       //Has the patient indicated yes or no to this symptom
         bool experiencing = false;              // Does the patient have this symptom?
 
-        //Symptom(string) Maybe instantiate as needed with user input?
+        //Clause(string , string);
+        //Clause();
+
+        setClauseInitialValues(string, string);
+
 }; 

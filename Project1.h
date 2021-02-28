@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <string>
 #include "Conclusion.h"
 #include "Clause.h"
 
