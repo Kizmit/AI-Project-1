@@ -101,27 +101,27 @@ int main() {
 
   clauseVariableList[7] = "symptoms";
 
-  clauseVariableList[13] = "pos_canc";
-  clauseVariableList[14] = "fat_wl";
+  clauseVariableList[13] = "pos_cancer";
+  clauseVariableList[14] = "fat_weLo";
 
-  clauseVariableList[19] = "pos_thy_canc";
+  clauseVariableList[19] = "pos_thy_cancer";
   clauseVariableList[20] = "neLu_difBre_swNeGl";
 
   clauseVariableList[25] = "neLu_difBre_swNeGl";
-  clauseVariableList[26] = "pos_thy_canc";
+  clauseVariableList[26] = "pos_thy_cancer";
 
   clauseVariableList[31] = "thy_cancer";
   clauseVariableList[32] = "high_calc";
   
-  clauseVariableList[37] = "thy_canc";
+  clauseVariableList[37] = "thy_cancer";
   clauseVariableList[38] = "age";
   clauseVariableList[39] = "high_calc";
   
-  clauseVariableList[43] = "thy_canc";
+  clauseVariableList[43] = "thy_cancer";
   clauseVariableList[44] = "age";
   clauseVariableList[45] = "high_calc";
   
-  clauseVariableList[49] = "thy_canc";
+  clauseVariableList[49] = "thy_cancer";
   clauseVariableList[50] = "age";
   clauseVariableList[51] = "high_calc";
 
