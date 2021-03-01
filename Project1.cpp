@@ -50,7 +50,7 @@ int main() {
   variableList[7].init("fr_di_paUr", "frequent, difficult, or painful urinating");
   variableList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term cetheter use");
   variableList[9].init("persFever", "persistent fever");
-  variableList[10].init("hiSm_shBr_chPa_coBl", "history of smoking, shortness of breath, chest pain, or coughing up blood"); // FIXME: both of these contain the variable "history of smoking" may need to seperate the variable...
+  variableList[10].init("shBr_chPa_coBl", "shortness of breath, chest pain, or coughing up blood");
   variableList[11].init("hiSm_seHaSmEx", "history of smoking or second-hand smoking exposure");
   variableList[12].init("ra_as_urEx", "radon, asbestos, or uranium exposure");
   variableList[13].init("ja_na_ab_shPa", "jaundice, nausea, or abdominal or shoulder pain");
