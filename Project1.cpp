@@ -111,17 +111,18 @@ void diagnosis(){
        << "7. If such a statement is found, go back to step 3." << endl
        << "8. If there are no more conclusions left on the conclusion stack with that name, the rule for the previous conclusion is false. If there is no previous conclusion, then notify the user that an answer cannot be found. If there is a previous conclusion, go back to step 6." << endl
        << "9. If the rule on top of the stack can be instantiated, remove it from the stack. If another conclusion variable is underneath, increment the clause number, and for the remaining clauses go back to step 3. If no other conclusion variable is underneath, we have answered our question. The user can come to a conclusion." << endl;
-  
-if(terminateFunction == false) {
 
-  for(int i = 1; i <= CONCLUSION_LIST_SIZE; i++){
+  for(int i = 1; i <= CONCLUSION_LIST_SIZE && terminateFunction == false; i++){
 
+    cout << "hit top of for loop" << endl;
     count = 0;
 
     // Search for the Conclusion
     
     index = searchConclusionList(conclusion, conclusion_Counter);
-    conclusion_Counter = index;
+    conclusion_Counter = index + 1;
+    cout << "Index: " << index << endl;
+    cout << "Conclusion Counter: " << conclusion_Counter << endl;
     
     if(index != 0){   // We found the item in the conclusionList
       conclusionStack.push(conclusionList[index]);    // Step 2 Done?
@@ -160,10 +161,15 @@ if(terminateFunction == false) {
         count++;
     }while(clauseVariableList[i] != "" && count < 6);
     cout << "HIT 2!" << endl;
+    terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
   }
-  testPrintLists();
-  useKnowledgeBase(conclusionStack.top().ruleNumber);
-}
+
+  if(terminateFunction == true){
+    cout << "Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl;
+  }
+  // testPrintLists();
+  // useKnowledgeBase(conclusionStack.top().ruleNumber);
+
 }
 
     
@@ -183,6 +189,7 @@ int searchConclusionList(string conc, int conclusion_Counter)
     }
     else{
       cout << "Error! The item '" << conc << "' could not be found." << endl;
+      break;
     };
   }
   return index;
@@ -219,7 +226,7 @@ void instantiate(string str)
       cin >> (answer);
       if (answer == "yes" || answer == "YES")
         variableList[i].experiencing = true;
-      cout << "HIT BREAK!" << endl;
+      // cout << "HIT BREAK!" << endl;
       break;
     }
   }
@@ -233,7 +240,7 @@ void treatment(){
 void testPrintLists()
 {
   cout << "--- Varaible List --- " << endl;
-  for(int i = 1; i < VARIABLE_LIST_SIZE; i++){
+  for(int i = 1; i < 9; i++){    // Replace 9 with VARIABLE_LIST_SIZE when done with small testing
     cout << i << " Name: " << variableList[i].name << endl;
     cout << i << " Print Name: " << variableList[i].print << endl;
     cout << i << " Instantiated: (0 = False, 1 = True) " << variableList[i].instantiated << endl;
@@ -241,7 +248,7 @@ void testPrintLists()
   }
   cout << endl;
   cout << "--- Conclusion List ---" << endl;
-  for(int i = 1; i < CONCLUSION_LIST_SIZE; i++){
+  for(int i = 1; i < 9; i++){    // Replace 9 with CONCLUSION_LIST_SIZE when done with small testing
     cout << i << " Name: " << conclusionList[i].name << endl;
     cout << i << " Final Conclusion: " << conclusionList[i].finalConclusion << endl;
     cout << i << " Rule Number: " << conclusionList[i].ruleNumber << endl;
@@ -264,6 +271,9 @@ bool useKnowledgeBase(int ruleNumber){
       cout << "Case 1 Value: " << variableList[1].experiencing << endl;
       terminateDiagnosisAlgorithm = true;
       finalDiagnosis = conclusionList[ruleNumber];
+    }
+    else{
+      conclusionStack.pop();
     }
     break;
   
