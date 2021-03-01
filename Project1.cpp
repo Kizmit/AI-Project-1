@@ -69,8 +69,8 @@ int main() {
   conclusionList[33].init("panc_cancer", "SUB", 33);
   conclusionList[34].init("cancer", "PANCREATIC NEUROENDOCRINE TUMOR", 34);
   conclusionList[35].init("panc_exo_tumor", "SUB", 35);
-  conclusionList[36].init("cancer", "DUCTAL ADENOCARCINOMA");
-  conclusionList[37].init("cancer", "ACINAR ADENOCARCINOMA");
+  conclusionList[36].init("cancer", "DUCTAL ADENOCARCINOMA", 36);
+  conclusionList[37].init("cancer", "ACINAR ADENOCARCINOMA", 37);
 
   // populating the variable list:
   variableList[1].init("symptoms", "any symptoms");
@@ -105,7 +105,7 @@ int main() {
   clauseVariableList[20] = "neLu_difBre_swNeGl";
   clauseVariableList[25] = "cant_diag";
   clauseVariableList[26] = "pos_thy_canc";
-  clauseVariableList[31] = "thy_canc";
+  clauseVariableList[31] = "thy_cancer";
   clauseVariableList[32] = "high_calc";
   clauseVariableList[37] = "thy_canc";
   clauseVariableList[38] = "age";
@@ -130,6 +130,7 @@ void diagnosis(){
  string conclusion = "cancer";  // Identify the conclusion
  int index, count, i;
  bool terminateFunction = false;    // Will be set to true by knowledge base if we hit a terminating conclusion.
+ /*
  cout << "1. Identify the conclusion. " << endl // DONE
        << "2. Search the conclusion list for the first instance of the conclusion's name. If found, place the rule on the conclusion stack using the rule number and a (1) to represent the clause number. If not found, notify the user that an answer cannot be found." << endl
        << "3. Instantiate the IF clause (i.e., each condition variable) of the statement." << endl
@@ -139,7 +140,7 @@ void diagnosis(){
        << "7. If such a statement is found, go back to step 3." << endl
        << "8. If there are no more conclusions left on the conclusion stack with that name, the rule for the previous conclusion is false. If there is no previous conclusion, then notify the user that an answer cannot be found. If there is a previous conclusion, go back to step 6." << endl
        << "9. If the rule on top of the stack can be instantiated, remove it from the stack. If another conclusion variable is underneath, increment the clause number, and for the remaining clauses go back to step 3. If no other conclusion variable is underneath, we have answered our question. The user can come to a conclusion." << endl;
-
+  */
   for(int i = 1; i <= CONCLUSION_LIST_SIZE && terminateFunction == false; i++){
 
     cout << "hit top of for loop" << endl;
@@ -149,11 +150,12 @@ void diagnosis(){
     
     index = searchConclusionList(conclusion, conclusion_Counter);
     conclusion_Counter = index + 1;
-    cout << "Index: " << index << endl;
+    cout << "Conclusion List Index: " << index << endl;
     cout << "Conclusion Counter: " << conclusion_Counter << endl;
     
     if(index != 0){   // We found the item in the conclusionList
       conclusionStack.push(conclusionList[index]);    // Step 2 Done?
+      cout << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
     }
     else{
       continue; // We did not find the conclusion
@@ -167,19 +169,19 @@ void diagnosis(){
     do{
         if (clauseVariableList[i + count] != "")
         {
-          index = searchVariableList(clauseVariableList[i + count]);    // Index now holds the location of the corresponding symptom in variableList
-          if (index != 0)   // Found the item in varaible list
+          int varIndex = searchVariableList(clauseVariableList[i + count]);    // Index now holds the location of the corresponding symptom in variableList
+          if (varIndex != 0)   // Found the item in varaible list
           {
-            if(variableList[index].instantiated == false)
+            if(variableList[varIndex].instantiated == false)
             {
-              instantiate(variableList[index].name);    // Step 3 and 4 Done?
+              instantiate(variableList[varIndex].name);    // Step 3 and 4 Done?
             }
           }
           else    // The Item was not on the varaiable list. So it must be a conclusion variable. Handle it!
           {
-              index = searchConclusionList(clauseVariableList[i + count], 1);   // Send 1 to start at the beginning of the list. Index will hold the location of the conclusion in conclusion list.
-              if(index != 0){   // We found the item in the conclusionList. So now we need to push it to the stack.
-                conclusionStack.push(conclusionList[index]);    
+              int clauseIndex = searchConclusionList(clauseVariableList[i + count], 1);   // Send 1 to start at the beginning of the list. Index will hold the location of the conclusion in conclusion list.
+              if(clauseIndex != 0){   // We found the item in the conclusionList. So now we need to push it to the stack.
+                conclusionStack.push(conclusionList[clauseIndex]);    
               }
               else{
                 continue; // We did not find the conclusion in the conclusion list.
@@ -210,15 +212,16 @@ int searchConclusionList(string conc, int conclusion_Counter)
   int index = 0;
   for(int i = conclusion_Counter; i <= CONCLUSION_LIST_SIZE; i++)
   {
-    if(conc == conclusionList[i].name) // (conc.compare(conclusionList[i].name) != 0)???
+    cout << "Searching conclusion list index: " << i << endl;
+    if(conc == conclusionList[i].name) 
     {
       index = i;
-      break;
+      return index;
     }
     else{
-      cout << "Error! The item '" << conc << "' could not be found." << endl;
-      break;
+      cout << "The conclusion '" << conc << "' was not found in this element." << endl << endl;
     };
+    index++;
   }
   return index;
 }
@@ -229,14 +232,13 @@ int searchVariableList(string clauseVariable)
   int index = 0;
   for(int i = 1; i <= VARIABLE_LIST_SIZE; i++)
   {
-    cout << variableList[i].name << endl;
-    if(clauseVariable == variableList[i].name)    // (conc.compare(conclusionList[i].name) != 0)???
+    if(clauseVariable == variableList[i].name)    
     {
       index = i;
       return index;
     }
     else{
-      cout << "Error! The item '" << clauseVariable << "' could not be found." << endl;
+      cout << "The variable '" << clauseVariable << "' was not found in this element." << endl;
     };
   }
   return index;
@@ -252,7 +254,7 @@ void instantiate(string str)
       variableList[i].instantiated = true;
       cout << "Do you have " << variableList[i].print << "?" << endl;
       cin >> (answer);
-      if (answer == "yes" || answer == "YES")
+      if (answer == "yes" || answer == "YES" || answer == "Yes")
         variableList[i].experiencing = true;
       // cout << "HIT BREAK!" << endl;
       break;
@@ -281,6 +283,13 @@ void testPrintLists()
     cout << i << " Final Conclusion: " << conclusionList[i].finalConclusion << endl;
     cout << i << " Rule Number: " << conclusionList[i].ruleNumber << endl;
   }
+  cout << endl;
+  cout << "--- Clause Variable List ---" << endl;
+  for(int i = 1; i < 9; i++){    // Replace 9 with CONCLUSION_LIST_SIZE when done with small testing
+    cout << "Variable at location " << i << ": " << clauseVariableList[i] << endl;
+  }
+
+  cout << endl << endl;
   
 }
 
