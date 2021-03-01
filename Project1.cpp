@@ -32,11 +32,6 @@ int main() {
   cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
   cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
 
-  /*
-  cout<< "Enter the Age of the Patient:  ";
-  cin >> Patient_Age; 
-  */ 
-
   //TODO: Agree on the Structure List Google Doc, then do the below items.
 
   //TODO: Manually Instantiate conclusionList.
@@ -130,7 +125,7 @@ int main() {
 
   testPrintLists();
  
-  //diagnosis();
+  diagnosis();
   //treatment();
 
   return 0;
@@ -140,10 +135,11 @@ int main() {
 
 void diagnosis(){
  int conclusion_Counter = 1;
+ string conclusion = "cancer";  // Identify the conclusion
  int index, count, i;
  count = 0;
  bool flag = false;
- cout << "1. Identify the conclusion. " << endl
+ cout << "1. Identify the conclusion. " << endl // DONE
        << "2. Search the conclusion list for the first instance of the conclusion's name. If found, place the rule on the conclusion stack using the rule number and a (1) to represent the clause number. If not found, notify the user that an answer cannot be found." << endl
        << "3. Instantiate the IF clause (i.e., each condition variable) of the statement." << endl
        << "4. If one of the IF clause variables is not instantiated, as indicated by the variable list, and is not a conclusion variable, that is, not on the conclusion list, ask the user to enter a value." << endl
@@ -153,7 +149,7 @@ void diagnosis(){
        << "8. If there are no more conclusions left on the conclusion stack with that name, the rule for the previous conclusion is false. If there is no previous conclusion, then notify the user that an answer cannot be found. If there is a previous conclusion, go back to step 6." << endl
        << "9. If the rule on top of the stack can be instantiated, remove it from the stack. If another conclusion variable is underneath, increment the clause number, and for the remaining clauses go back to step 3. If no other conclusion variable is underneath, we have answered our question. The user can come to a conclusion." << endl;
   
-  index = searchConclusionList("cancer");
+  index = searchConclusionList(conclusion);
   
   while (flag == false){
     conclusionStack.push(conclusionList[index]);
@@ -172,22 +168,25 @@ void diagnosis(){
           instantiate(clauseVariableList[index]);
         }
       }
-    }while(clauseVariableList[i] != "" && count < 6); //LEFT OFF HERE. LOOPS ARENT CONTROLLED QUITE RIGHT
+    }while(clauseVariableList[i] != "" && count < 6); //LEFT OFF HERE. LOOPS ARENT CONTROLLED QUITE RIGHT. Gotcha, Might need to add one more outer loop. - Jeff
   }
 
 }
 
 int searchConclusionList(string conc)
 {
-  int index = 0;
+  int index;
   for(int i = 1; i <= CONCLUSION_LIST_SIZE; i++)
   {
-    if(conc == conclusionList[i].name)
+    if(conc == conclusionList[i].name) // (conc.compare(conclusionList[i].name) != 0)???
     {
       index = i;
       break;
     }
-    else continue;
+    else{
+      cout << "Error! The conclusion '" << conc << "' could not be found." << endl;
+      exit(1);
+    };
   }
   return index;
 }
@@ -200,7 +199,7 @@ void instantiate(string str)
     if (variableList[i].name == str && !variableList[i].instantiated)
     {
       variableList[i].instantiated = true;
-      printf("Do you have %s", variableList[i].print);
+      cout << "Do you have " << variableList[i].print << "?" << endl;
       cin >> (answer);
       if (answer == "yes" || answer == "YES")
         variableList[i].experiencing = true;

@@ -11,5 +11,5 @@ struct Conclusion{
         
         // Conclusion(string n, string, int);
 
-        setConcInitialValues(string, string, int);
+        void setConcInitialValues(string, string, int);
 };

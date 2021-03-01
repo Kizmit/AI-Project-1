@@ -12,6 +12,6 @@ struct Clause{
         //Clause(string , string);
         //Clause();
 
-        setClauseInitialValues(string, string);
+        void setClauseInitialValues(string, string);
 
 }; 

@@ -12,7 +12,7 @@ Conclusion::Conclusion(string pass_n, string pass_finalConclusion, int pass_rule
 }
 */
 
-Conclusion::setConcInitialValues(string pass_n, string pass_finalConclusion, int pass_ruleNumber)
+void Conclusion::setConcInitialValues(string pass_n, string pass_finalConclusion, int pass_ruleNumber)
 {
     name = pass_n;    
     finalConclusion = pass_finalConclusion;

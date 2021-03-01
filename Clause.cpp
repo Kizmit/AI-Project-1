@@ -13,7 +13,7 @@ Clause::Clause()
 }
 */
 
-Clause::setClauseInitialValues(string n, string p)
+void Clause::setClauseInitialValues(string n, string p)
 {
     name = n;  
     print = p;
