@@ -7,18 +7,15 @@
     Spring 2021
 */
 
-
 #include "Project1.h"
 
 using namespace std;
 
-// Will be Instantiated in main() - See Below **** Will probably be changed
-Conclusion conclusionList[CONCLUSION_LIST_SIZE];//[LIST_WIDTH]; commented this out for now; I think we don't need 2D here
-Clause variableList[VARIABLE_LIST_SIZE];//[LIST_WIDTH];
+Conclusion conclusionList[CONCLUSION_LIST_SIZE];
+Clause variableList[VARIABLE_LIST_SIZE];
 string clauseVariableList[CLAUSE_VAR_LIST_SIZE];
 stack<Conclusion> conclusionStack;
 stack<Clause> clauseStack;
-
 
 // TODO: define these functions below main (return types are just placeholder, change if needed)
 void diagnosis();
@@ -32,75 +29,40 @@ int main() {
   cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
   cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
 
-  //TODO: Agree on the Structure List Google Doc, then do the below items.
+  // manually instantiating the conclusion list:
+  conclusionList[1].init("cancer", "NONE", 1);
+  conclusionList[2].init("pos_cancer", "SUB", 2);
+  conclusionList[3].init("pos_thy_cancer", "SUB", 3);
+  conclusionList[4].init("cant_diag", "SUB", 4);
+  conclusionList[5].init("thy_cancer", "SUB", 5);
+  conclusionList[6].init("cancer", "MEDULLARY THYROID", 6);
+  conclusionList[7].init("cancer", "PAPILLARY THYROID", 7);
+  conclusionList[8].init("cancer", "FOLLICULAR THYROID", 8);
+  conclusionList[9].init("cancer", "ANAPLASTIC THYROID", 9);
 
-  //TODO: Manually Instantiate conclusionList.
-  //How it would look with a 2D array; it doesn't make much sense
-  /*conclusionList[1][0] = "1"; //Conclusion 1 corresponds to rule 1 (is this really necessary? index will correspond to rule #)
-  conclusionList[1][1] = "canc"; //Conclusion 1 is cancer
-  conclusionList[1][2] = "symp"; //Condition is whether or not patient has symptoms (is this really necessary? clauseVarList has corresponding conditions)
-  conclusionList[2][0] = "2"
-  conclusionList[2][1] = "canc"
-  conclusionList[2][2] = "symp"
-  conclusionList[3][0] = "3"
-  conclusionList[3][1] = "pos_thy_canc"
-  conclusionList[3][2] = "pos_canc, fat_wl"*/
-
-/*
-  conclusionList[1] = Conclusion("cancer", "NONE", 1);
-  conclusionList[2] = Conclusion("pos_cancer", "SUB", 2);
-  conclusionList[3] = Conclusion("pos_thy_cancer", "SUB", 3);
-  conclusionList[4] = Conclusion("cant_diag", "SUB", 4);
-  conclusionList[5] = Conclusion("thy_cancer", "SUB", 5);
-  conclusionList[6] = Conclusion("cancer", "MEDULLARY THYROID", 6);
-  conclusionList[7] = Conclusion("cancer", "PAPILLARY THYROID", 7);
-  conclusionList[8] = Conclusion("cancer", "FOLLICULAR THYROID", 8);
-  conclusionList[9] = Conclusion("cancer", "ANAPLASTIC THYROID", 9);
-  */
-
-  conclusionList[1].setConcInitialValues("cancer", "NONE", 1);
-  conclusionList[2].setConcInitialValues("pos_cancer", "SUB", 2);
-  conclusionList[3].setConcInitialValues("pos_thy_cancer", "SUB", 3);
-  conclusionList[4].setConcInitialValues("cant_diag", "SUB", 4);
-  conclusionList[5].setConcInitialValues("thy_cancer", "SUB", 5);
-  conclusionList[6].setConcInitialValues("cancer", "MEDULLARY THYROID", 6);
-  conclusionList[7].setConcInitialValues("cancer", "PAPILLARY THYROID", 7);
-  conclusionList[8].setConcInitialValues("cancer", "FOLLICULAR THYROID", 8);
-  conclusionList[9].setConcInitialValues("cancer", "ANAPLASTIC THYROID", 9);
-
-  //TODO: Manually Instantiate variableList.
-  //index 2 of each variables index in the list would be the value of the variable; update with user input as program goes
-  /*variableList[1][0] = "symptoms"; //variable corresponds to rule 1
-  variableList[1][1] = "NI";  //initially not instantiated
-  variableList[2][0] = "fatigue"; 
-  variableList[2][1] = "NI";
-  variableList[3][0] = "weight_loss"; 
-  variableList[3][1] = "NI";
-  variableList[4][0] = "neck_lu"; 
-  variableList[4][1] = "NI";
-  variableList[5][0] = "dif_bre"; 
-  variableList[5][1] = "NI";
-  variableList[6][0] = "swol_neck_glands"; 
-  variableList[6][1] = "NI";
-  variableList[7][0] = "high_calc"; 
-  variableList[7][1] = "NI";
-  variableList[8][0] = "age"; 
-  variableList[8][1] = "NI";*/
-  /*
-
-  variableList[1] = Clause("symptoms", "symptoms");
-  variableList[2] = Clause("fat_wl", "fatigue or weight loss");
-  variableList[3] = Clause("neLu_difBre_swNeGl", "any of the following: neck lump, difficulty breathing, or swollen neck glands");
-  variableList[4] = Clause("high_calc", "high calcitonin levels");
-  variableList[5] = Clause("age");
-  */
-
-  variableList[1].setClauseInitialValues("symptoms", "symptoms");
-  variableList[2].setClauseInitialValues("fat_wl", "fatigue or weight loss");
-  variableList[3].setClauseInitialValues("neLu_difBre_swNeGl", "any of the following: neck lump, difficulty breathing, or swollen neck glands");
-  variableList[4].setClauseInitialValues("high_calc", "high calcitonin levels");
-  variableList[5].setClauseInitialValues("age", "AGE");
-  
+  // manually instantiating the variable list:
+  variableList[1].init("symptoms", "any symptoms");
+  variableList[2].init("fat_wl", "fatigue or weight loss");
+  variableList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
+  variableList[4].init("high_calc", "high calcitonin levels");
+  variableList[5].init("age", "AGE");
+  variableList[6].init("loss_app", "loss of appetite");
+  variableList[7].init("fr_di_paUr", "frequent, difficult, or painful urinating");
+  variableList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term cetheter use");
+  variableList[9].init("persFever", "persistent fever");
+  variableList[10].init("hiSm_shBr_chPa_coBl", "history of smoking, shortness of breath, chest pain, or coughing up blood"); // FIXME: both of these contain the variable "history of smoking" may need to seperate the variable...
+  variableList[11].init("hiSm_seHaSmEx", "history of smoking or second-hand smoking exposure");
+  variableList[12].init("ra_as_urEx", "radon, asbestos, or uranium exposure");
+  variableList[13].init("ja_na_ab_shPa", "jaundice, nausea, or abdominal or shoulder pain");
+  variableList[14].init("CVA_an", "CVA mass or anemia");
+  variableList[15].init("tubules", "cancer cells originated tubules");
+  variableList[16].init("renal_pelvis", "cancer cells originated in renal pelvis");
+  variableList[17].init("sw_ch_buSt_bl", "sweats, chills, burning stomach, or bloating");
+  variableList[18].init("enLi_sp_it_feFuEa", "enlarged liver or spleen, itching, or feeling full easily");
+  variableList[19].init("grInLi", "tentacle or nodule growth in liver");
+  variableList[20].init("bile_duct", "cancer cells originated in bilde duct");
+  variableList[21].init("exocrine_component", "cancer cells originated in exocrine component of the pancreas");
+  variableList[22].init("ducts", "cancer cells originated in ducts of the pancreas");
   
   //TODO: Manually Instantiate clauseVariableList.
   clauseVariableList[1] = "symptoms";
@@ -130,8 +92,6 @@ int main() {
 
   return 0;
 }
-
-// TODO: define functions
 
 void diagnosis(){
  int conclusion_Counter = 1;

@@ -8,8 +8,6 @@ struct Conclusion{
         string name;
         string finalConclusion;
         int ruleNumber, clauseNumber;
-        
-        // Conclusion(string n, string, int);
 
-        void setConcInitialValues(string, string, int);
+        void init(string, string, int);
 };
