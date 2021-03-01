@@ -74,7 +74,7 @@ int main() {
 
   // populating the variable list:
   variableList[1].init("symptoms", "any symptoms");
-  variableList[2].init("fat_wl", "fatigue or weight loss");
+  variableList[2].init("fat_weLo", "fatigue or weight loss");
   variableList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
   variableList[4].init("high_calc", "high calcitonin levels");
   variableList[5].init("age", "AGE");
@@ -98,24 +98,32 @@ int main() {
   
   //TODO: manually populate clauseVariableList.
   clauseVariableList[1] = "symptoms";
+
   clauseVariableList[7] = "symptoms";
+
   clauseVariableList[13] = "pos_canc";
   clauseVariableList[14] = "fat_wl";
+
   clauseVariableList[19] = "pos_thy_canc";
   clauseVariableList[20] = "neLu_difBre_swNeGl";
-  clauseVariableList[25] = "cant_diag";
+
+  clauseVariableList[25] = "neLu_difBre_swNeGl";
   clauseVariableList[26] = "pos_thy_canc";
+
   clauseVariableList[31] = "thy_cancer";
   clauseVariableList[32] = "high_calc";
+  
   clauseVariableList[37] = "thy_canc";
   clauseVariableList[38] = "age";
   clauseVariableList[39] = "high_calc";
+  
   clauseVariableList[43] = "thy_canc";
   clauseVariableList[44] = "age";
   clauseVariableList[45] = "high_calc";
+  
   clauseVariableList[49] = "thy_canc";
   clauseVariableList[50] = "age";
-  clauseVariableList[51] = "high_calc"; 
+  clauseVariableList[51] = "high_calc";
 
   testPrintLists();
  
