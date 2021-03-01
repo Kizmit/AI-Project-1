@@ -5,6 +5,7 @@
 #include "Conclusion.h"
 #include "Clause.h"
 
+// TODO: update these constants once lists are set in stone
 // Actual Amount of Entries each list will contain. Useful for parsing more efficiently.
 #define VARIABLE_AMOUNT 43
 #define CONCLUSIONS_AMOUNT 37

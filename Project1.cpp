@@ -29,18 +29,46 @@ int main() {
   cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
   cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
 
-  // manually instantiating the conclusion list:
+  // populating the conclusion list:
   conclusionList[1].init("cancer", "NONE", 1);
   conclusionList[2].init("pos_cancer", "SUB", 2);
   conclusionList[3].init("pos_thy_cancer", "SUB", 3);
-  conclusionList[4].init("cant_diag", "SUB", 4);
+  conclusionList[4].init("cant_diag", "CAN'T DIAGNOSE", 4);
   conclusionList[5].init("thy_cancer", "SUB", 5);
-  conclusionList[6].init("cancer", "MEDULLARY THYROID", 6);
-  conclusionList[7].init("cancer", "PAPILLARY THYROID", 7);
-  conclusionList[8].init("cancer", "FOLLICULAR THYROID", 8);
-  conclusionList[9].init("cancer", "ANAPLASTIC THYROID", 9);
+  conclusionList[6].init("cancer", "MEDULLARY THYROID CANCER", 6);
+  conclusionList[7].init("cancer", "PAPILLARY THYROID CANCER", 7);
+  conclusionList[8].init("cancer", "FOLLICULAR THYROID CANCER", 8);
+  conclusionList[9].init("cancer", "ANAPLASTIC THYROID CANCER", 9);
+  conclusionList[10].init("pos_bla_cancer", "SUB", 10);
+  conclusionList[11].init("cant_diag", "CAN'T DIAGNOSE", 11);
+  conclusionList[12].init("bla_cancer", "SUB", 12);
+  conclusionList[13].init("cancer", "SQUAMOUS CELL CARCINOMA", 13);
+  conclusionList[14].init("cancer", "UROTHELIAL CARCINOMA", 14);
+  conclusionList[15].init("pos_lung_cancer", "SUB", 15);
+  conclusionList[16].init("cant_diag", "CAN'T DIAGNOSE", 16);
+  conclusionList[17].init("lung_cancer", "SUB", 17);
+  conclusionList[18].init("cancer", "NON-SMALL CELL LUNG CANCER", 18);
+  conclusionList[19].init("cancer", "NON-SMALL CELL LUNG CANCER", 19);
+  conclusionList[20].init("cancer", "SMALL CELL LUNG CANCER", 20);
+  conclusionList[21].init("pos_kid_cancer", "SUB", 21);
+  conclusionList[22].init("cant_diag", "CAN'T DIAGNOSE", 22);
+  conclusionList[23].init("kid_cancer", "SUB", 23);
+  conclusionList[24].init("cancer", "RENAL CELL CARCINOMA", 24);
+  conclusionList[25].init("cancer", "UROTHELIAL CARCINOMA", 25);
+  conclusionList[26].init("cancer", "SARCOMA OF THE KIDNEY", 26);
+  conclusionList[27].init("pos_liver_cancer", "SUB", 27);
+  conclusionList[28].init("cant_diag", "CANT'T DIAGNOSE", 28);
+  conclusionList[29].init("liver_cancer", "LIVER CANCER", 29);
+  conclusionList[30].init("cancer", "HEPATOCELLULAR CARCINOMA", 30);
+  conclusionList[31].init("cancer", "ANGIOSARCOMA", 31);
+  conclusionList[32].init("cancer", "CHOLANGIOCARCINOMA", 32);
+  conclusionList[33].init("panc_cancer", "SUB", 33);
+  conclusionList[34].init("cancer", "PANCREATIC NEUROENDOCRINE TUMOR", 34);
+  conclusionList[35].init("panc_exo_tumor", "SUB", 35);
+  conclusionList[36].init("cancer", "DUCTAL ADENOCARCINOMA");
+  conclusionList[37].init("cancer", "ACINAR ADENOCARCINOMA");
 
-  // manually instantiating the variable list:
+  // populating the variable list:
   variableList[1].init("symptoms", "any symptoms");
   variableList[2].init("fat_wl", "fatigue or weight loss");
   variableList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
@@ -64,7 +92,7 @@ int main() {
   variableList[21].init("exocrine_component", "cancer cells originated in exocrine component of the pancreas");
   variableList[22].init("ducts", "cancer cells originated in ducts of the pancreas");
   
-  //TODO: Manually Instantiate clauseVariableList.
+  //TODO: manually populate clauseVariableList.
   clauseVariableList[1] = "symptoms";
   clauseVariableList[7] = "symptoms";
   clauseVariableList[13] = "pos_canc";
