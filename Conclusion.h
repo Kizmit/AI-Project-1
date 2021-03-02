@@ -8,7 +8,8 @@ struct Conclusion{
         string name;
         string finalConclusion;
         int ruleNumber, clauseNumber;
-        
+        bool instantiated = false;
+        bool value;     // Used to store sub conclusion values
 
         void init(string, string, int);
 };
