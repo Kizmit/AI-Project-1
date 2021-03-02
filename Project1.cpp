@@ -81,7 +81,7 @@ int main() {
   variableList[6].init("loss_app", "loss of appetite");
   variableList[7].init("fr_di_paUr", "frequent, difficult, or painful urinating");
   variableList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term cetheter use");
-  variableList[9].init("persFever", "persistent fever");
+  variableList[9].init("pers_fever", "persistent fever");
   variableList[10].init("shBr_chPa_coBl", "shortness of breath, chest pain, or coughing up blood");
   variableList[11].init("hiSm_seHaSmEx", "history of smoking or second-hand smoking exposure");
   variableList[12].init("ra_as_urEx", "radon, asbestos, or uranium exposure");
@@ -96,18 +96,28 @@ int main() {
   variableList[21].init("exocrine_component", "cancer cells originated in exocrine component of the pancreas");
   variableList[22].init("ducts", "cancer cells originated in ducts of the pancreas");
   
-  //TODO: manually populate clauseVariableList.
+  // populate the clause variable list:
+  // rule 1:
   clauseVariableList[1] = "symptoms";
-
+  // rule 2:
   clauseVariableList[7] = "symptoms";
+<<<<<<< HEAD
 
   clauseVariableList[13] = "pos_cancer";
   clauseVariableList[14] = "fat_weLo";
 
   clauseVariableList[19] = "pos_thy_cancer";
+=======
+  // rule 3:
+  clauseVariableList[13] = "pos_canc";
+  clauseVariableList[14] = "fat_wl";
+  // rule 4:
+  clauseVariableList[19] = "pos_thy_canc";
+>>>>>>> 8c88986553a582235450a261f946b19b3fb64961
   clauseVariableList[20] = "neLu_difBre_swNeGl";
-
+  // rule 5:
   clauseVariableList[25] = "neLu_difBre_swNeGl";
+<<<<<<< HEAD
   clauseVariableList[26] = "pos_thy_cancer";
 
   clauseVariableList[31] = "thy_cancer";
@@ -122,8 +132,127 @@ int main() {
   clauseVariableList[45] = "high_calc";
   
   clauseVariableList[49] = "thy_cancer";
+=======
+  clauseVariableList[26] = "pos_thy_canc";
+  // rule 6:
+  clauseVariableList[31] = "thy_cancer";
+  clauseVariableList[32] = "high_calc";
+  // rule 7:
+  clauseVariableList[37] = "thy_canc";
+  clauseVariableList[38] = "age";
+  clauseVariableList[39] = "high_calc";
+  // rule 8:
+  clauseVariableList[43] = "thy_canc";
+  clauseVariableList[44] = "age";
+  clauseVariableList[45] = "high_calc";
+  // rule 9:
+  clauseVariableList[49] = "thy_canc";
+>>>>>>> 8c88986553a582235450a261f946b19b3fb64961
   clauseVariableList[50] = "age";
   clauseVariableList[51] = "high_calc";
+  // rule 10:
+  clauseVariableList[55] = "pos_cancer";
+  clauseVariableList[56] = "fat_weLo";
+  clauseVariableList[57] = "loss_app";
+  // rule 11:
+  clauseVariableList[61] = "pos_bla_cancer";
+  clauseVariableList[62] = "fr_di_paUr";
+  // rule 12:
+  clauseVariableList[67] = "fr_di_paUr";
+  clauseVariableList[68] = "pos_bla_cancer";
+  // rule 13:
+  clauseVariableList[73] = "bla_cancer";
+  clauseVariableList[74] = "hiBlIn_LoTeCaUs";
+  // rule 14:
+  clauseVariableList[79] = "bla_cancer";
+  clauseVariableList[80] = "hiBlIn_LoTeCaUs";
+  // rule 15:
+  clauseVariableList[85] = "pos_cancer";
+  clauseVariableList[86] = "fat_weLo";
+  clauseVariableList[87] = "loss_app";
+  clauseVariableList[88] = "pers_fever";
+  // rule 16:
+  clauseVariableList[91] = "pos_lung_cancer";
+  clauseVariableList[92] = "shBr_chPa_coBl";
+  // rule 17:
+  clauseVariableList[97] = "shBr_chPa_coBl";
+  clauseVariableList[98] = "pos_lung_cancer";
+  // rule 18:
+  clauseVariableList[103] = "lung_cancer";
+  clauseVariableList[104] = "hiSm_seHaSmEx";
+  // rule 19:
+  clauseVariableList[109]	= "lung_cancer";
+  clauseVariableList[110]	= "hiSm_seHaSmEx";
+  clauseVariableList[111]	= "ra_as_urEx";
+  // rule 20:
+  clauseVariableList[115]	= "lung_cancer";
+  clauseVariableList[116]	= "hiSm_seHaSmEx";
+  clauseVariableList[117]	= "ra_as_urEx";
+  // rule 21:
+  clauseVariableList[121]	= "pos_cancer";
+  clauseVariableList[122]	= "fat_weLo";
+  clauseVariableList[123]	= "loss_app";
+  clauseVariableList[124]	= "pers_fever";
+  clauseVariableList[125]	= "ja_na_ab_shPa";
+  // rule 22:
+  clauseVariableList[127]	= "pos_kid_cancer";
+  clauseVariableList[128]	= "CVA_an";
+  // rule 23:
+  clauseVariableList[133]	= "CVA_an";
+  clauseVariableList[134]	= "pos_kid_cancer";
+  // rule 24:
+  clauseVariableList[139]	= "kid_cancer";
+  clauseVariableList[140]	= "tubules";
+  // rule 25:
+  clauseVariableList[145]	= "kid_cancer";
+  clauseVariableList[146]	= "tubules";
+  clauseVariableList[147]	= "renal_pelvis";
+  // rule 26:
+  clauseVariableList[151]	= "kid_cancer";
+  clauseVariableList[152]	= "tubules";
+  clauseVariableList[153]	= "renal_pelvis";
+  // rule 27:
+  clauseVariableList[157]	= "pos_cancer";
+  clauseVariableList[158]	= "fat_weLo";
+  clauseVariableList[159]	= "loss_app";
+  clauseVariableList[160]	= "pers_fever";
+  clauseVariableList[161]	= "ja_na_ab_shPa";
+  clauseVariableList[162]	= "sw_ch_buSt_bl";
+  // rule 28:
+  clauseVariableList[163]	= "pos_liver_cancer";
+  clauseVariableList[164]	= "enLi_sp_it_feFuEa";
+  // rule 29:
+  clauseVariableList[169]	= "pos_liver_cancer";
+  clauseVariableList[170]	= "enLi_sp_it_feFuEa";
+  // rule 30:
+  clauseVariableList[175]	= "liver_cancer";
+  clauseVariableList[176]	= "grInLi";
+  // rule 31:
+  clauseVariableList[181]	= "liver_cancer";
+  clauseVariableList[182]	= "grInLi";
+  // rule 32:
+  clauseVariableList[187]	= "liver_cancer";
+  clauseVariableList[188]	= "grInLi";
+  clauseVariableList[189]	= "bile_duct";
+  // rule 33:
+  clauseVariableList[193]	= "pos_cancer";
+  clauseVariableList[194]	= "fat_weLo";
+  clauseVariableList[195]	= "loss_app";
+  clauseVariableList[196]	= "pers_fever";
+  clauseVariableList[197]	= "ja_na_ab_shPa";
+  clauseVariableList[198]	= "sw_ch_buSt_bl";
+  // rule 34:
+  clauseVariableList[199]	= "panc_cancer";
+  clauseVariableList[200]	= "exocrine_component";
+  // rule 35:
+  clauseVariableList[205]	= "panc_cancer";
+  clauseVariableList[206]	= "exocrine_component";
+  // rule 36:
+  clauseVariableList[211]	= "panc_exo_tumor";
+  clauseVariableList[212]	= "ducts";
+  // rule 37:
+  clauseVariableList[217]	= "panc_exo_tumor";
+  clauseVariableList[218]	= "ducts";
 
   testPrintLists();
  
