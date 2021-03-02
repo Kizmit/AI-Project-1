@@ -253,7 +253,9 @@ void diagnosis(){
        << "8. If there are no more conclusions left on the conclusion stack with that name, the rule for the previous conclusion is false. If there is no previous conclusion, then notify the user that an answer cannot be found. If there is a previous conclusion, go back to step 6." << endl
        << "9. If the rule on top of the stack can be instantiated, remove it from the stack. If another conclusion variable is underneath, increment the clause number, and for the remaining clauses go back to step 3. If no other conclusion variable is underneath, we have answered our question. The user can come to a conclusion." << endl;
   */
-  for(int i = 1; i <= CONCLUSION_LIST_SIZE && terminateFunction == false; i++){
+  i = 1;
+ do{
+  //for(int i = 1; i <= CONCLUSION_LIST_SIZE && terminateFunction == false; i++){
 
     //cout << "hit top of for loop" << endl;
     count = 0;
@@ -267,50 +269,92 @@ void diagnosis(){
     
     if(index != 0){   // We found the item in the conclusionList
       conclusionStack.push(conclusionList[index]);    // Step 2 Done?
-      cout << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
+      //cout << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
     }
     else{
-      continue; // We did not find the conclusion
+      //cout << "The conclusion '" << conclusion << "' could not be found in the conclusion list." << endl;
     }
 
+/*
     if(conclusionStack.empty() == false){
         i = conclusionStack.top().clauseNumber;   // Go to top of the stack
     }
+*/
+  bool entered = false;
+do{
+  entered = false;
+  count = 0;
 
-    // Search for the Variables
+   if(conclusionStack.empty() == false){
+          i = conclusionStack.top().clauseNumber;   // Go to top of the stack
+        }
+    // Step 3
     do{
+        
+        //cout << "i: " << i << endl;
+        //cout << "i + count: " << i + count << endl;
+        //cout << "Clause Variable: " << clauseVariableList[i + count] << endl;
+
         if (clauseVariableList[i + count] != "")
         {
+          
           int varIndex = searchVariableList(clauseVariableList[i + count]);    // Index now holds the location of the corresponding symptom in variableList
           if (varIndex != 0)   // Found the item in varaible list
           {
+            //cout << "The variable '" << variableList[varIndex].name << "' was found in element " << index << " of the variable list." << endl;
             if(variableList[varIndex].instantiated == false)
             {
+              //cout << "Instantiating the variable: " << variableList[varIndex].name << endl;
               instantiate(variableList[varIndex].name);    // Step 3 and 4 Done?
+              entered = true;
+              
             }
           }
           else    // The Item was not on the varaiable list. So it must be a conclusion variable. Handle it!
           {
               int clauseIndex = searchConclusionList(clauseVariableList[i + count], 1);   // Send 1 to start at the beginning of the list. Index will hold the location of the conclusion in conclusion list.
               if(clauseIndex != 0){   // We found the item in the conclusionList. So now we need to push it to the stack.
-                conclusionStack.push(conclusionList[clauseIndex]);    
+                conclusionStack.push(conclusionList[clauseIndex]);  
+                //cout << "Pushing on to the stack!" << endl;
+                entered = true;
+                
+                
+                
               }
               else{
                 continue; // We did not find the conclusion in the conclusion list.
               }
           }
         }
+        // i++;
         count++;
-    }while(clauseVariableList[i] != "" && count < 6);
-    //cout << "HIT 2!" << endl;
-    terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
-  }
+        cout << endl;
+    }while(clauseVariableList[i + count] != "" && count < 6);
+    
 
-  if(terminateFunction == true){
-    cout << "Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl;
+}while(!conclusionStack.empty() && entered == true);
+    
+    while(!conclusionStack.empty() && !terminateFunction)
+    {
+      terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
+    }
+    
+    
+    /*
+    while(!conclusionStack.empty() && !terminateFunction){
+      cout << "Hit!" << endl;
+      terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
+    }
+    */
+    
+    
+  //}
+  
+ }while(!terminateFunction);
+
+ if(terminateFunction == true){
+    cout << endl << endl << "Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
   }
-  // testPrintLists();
-  // useKnowledgeBase(conclusionStack.top().ruleNumber);
 
 }
 
@@ -328,10 +372,11 @@ int searchConclusionList(string conc, int conclusion_Counter)
     if(conc == conclusionList[i].name) 
     {
       index = i;
+      //cout << "\nConclusion Found!" << endl;
       return index;
     }
     else{
-      cout << "The conclusion '" << conc << "' was not found in this element." << endl << endl;
+      // cout << "The conclusion '" << conc << "' was not found in this element." << endl << endl;
     };
     index++;
   }
@@ -340,7 +385,7 @@ int searchConclusionList(string conc, int conclusion_Counter)
 
 int searchVariableList(string clauseVariable)
 {
-  cout << "Variable: " << clauseVariable << endl;
+  //cout << "Variable: " << clauseVariable << endl;
   int index = 0;
   for(int i = 1; i <= VARIABLE_LIST_SIZE; i++)
   {
@@ -350,7 +395,7 @@ int searchVariableList(string clauseVariable)
       return index;
     }
     else{
-      cout << "The variable '" << clauseVariable << "' was not found in element " << i << "." << endl;
+      // cout << "The variable '" << clauseVariable << "' was not found in element " << i << "." << endl;
     };
   }
   return index;
@@ -367,8 +412,9 @@ void instantiate(string str)
       cout << "Do you have " << variableList[i].print << "?" << endl;
       cin >> (answer);
       if (answer == "yes" || answer == "YES" || answer == "Yes")
-        variableList[i].experiencing = true;
-      // cout << "HIT BREAK!" << endl;
+      {
+          variableList[i].experiencing = true;
+      }
       break;
     }
   }
@@ -408,7 +454,7 @@ void testPrintLists()
 bool useKnowledgeBase(int ruleNumber){
   bool terminateDiagnosisAlgorithm = false;
   
-  cout << "Accessing Knowledge Base...." << endl << endl;
+  cout << "Accessing Knowledge Base with Rule Number: " << ruleNumber << endl << endl;
 
   // Create a switch statement and all of the if then statements with the cases. Reference example.
 
@@ -417,14 +463,57 @@ bool useKnowledgeBase(int ruleNumber){
   case 1:
     if(variableList[1].experiencing == false)
     {
-      cout << "Case 1 Value (False = 0/True = 1): " << variableList[1].experiencing << endl;
+      // cout << "Case 1 Value (False = 0/True = 1): " << variableList[1].experiencing << endl;
       terminateDiagnosisAlgorithm = true;
       finalDiagnosis = conclusionList[ruleNumber];
     }
-    else{
-      conclusionStack.pop();
+    break;
+  
+  case 2:
+    if(variableList[1].experiencing == true)
+    {
+      // cout << endl << conclusionList[2].name << " set to TRUE!" << endl; 
+      conclusionList[2].value = true;
     }
     break;
+  
+  case 3:
+    if(conclusionList[2].value == true && variableList[2].experiencing == false)
+    {
+      cout << endl << conclusionList[3].name << " set to TRUE!" << endl; 
+      conclusionList[3].value = true;
+    }
+    break;
+  
+  case 4: 
+    if(conclusionList[3].value == true && variableList[3].experiencing == false)
+    {
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = conclusionList[ruleNumber];
+    }
+    break;
+  
+  case 5:
+  //cout << variableList[3].experiencing << endl;
+  //cout << variableList[3].name << endl;
+  //cout << conclusionList[3].value << endl;
+  
+  if(variableList[3].experiencing == true && conclusionList[3].value == true)
+  {
+   // cout << variableList[3].experiencing << endl;
+    //cout << conclusionList[3].value << endl;
+    //cout << conclusionList[5].name << " set to TRUE!" << endl; 
+    conclusionList[5].value = true;
+  }
+  break;
+
+  case 6:
+  if(conclusionList[5].value == true && variableList[4].experiencing == true)
+  {
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[6];
+  }
+  break;
   
   default:
     cout << "You should not be here!" << endl;
@@ -434,6 +523,10 @@ bool useKnowledgeBase(int ruleNumber){
   if(terminateDiagnosisAlgorithm == false){
     cout << "Continuing with the diagnosis, hopping out of the knowledge base..." << endl << endl;
   }
+  else{
+    cout << "\n\n\n--- Found a terminating conclusion, moving on to treatment recommendation---" << endl;
+  }
   
+  conclusionStack.pop();
   return terminateDiagnosisAlgorithm;
 }
