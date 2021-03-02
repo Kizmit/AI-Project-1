@@ -104,7 +104,7 @@ int main() {
 <<<<<<< HEAD
 
   clauseVariableList[13] = "pos_cancer";
-  clauseVariableList[14] = "fat_weLo";
+  clauseVariableList[14] = "fat_weLo";    // We need to line these up
 
   clauseVariableList[19] = "pos_thy_cancer";
 =======
