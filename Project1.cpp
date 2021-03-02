@@ -101,23 +101,14 @@ int main() {
   clauseVariableList[1] = "symptoms";
   // rule 2:
   clauseVariableList[7] = "symptoms";
-<<<<<<< HEAD
 
   clauseVariableList[13] = "pos_cancer";
   clauseVariableList[14] = "fat_weLo";    // We need to line these up
 
   clauseVariableList[19] = "pos_thy_cancer";
-=======
-  // rule 3:
-  clauseVariableList[13] = "pos_canc";
-  clauseVariableList[14] = "fat_wl";
-  // rule 4:
-  clauseVariableList[19] = "pos_thy_canc";
->>>>>>> 8c88986553a582235450a261f946b19b3fb64961
   clauseVariableList[20] = "neLu_difBre_swNeGl";
   // rule 5:
   clauseVariableList[25] = "neLu_difBre_swNeGl";
-<<<<<<< HEAD
   clauseVariableList[26] = "pos_thy_cancer";
 
   clauseVariableList[31] = "thy_cancer";
@@ -132,22 +123,6 @@ int main() {
   clauseVariableList[45] = "high_calc";
   
   clauseVariableList[49] = "thy_cancer";
-=======
-  clauseVariableList[26] = "pos_thy_canc";
-  // rule 6:
-  clauseVariableList[31] = "thy_cancer";
-  clauseVariableList[32] = "high_calc";
-  // rule 7:
-  clauseVariableList[37] = "thy_canc";
-  clauseVariableList[38] = "age";
-  clauseVariableList[39] = "high_calc";
-  // rule 8:
-  clauseVariableList[43] = "thy_canc";
-  clauseVariableList[44] = "age";
-  clauseVariableList[45] = "high_calc";
-  // rule 9:
-  clauseVariableList[49] = "thy_canc";
->>>>>>> 8c88986553a582235450a261f946b19b3fb64961
   clauseVariableList[50] = "age";
   clauseVariableList[51] = "high_calc";
   // rule 10:
