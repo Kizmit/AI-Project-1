@@ -654,6 +654,94 @@ bool useKnowledgeBase(int ruleNumber){
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[18];
   }
+  break;
+
+  case 19:
+  if(conclusionList[17].value == true && variableList[11].experiencing == true && variableList[12].experiencing == false)
+  {
+    log_File << endl << conclusionList[19].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[19];
+  }
+  break;
+
+  case 20:
+  if(conclusionList[17].value == true && variableList[11].experiencing == true && variableList[12].experiencing == true)
+  {
+    log_File << endl << conclusionList[20].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[20];
+  }
+  break;
+
+  case 21:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == false)
+  {
+    log_File << endl << conclusionList[21].name << " set to TRUE!" << endl; 
+    conclusionList[21].value = true;
+  }
+  break;
+
+  case 22:
+  if(conclusionList[21].value == true && variableList[14].experiencing == false)
+  {
+    log_File << endl << conclusionList[22].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[22];
+  }
+  break;
+
+  case 23:
+  if(conclusionList[21].value == true && variableList[14].experiencing == true)
+  {
+    log_File << endl << conclusionList[23].name << " set to TRUE!" << endl; 
+    conclusionList[23].value = true;
+  }
+  break;
+  
+  case 24:
+  if(conclusionList[23].value == true && variableList[15].experiencing == true)
+  {
+    log_File << endl << conclusionList[24].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[24];
+  }
+  break;
+
+  case 25:
+  if(conclusionList[23].value == true && variableList[15].experiencing == false && variableList[16].experiencing == true)
+  {
+    log_File << endl << conclusionList[25].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[25];
+  }
+  break;
+
+  case 26:
+  if(conclusionList[23].value == true && variableList[15].experiencing == false && variableList[16].experiencing == false)
+  {
+    log_File << endl << conclusionList[26].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[26];
+  }
+  break;
+
+  case 27:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == true && variableList[17].experiencing == false)
+  {
+    log_File << endl << conclusionList[27].name << " set to TRUE!" << endl; 
+    conclusionList[27].value = true;
+  }
+  break;
+
+  case 28:
+  if(conclusionList[27].value == true && variableList[18].experiencing == false)
+  {
+    log_File << endl << conclusionList[28].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[28];
+  }
+  break;
 
   
   default:
