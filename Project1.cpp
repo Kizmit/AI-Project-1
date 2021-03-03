@@ -36,6 +36,11 @@ int main() {
   cin >> patientID;
 
   // Create Log File
+  string logName = "Project1_LOG_ID#" + patientID + ".txt";
+  ofstream log_File;
+  log_File.open(logName);
+
+  log_File << "Patient #: " << patientID << endl << endl << endl;
 
   // populating the conclusion list:
   conclusionList[1].init("cancer", "NONE", 1);
@@ -81,7 +86,7 @@ int main() {
   variableList[2].init("fat_weLo", "fatigue or weight loss");
   variableList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
   variableList[4].init("high_calc", "high calcitonin levels");
-  variableList[5].init("age", "AGE");           // Different use case for instantiation(). Taking integer input, not setting boolean.   variableList[5].age = userInput.
+  variableList[5].init("age", "AGE");           // Different use case for instantiation(). .> See Function Below. (Taking integer input, not setting boolean.   variableList[5].age = userInput. )
   variableList[6].init("loss_app", "loss of appetite");
   variableList[7].init("fr_di_paUr", "frequent, difficult, or painful urination");
   variableList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term catheter use");
@@ -238,10 +243,14 @@ int main() {
   printWelcomeMessage();
  
   cout << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
+  log_File << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
   diagnosis();
+
+  //cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
   //treatment();
 
   // Close the log stream
+  log_File.close();
 
   return 0;
 }
@@ -553,7 +562,7 @@ bool useKnowledgeBase(int ruleNumber){
 
 void printWelcomeMessage()
 {
-  cout << "----------------------------------------------------------------------------------------------------" << endl;
+  cout << "\n----------------------------------------------------------------------------------------------------" << endl;
   cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
   cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
   cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
