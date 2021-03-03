@@ -17,6 +17,9 @@ string clauseVariableList[CLAUSE_VAR_LIST_SIZE];
 stack<Conclusion> conclusionStack;
 stack<Clause> clauseStack;
 
+// Logging
+ofstream log_File;
+
 // TODO: define these functions below main (return types are just placeholder, change if needed)
 void printWelcomeMessage();
 void diagnosis();
@@ -37,7 +40,7 @@ int main() {
 
   // Create Log File
   string logName = "Project1_LOG_ID#" + patientID + ".txt";
-  ofstream log_File;
+  
   log_File.open(logName);
 
   log_File << "Patient #: " << patientID << endl << endl << endl;
@@ -492,16 +495,16 @@ bool useKnowledgeBase(int ruleNumber){
   case 1:
     if(variableList[1].experiencing == false)
     {
-      // cout << "Case 1 Value (False = 0/True = 1): " << variableList[1].experiencing << endl;
+      log_File << endl << conclusionList[1].name << " set to TRUE!" << endl; 
       terminateDiagnosisAlgorithm = true;
-      finalDiagnosis = conclusionList[ruleNumber];
+      finalDiagnosis = conclusionList[1];
     }
     break;
   
   case 2:
     if(variableList[1].experiencing == true)
     {
-      // cout << endl << conclusionList[2].name << " set to TRUE!" << endl; 
+      log_File << endl << conclusionList[2].name << " set to TRUE!" << endl; 
       conclusionList[2].value = true;
     }
     break;
@@ -509,7 +512,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 3:
     if(conclusionList[2].value == true && variableList[2].experiencing == false)
     {
-      cout << endl << conclusionList[3].name << " set to TRUE!" << endl; 
+      log_File << endl << conclusionList[3].name << " set to TRUE!" << endl; 
       conclusionList[3].value = true;
     }
     break;
@@ -517,21 +520,16 @@ bool useKnowledgeBase(int ruleNumber){
   case 4: 
     if(conclusionList[3].value == true && variableList[3].experiencing == false)
     {
+      log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
       terminateDiagnosisAlgorithm = true;
-      finalDiagnosis = conclusionList[ruleNumber];
+      finalDiagnosis = conclusionList[4];
     }
     break;
   
   case 5:
-  //cout << variableList[3].experiencing << endl;
-  //cout << variableList[3].name << endl;
-  //cout << conclusionList[3].value << endl;
-  
   if(variableList[3].experiencing == true && conclusionList[3].value == true)
   {
-   // cout << variableList[3].experiencing << endl;
-    //cout << conclusionList[3].value << endl;
-    //cout << conclusionList[5].name << " set to TRUE!" << endl; 
+    log_File << endl << conclusionList[5].name << " set to TRUE!" << endl; 
     conclusionList[5].value = true;
   }
   break;
@@ -539,10 +537,69 @@ bool useKnowledgeBase(int ruleNumber){
   case 6:
   if(conclusionList[5].value == true && variableList[4].experiencing == true)
   {
+    log_File << endl << conclusionList[6].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
+    conclusionList[6].value = true;
     finalDiagnosis = conclusionList[6];
   }
   break;
+
+  case 7: 
+  if(conclusionList[3].value == true && variableList[5].age < 51 && variableList[4].experiencing == false)
+  {
+    log_File << endl << conclusionList[7].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[7].value = true;
+    finalDiagnosis = conclusionList[7];
+  }
+  break;
+
+  case 8:
+  if(conclusionList[3].value == true && variableList[5].age >= 51 && variableList[5].age < 61 && variableList[4].experiencing == false)
+  {
+    log_File << endl << conclusionList[8].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[8].value = true;
+    finalDiagnosis = conclusionList[8];
+  }
+  break;
+
+  case 9: 
+  if(conclusionList[3].value == true && variableList[5].age > 61 && variableList[4].experiencing == false)
+  {
+    log_File << endl << conclusionList[9].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[9].value = true;
+    finalDiagnosis = conclusionList[9];
+  }
+  break;
+
+  case 10:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == false)
+  {
+    log_File << endl << conclusionList[10].name << " set to TRUE!" << endl; 
+    conclusionList[10].value = true;
+  }
+  break;
+
+  case 11:
+  if(conclusionList[10].value == true && variableList[7].experiencing == false)
+  {
+    log_File << endl << conclusionList[11].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[11].value = true;
+    finalDiagnosis = conclusionList[11];
+  }
+  break;
+
+  case 12:
+  if(conclusionList[10].value == true && variableList[7].experiencing == true)
+  {
+    log_File << endl << conclusionList[12].name << " set to TRUE!" << endl; 
+    conclusionList[12].value = true;
+  }
+  break;
+
   
   default:
     cout << "You should not be here!" << endl;

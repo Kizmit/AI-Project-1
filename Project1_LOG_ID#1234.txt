@@ -1,0 +1,5 @@
+Patient #: 1234
+
+
+--- Starting Diagnosis Process For Patient #1234 ---
+
