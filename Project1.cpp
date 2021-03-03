@@ -743,10 +743,89 @@ bool useKnowledgeBase(int ruleNumber){
   }
   break;
 
+  case 29:
+  if(conclusionList[27].value == true && variableList[18].experiencing == true)
+  {
+    log_File << endl << conclusionList[29].name << " set to TRUE!" << endl; 
+    conclusionList[29].value = true;
+  }
+  break;
+
+  case 30:
+  if(conclusionList[29].value == true && variableList[19].experiencing == true)
+  {
+    log_File << endl << conclusionList[30].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[30];
+  }
+  break;
+
+  case 31:
+  if(conclusionList[29].value == true && variableList[19].experiencing == false && variableList[20].experiencing == false)
+  {
+    log_File << endl << conclusionList[31].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[31];
+  }
+  break;
+
+  case 32:
+  if(conclusionList[29].value == true && variableList[19].experiencing == false && variableList[20].experiencing == true)
+  {
+    log_File << endl << conclusionList[32].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[32];
+  }
+  break;
+
+  case 33:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == true && variableList[17].experiencing == true)
+  {
+    log_File << endl << conclusionList[33].name << " set to TRUE!" << endl; 
+    conclusionList[33].value = true;
+  }
+  break;
+
+  case 34:
+  if(conclusionList[33].value == true && variableList[21].experiencing == false)
+  {
+    log_File << endl << conclusionList[34].name << " set to TRUE!" << endl; 
+    conclusionList[34].value = true;
+  }
+  break;
+
+  case 35:
+  if(conclusionList[33].value == true && variableList[21].experiencing == true)
+  {
+    log_File << endl << conclusionList[35].name << " set to TRUE!" << endl; 
+    conclusionList[35].value = true;
+  }
+  break;
+
+  case 36:
+  if(conclusionList[35].value == true && variableList[22].experiencing == true)
+  {
+    log_File << endl << conclusionList[36].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[36];
+  }
+  break;
+
+  case 37:
+  if(conclusionList[35].value == true && variableList[22].experiencing == false)
+  {
+    log_File << endl << conclusionList[37].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[37];
+  }
+
+
+
   
   default:
-    cout << "You should not be here!" << endl;
-    break;
+      log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = conclusionList[4];
   }
 
   if(terminateDiagnosisAlgorithm == false){
