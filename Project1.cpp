@@ -18,6 +18,7 @@ stack<Conclusion> conclusionStack;
 stack<Clause> clauseStack;
 
 // TODO: define these functions below main (return types are just placeholder, change if needed)
+void printWelcomeMessage();
 void diagnosis();
 void treatment();
 int searchConclusionList(string, int);
@@ -29,9 +30,12 @@ bool useKnowledgeBase(int);
 Conclusion finalDiagnosis;    // This will hold the result of our diagnosis functions.
 
 int main() {
-  cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
-  cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
-  cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
+  // Gather the Patient ID and set up the logging information
+  string patientID;
+  cout << "Enter in the ID# for the patient: ";
+  cin >> patientID;
+
+  // Create Log File
 
   // populating the conclusion list:
   conclusionList[1].init("cancer", "NONE", 1);
@@ -230,18 +234,23 @@ int main() {
   clauseVariableList[218]	= "ducts";
 
   // testPrintLists();
+
+  printWelcomeMessage();
  
+  cout << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
   diagnosis();
   //treatment();
+
+  // Close the log stream
 
   return 0;
 }
 
 void diagnosis(){
- int conclusion_Counter = 1;  // Keep track of how far the conclusionList has been traversed. We need to advance in our search.
- string conclusion = "cancer";  // Identify the conclusion
- int index, count, i;
- bool terminateFunction = false;    // Will be set to true by knowledge base if we hit a terminating conclusion.
+  int conclusion_Counter = 1;  // Keep track of how far the conclusionList has been traversed. We need to advance in our search.
+  string conclusion = "cancer";  // Identify the conclusion
+  int index, count, i;
+  bool terminateFunction = false;    // Will be set to true by knowledge base if we hit a terminating conclusion.
  /*
  cout << "1. Identify the conclusion. " << endl // DONE
        << "2. Search the conclusion list for the first instance of the conclusion's name. If found, place the rule on the conclusion stack using the rule number and a (1) to represent the clause number. If not found, notify the user that an answer cannot be found." << endl
@@ -272,7 +281,7 @@ void diagnosis(){
       cout << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
     }
     else{
-      //cout << "The conclusion '" << conclusion << "' could not be found in the conclusion list." << endl;
+      //cout << "The conclusion '" << conclusion << "' could not be found in the current element of the conclusion list." << endl;
     }
 
 /*
@@ -411,7 +420,7 @@ void instantiate(string str)
     {
       if(variableList[i].name != "age"){                      // Everything but age, meaning we are setting a boolean.
         variableList[i].instantiated = true;
-        cout << "Do you have " << variableList[i].print << "?" << endl;
+        cout << "Do you have " << variableList[i].print << ": ";
         cin >> (answer);
         if (answer == "yes" || answer == "YES" || answer == "Yes")
         {
@@ -540,4 +549,13 @@ bool useKnowledgeBase(int ruleNumber){
   
   conclusionStack.pop();
   return terminateDiagnosisAlgorithm;
+}
+
+void printWelcomeMessage()
+{
+  cout << "----------------------------------------------------------------------------------------------------" << endl;
+  cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
+  cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
+  cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
+  cout << "----------------------------------------------------------------------------------------------------" << endl << endl;
 }
