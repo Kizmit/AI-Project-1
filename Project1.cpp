@@ -18,6 +18,7 @@ stack<Conclusion> conclusionStack;
 stack<Clause> clauseStack;
 
 // TODO: define these functions below main (return types are just placeholder, change if needed)
+void printWelcomeMessage();
 void diagnosis();
 void treatment();
 int searchConclusionList(string, int);
@@ -29,9 +30,17 @@ bool useKnowledgeBase(int);
 Conclusion finalDiagnosis;    // This will hold the result of our diagnosis functions.
 
 int main() {
-  cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
-  cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
-  cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
+  // Gather the Patient ID and set up the logging information
+  string patientID;
+  cout << "Enter in the ID# for the patient: ";
+  cin >> patientID;
+
+  // Create Log File
+  string logName = "Project1_LOG_ID#" + patientID + ".txt";
+  ofstream log_File;
+  log_File.open(logName);
+
+  log_File << "Patient #: " << patientID << endl << endl << endl;
 
   // populating the conclusion list:
   conclusionList[1].init("cancer", "NONE", 1);
@@ -61,7 +70,7 @@ int main() {
   conclusionList[25].init("cancer", "UROTHELIAL CARCINOMA", 25);
   conclusionList[26].init("cancer", "SARCOMA OF THE KIDNEY", 26);
   conclusionList[27].init("pos_liver_cancer", "SUB", 27);
-  conclusionList[28].init("cant_diag", "CANT'T DIAGNOSE", 28);
+  conclusionList[28].init("cant_diag", "CAN'T DIAGNOSE", 28);
   conclusionList[29].init("liver_cancer", "LIVER CANCER", 29);
   conclusionList[30].init("cancer", "HEPATOCELLULAR CARCINOMA", 30);
   conclusionList[31].init("cancer", "ANGIOSARCOMA", 31);
@@ -77,10 +86,10 @@ int main() {
   variableList[2].init("fat_weLo", "fatigue or weight loss");
   variableList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
   variableList[4].init("high_calc", "high calcitonin levels");
-  variableList[5].init("age", "AGE");
+  variableList[5].init("age", "AGE");           // Different use case for instantiation(). .> See Function Below. (Taking integer input, not setting boolean.   variableList[5].age = userInput. )
   variableList[6].init("loss_app", "loss of appetite");
-  variableList[7].init("fr_di_paUr", "frequent, difficult, or painful urinating");
-  variableList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term cetheter use");
+  variableList[7].init("fr_di_paUr", "frequent, difficult, or painful urination");
+  variableList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term catheter use");
   variableList[9].init("pers_fever", "persistent fever");
   variableList[10].init("shBr_chPa_coBl", "shortness of breath, chest pain, or coughing up blood");
   variableList[11].init("hiSm_seHaSmEx", "history of smoking or second-hand smoking exposure");
@@ -92,7 +101,7 @@ int main() {
   variableList[17].init("sw_ch_buSt_bl", "sweats, chills, burning stomach, or bloating");
   variableList[18].init("enLi_sp_it_feFuEa", "enlarged liver or spleen, itching, or feeling full easily");
   variableList[19].init("grInLi", "tentacle or nodule growth in liver");
-  variableList[20].init("bile_duct", "cancer cells originated in bilde duct");
+  variableList[20].init("bile_duct", "cancer cells originated in bile duct");
   variableList[21].init("exocrine_component", "cancer cells originated in exocrine component of the pancreas");
   variableList[22].init("ducts", "cancer cells originated in ducts of the pancreas");
   
@@ -110,18 +119,18 @@ int main() {
   // rule 5:
   clauseVariableList[25] = "neLu_difBre_swNeGl";
   clauseVariableList[26] = "pos_thy_cancer";
-
+  // rule 6:
   clauseVariableList[31] = "thy_cancer";
   clauseVariableList[32] = "high_calc";
-  
+  // rule 7:
   clauseVariableList[37] = "thy_cancer";
   clauseVariableList[38] = "age";
   clauseVariableList[39] = "high_calc";
-  
+  // rule 8:
   clauseVariableList[43] = "thy_cancer";
   clauseVariableList[44] = "age";
   clauseVariableList[45] = "high_calc";
-  
+  // rule 9:
   clauseVariableList[49] = "thy_cancer";
   clauseVariableList[50] = "age";
   clauseVariableList[51] = "high_calc";
@@ -229,19 +238,28 @@ int main() {
   clauseVariableList[217]	= "panc_exo_tumor";
   clauseVariableList[218]	= "ducts";
 
-  testPrintLists();
+  // testPrintLists();
+
+  printWelcomeMessage();
  
+  cout << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
+  log_File << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
   diagnosis();
+
+  //cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
   //treatment();
+
+  // Close the log stream
+  log_File.close();
 
   return 0;
 }
 
 void diagnosis(){
- int conclusion_Counter = 1;  // Keep track of how far the conclusionList has been traversed. We need to advance in our search.
- string conclusion = "cancer";  // Identify the conclusion
- int index, count, i;
- bool terminateFunction = false;    // Will be set to true by knowledge base if we hit a terminating conclusion.
+  int conclusion_Counter = 1;  // Keep track of how far the conclusionList has been traversed. We need to advance in our search.
+  string conclusion = "cancer";  // Identify the conclusion
+  int index, count, i;
+  bool terminateFunction = false;    // Will be set to true by knowledge base if we hit a terminating conclusion.
  /*
  cout << "1. Identify the conclusion. " << endl // DONE
        << "2. Search the conclusion list for the first instance of the conclusion's name. If found, place the rule on the conclusion stack using the rule number and a (1) to represent the clause number. If not found, notify the user that an answer cannot be found." << endl
@@ -269,10 +287,10 @@ void diagnosis(){
     
     if(index != 0){   // We found the item in the conclusionList
       conclusionStack.push(conclusionList[index]);    // Step 2 Done?
-      //cout << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
+      cout << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
     }
     else{
-      //cout << "The conclusion '" << conclusion << "' could not be found in the conclusion list." << endl;
+      //cout << "The conclusion '" << conclusion << "' could not be found in the current element of the conclusion list." << endl;
     }
 
 /*
@@ -404,18 +422,29 @@ int searchVariableList(string clauseVariable)
 void instantiate(string str)
 {
   string answer;
+  int ageInput;
   for(int i = 1; i <= VARIABLE_LIST_SIZE; i++)
   {
     if (variableList[i].name == str && !variableList[i].instantiated)
     {
-      variableList[i].instantiated = true;
-      cout << "Do you have " << variableList[i].print << "?" << endl;
-      cin >> (answer);
-      if (answer == "yes" || answer == "YES" || answer == "Yes")
-      {
+      if(variableList[i].name != "age"){                      // Everything but age, meaning we are setting a boolean.
+        variableList[i].instantiated = true;
+        cout << "Do you have " << variableList[i].print << ": ";
+        cin >> (answer);
+        if (answer == "yes" || answer == "YES" || answer == "Yes")
+        {
           variableList[i].experiencing = true;
+        }
+        break;
       }
-      break;
+      else{         // The Variable we are trying to instantiate is for the age. So...we need to handle it as an integer.
+        variableList[i].instantiated = true;
+        cout << "Enter in your age: ";
+        cin >> ageInput;
+        variableList[i].age = ageInput;
+        break;
+      }
+      
     }
   }
 }
@@ -427,8 +456,8 @@ void treatment(){
 
 void testPrintLists()
 {
-  cout << "--- Varaible List --- " << endl;
-  for(int i = 1; i < 9; i++){    // Replace 9 with VARIABLE_LIST_SIZE when done with small testing
+  cout << "--- Variable List --- " << endl;
+  for(int i = 1; i < VARIABLE_LIST_SIZE; i++){    // Replace 9 with VARIABLE_LIST_SIZE when done with small testing
     cout << i << " Name: " << variableList[i].name << endl;
     cout << i << " Print Name: " << variableList[i].print << endl;
     cout << i << " Instantiated: (0 = False, 1 = True) " << variableList[i].instantiated << endl;
@@ -436,14 +465,14 @@ void testPrintLists()
   }
   cout << endl;
   cout << "--- Conclusion List ---" << endl;
-  for(int i = 1; i < 9; i++){    // Replace 9 with CONCLUSION_LIST_SIZE when done with small testing
+  for(int i = 1; i < CONCLUSION_LIST_SIZE; i++){    // Replace 9 with CONCLUSION_LIST_SIZE when done with small testing
     cout << i << " Name: " << conclusionList[i].name << endl;
     cout << i << " Final Conclusion: " << conclusionList[i].finalConclusion << endl;
     cout << i << " Rule Number: " << conclusionList[i].ruleNumber << endl;
   }
   cout << endl;
   cout << "--- Clause Variable List ---" << endl;
-  for(int i = 1; i < 9; i++){    // Replace 9 with CONCLUSION_LIST_SIZE when done with small testing
+  for(int i = 1; i < CLAUSE_VAR_LIST_SIZE; i++){    // Replace 9 with CLAUSE_VAR_LIST_SIZE when done with small testing
     cout << "Variable at location " << i << ": " << clauseVariableList[i] << endl;
   }
 
@@ -529,4 +558,13 @@ bool useKnowledgeBase(int ruleNumber){
   
   conclusionStack.pop();
   return terminateDiagnosisAlgorithm;
+}
+
+void printWelcomeMessage()
+{
+  cout << "\n----------------------------------------------------------------------------------------------------" << endl;
+  cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
+  cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
+  cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
+  cout << "----------------------------------------------------------------------------------------------------" << endl << endl;
 }

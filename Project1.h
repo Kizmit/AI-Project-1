@@ -1,5 +1,5 @@
 #include <iostream>
-#include <vector>
+#include <fstream>      // Going to be used for logging
 #include <stack>
 #include <string>
 #include "Conclusion.h"
@@ -16,5 +16,3 @@
 #define CONCLUSION_LIST_SIZE 40
 #define CLAUSE_VAR_LIST_SIZE 225 //223 needed as each rule may have up to 6 clause variables (6*37)
 #define CONC_STACK_SIZE 20
-
-#define LIST_WIDTH 3
