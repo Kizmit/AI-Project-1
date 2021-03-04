@@ -1,0 +1,22 @@
+Patient #: 1234
+
+
+--- Starting Diagnosis Process For Patient #1234 ---
+
+The Conclusion has not been solved yet, searching for an instance now...
+***
+Conclusion Found!
+The conclusion 'cancer' was found in element 1 of the conclusion list.
+***
+Variable Found!
+The variable 'symptoms' was found in element 1 of the variable list.
+The Variable has not been assigned a value yet. Now instantiating the variable: symptoms
+***
+Variable Found!
+The variable 'symptoms' was found in element 1 of the variable list.
+Accessing Knowledge Base with Rule Number: 1
+--- Found a terminating conclusion, moving on to treatment recommendation---
+
+*** Final Diagnosis: cancer = NONE
+
+

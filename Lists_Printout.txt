@@ -1,0 +1,578 @@
+--- Variable List ---
+1 Name: symptoms
+1 Print Name: any symptoms
+1 Instantiated: (0 = False, 1 = True) 0
+1 Experiencing: (0 = False, 1 = True) 0
+2 Name: fat_weLo
+2 Print Name: fatigue or weight loss
+2 Instantiated: (0 = False, 1 = True) 0
+2 Experiencing: (0 = False, 1 = True) 0
+3 Name: neLu_difBre_swNeGl
+3 Print Name: neck lump, difficulty breathing, or swollen neck glands
+3 Instantiated: (0 = False, 1 = True) 0
+3 Experiencing: (0 = False, 1 = True) 0
+4 Name: high_calc
+4 Print Name: high calcitonin levels
+4 Instantiated: (0 = False, 1 = True) 0
+4 Experiencing: (0 = False, 1 = True) 0
+5 Name: age
+5 Print Name: AGE
+5 Instantiated: (0 = False, 1 = True) 0
+5 Experiencing: (0 = False, 1 = True) 0
+6 Name: loss_app
+6 Print Name: loss of appetite
+6 Instantiated: (0 = False, 1 = True) 0
+6 Experiencing: (0 = False, 1 = True) 0
+7 Name: fr_di_paUr
+7 Print Name: frequent, difficult, or painful urination
+7 Instantiated: (0 = False, 1 = True) 0
+7 Experiencing: (0 = False, 1 = True) 0
+8 Name: hiBlIn_LoTeCaUs
+8 Print Name: history of bladder infection or long term catheter use
+8 Instantiated: (0 = False, 1 = True) 0
+8 Experiencing: (0 = False, 1 = True) 0
+9 Name: pers_fever
+9 Print Name: persistent fever
+9 Instantiated: (0 = False, 1 = True) 0
+9 Experiencing: (0 = False, 1 = True) 0
+10 Name: shBr_chPa_coBl
+10 Print Name: shortness of breath, chest pain, or coughing up blood
+10 Instantiated: (0 = False, 1 = True) 0
+10 Experiencing: (0 = False, 1 = True) 0
+11 Name: hiSm_seHaSmEx
+11 Print Name: history of smoking or second-hand smoking exposure
+11 Instantiated: (0 = False, 1 = True) 0
+11 Experiencing: (0 = False, 1 = True) 0
+12 Name: ra_as_urEx
+12 Print Name: radon, asbestos, or uranium exposure
+12 Instantiated: (0 = False, 1 = True) 0
+12 Experiencing: (0 = False, 1 = True) 0
+13 Name: ja_na_ab_shPa
+13 Print Name: jaundice, nausea, or abdominal or shoulder pain
+13 Instantiated: (0 = False, 1 = True) 0
+13 Experiencing: (0 = False, 1 = True) 0
+14 Name: CVA_an
+14 Print Name: CVA mass or anemia
+14 Instantiated: (0 = False, 1 = True) 0
+14 Experiencing: (0 = False, 1 = True) 0
+15 Name: tubules
+15 Print Name: cancer cells originated tubules
+15 Instantiated: (0 = False, 1 = True) 0
+15 Experiencing: (0 = False, 1 = True) 0
+16 Name: renal_pelvis
+16 Print Name: cancer cells originated in renal pelvis
+16 Instantiated: (0 = False, 1 = True) 0
+16 Experiencing: (0 = False, 1 = True) 0
+17 Name: sw_ch_buSt_bl
+17 Print Name: sweats, chills, burning stomach, or bloating
+17 Instantiated: (0 = False, 1 = True) 0
+17 Experiencing: (0 = False, 1 = True) 0
+18 Name: enLi_sp_it_feFuEa
+18 Print Name: enlarged liver or spleen, itching, or feeling full easily
+18 Instantiated: (0 = False, 1 = True) 0
+18 Experiencing: (0 = False, 1 = True) 0
+19 Name: grInLi
+19 Print Name: tentacle or nodule growth in liver
+19 Instantiated: (0 = False, 1 = True) 0
+19 Experiencing: (0 = False, 1 = True) 0
+20 Name: bile_duct
+20 Print Name: cancer cells originated in bile duct
+20 Instantiated: (0 = False, 1 = True) 0
+20 Experiencing: (0 = False, 1 = True) 0
+21 Name: exocrine_component
+21 Print Name: cancer cells originated in exocrine component of the pancreas
+21 Instantiated: (0 = False, 1 = True) 0
+21 Experiencing: (0 = False, 1 = True) 0
+22 Name: ducts
+22 Print Name: cancer cells originated in ducts of the pancreas
+22 Instantiated: (0 = False, 1 = True) 0
+22 Experiencing: (0 = False, 1 = True) 0
+23 Name:
+23 Print Name:
+23 Instantiated: (0 = False, 1 = True) 0
+23 Experiencing: (0 = False, 1 = True) 0
+24 Name:
+24 Print Name:
+24 Instantiated: (0 = False, 1 = True) 0
+24 Experiencing: (0 = False, 1 = True) 0
+25 Name:
+25 Print Name:
+25 Instantiated: (0 = False, 1 = True) 0
+25 Experiencing: (0 = False, 1 = True) 0
+26 Name:
+26 Print Name:
+26 Instantiated: (0 = False, 1 = True) 0
+26 Experiencing: (0 = False, 1 = True) 0
+27 Name:
+27 Print Name:
+27 Instantiated: (0 = False, 1 = True) 0
+27 Experiencing: (0 = False, 1 = True) 0
+28 Name:
+28 Print Name:
+28 Instantiated: (0 = False, 1 = True) 0
+28 Experiencing: (0 = False, 1 = True) 0
+29 Name:
+29 Print Name:
+29 Instantiated: (0 = False, 1 = True) 0
+29 Experiencing: (0 = False, 1 = True) 0
+30 Name:
+30 Print Name:
+30 Instantiated: (0 = False, 1 = True) 0
+30 Experiencing: (0 = False, 1 = True) 0
+31 Name:
+31 Print Name:
+31 Instantiated: (0 = False, 1 = True) 0
+31 Experiencing: (0 = False, 1 = True) 0
+32 Name:
+32 Print Name:
+32 Instantiated: (0 = False, 1 = True) 0
+32 Experiencing: (0 = False, 1 = True) 0
+33 Name:
+33 Print Name:
+33 Instantiated: (0 = False, 1 = True) 0
+33 Experiencing: (0 = False, 1 = True) 0
+34 Name:
+34 Print Name:
+34 Instantiated: (0 = False, 1 = True) 0
+34 Experiencing: (0 = False, 1 = True) 0
+35 Name:
+35 Print Name:
+35 Instantiated: (0 = False, 1 = True) 0
+35 Experiencing: (0 = False, 1 = True) 0
+36 Name:
+36 Print Name:
+36 Instantiated: (0 = False, 1 = True) 0
+36 Experiencing: (0 = False, 1 = True) 0
+37 Name:
+37 Print Name:
+37 Instantiated: (0 = False, 1 = True) 0
+37 Experiencing: (0 = False, 1 = True) 0
+38 Name:
+38 Print Name:
+38 Instantiated: (0 = False, 1 = True) 0
+38 Experiencing: (0 = False, 1 = True) 0
+39 Name:
+39 Print Name:
+39 Instantiated: (0 = False, 1 = True) 0
+39 Experiencing: (0 = False, 1 = True) 0
+40 Name:
+40 Print Name:
+40 Instantiated: (0 = False, 1 = True) 0
+40 Experiencing: (0 = False, 1 = True) 0
+41 Name:
+41 Print Name:
+41 Instantiated: (0 = False, 1 = True) 0
+41 Experiencing: (0 = False, 1 = True) 0
+42 Name:
+42 Print Name:
+42 Instantiated: (0 = False, 1 = True) 0
+42 Experiencing: (0 = False, 1 = True) 0
+43 Name:
+43 Print Name:
+43 Instantiated: (0 = False, 1 = True) 0
+43 Experiencing: (0 = False, 1 = True) 0
+44 Name:
+44 Print Name:
+44 Instantiated: (0 = False, 1 = True) 0
+44 Experiencing: (0 = False, 1 = True) 0
+45 Name:
+45 Print Name:
+45 Instantiated: (0 = False, 1 = True) 0
+45 Experiencing: (0 = False, 1 = True) 0
+46 Name:
+46 Print Name:
+46 Instantiated: (0 = False, 1 = True) 0
+46 Experiencing: (0 = False, 1 = True) 0
+47 Name:
+47 Print Name:
+47 Instantiated: (0 = False, 1 = True) 0
+47 Experiencing: (0 = False, 1 = True) 0
+48 Name:
+48 Print Name:
+48 Instantiated: (0 = False, 1 = True) 0
+48 Experiencing: (0 = False, 1 = True) 0
+49 Name:
+49 Print Name:
+49 Instantiated: (0 = False, 1 = True) 0
+49 Experiencing: (0 = False, 1 = True) 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- Conclusion List ---
+1 Name: cancer
+1 Final Conclusion: NONE
+1 Rule Number: 1
+2 Name: pos_cancer
+2 Final Conclusion: SUB
+2 Rule Number: 2
+3 Name: pos_thy_cancer
+3 Final Conclusion: SUB
+3 Rule Number: 3
+4 Name: cant_diag
+4 Final Conclusion: CAN'T DIAGNOSE
+4 Rule Number: 4
+5 Name: thy_cancer
+5 Final Conclusion: SUB
+5 Rule Number: 5
+6 Name: cancer
+6 Final Conclusion: MEDULLARY THYROID CANCER
+6 Rule Number: 6
+7 Name: cancer
+7 Final Conclusion: PAPILLARY THYROID CANCER
+7 Rule Number: 7
+8 Name: cancer
+8 Final Conclusion: FOLLICULAR THYROID CANCER
+8 Rule Number: 8
+9 Name: cancer
+9 Final Conclusion: ANAPLASTIC THYROID CANCER
+9 Rule Number: 9
+10 Name: pos_bla_cancer
+10 Final Conclusion: SUB
+10 Rule Number: 10
+11 Name: cant_diag
+11 Final Conclusion: CAN'T DIAGNOSE
+11 Rule Number: 11
+12 Name: bla_cancer
+12 Final Conclusion: SUB
+12 Rule Number: 12
+13 Name: cancer
+13 Final Conclusion: SQUAMOUS CELL CARCINOMA
+13 Rule Number: 13
+14 Name: cancer
+14 Final Conclusion: UROTHELIAL CARCINOMA
+14 Rule Number: 14
+15 Name: pos_lung_cancer
+15 Final Conclusion: SUB
+15 Rule Number: 15
+16 Name: cant_diag
+16 Final Conclusion: CAN'T DIAGNOSE
+16 Rule Number: 16
+17 Name: lung_cancer
+17 Final Conclusion: SUB
+17 Rule Number: 17
+18 Name: cancer
+18 Final Conclusion: NON-SMALL CELL LUNG CANCER
+18 Rule Number: 18
+19 Name: cancer
+19 Final Conclusion: NON-SMALL CELL LUNG CANCER
+19 Rule Number: 19
+20 Name: cancer
+20 Final Conclusion: SMALL CELL LUNG CANCER
+20 Rule Number: 20
+21 Name: pos_kid_cancer
+21 Final Conclusion: SUB
+21 Rule Number: 21
+22 Name: cant_diag
+22 Final Conclusion: CAN'T DIAGNOSE
+22 Rule Number: 22
+23 Name: kid_cancer
+23 Final Conclusion: SUB
+23 Rule Number: 23
+24 Name: cancer
+24 Final Conclusion: RENAL CELL CARCINOMA
+24 Rule Number: 24
+25 Name: cancer
+25 Final Conclusion: UROTHELIAL CARCINOMA
+25 Rule Number: 25
+26 Name: cancer
+26 Final Conclusion: SARCOMA OF THE KIDNEY
+26 Rule Number: 26
+27 Name: pos_liver_cancer
+27 Final Conclusion: SUB
+27 Rule Number: 27
+28 Name: cant_diag
+28 Final Conclusion: CAN'T DIAGNOSE
+28 Rule Number: 28
+29 Name: liver_cancer
+29 Final Conclusion: LIVER CANCER
+29 Rule Number: 29
+30 Name: cancer
+30 Final Conclusion: HEPATOCELLULAR CARCINOMA
+30 Rule Number: 30
+31 Name: cancer
+31 Final Conclusion: ANGIOSARCOMA
+31 Rule Number: 31
+32 Name: cancer
+32 Final Conclusion: CHOLANGIOCARCINOMA
+32 Rule Number: 32
+33 Name: panc_cancer
+33 Final Conclusion: SUB
+33 Rule Number: 33
+34 Name: cancer
+34 Final Conclusion: PANCREATIC NEUROENDOCRINE TUMOR
+34 Rule Number: 34
+35 Name: panc_exo_tumor
+35 Final Conclusion: SUB
+35 Rule Number: 35
+36 Name: cancer
+36 Final Conclusion: DUCTAL ADENOCARCINOMA
+36 Rule Number: 36
+37 Name: cancer
+37 Final Conclusion: ACINAR ADENOCARCINOMA
+37 Rule Number: 37
+38 Name:
+38 Final Conclusion:
+38 Rule Number: 0
+39 Name:
+39 Final Conclusion:
+39 Rule Number: 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- Clause Variable List ---
+Variable at location 1: symptoms
+Variable at location 2:
+Variable at location 3:
+Variable at location 4:
+Variable at location 5:
+Variable at location 6:
+Variable at location 7: symptoms
+Variable at location 8:
+Variable at location 9:
+Variable at location 10:
+Variable at location 11:
+Variable at location 12:
+Variable at location 13: pos_cancer
+Variable at location 14: fat_weLo
+Variable at location 15:
+Variable at location 16:
+Variable at location 17:
+Variable at location 18:
+Variable at location 19: pos_thy_cancer
+Variable at location 20: neLu_difBre_swNeGl
+Variable at location 21:
+Variable at location 22:
+Variable at location 23:
+Variable at location 24:
+Variable at location 25: neLu_difBre_swNeGl
+Variable at location 26: pos_thy_cancer
+Variable at location 27:
+Variable at location 28:
+Variable at location 29:
+Variable at location 30:
+Variable at location 31: thy_cancer
+Variable at location 32: high_calc
+Variable at location 33:
+Variable at location 34:
+Variable at location 35:
+Variable at location 36:
+Variable at location 37: thy_cancer
+Variable at location 38: age
+Variable at location 39: high_calc
+Variable at location 40:
+Variable at location 41:
+Variable at location 42:
+Variable at location 43: thy_cancer
+Variable at location 44: age
+Variable at location 45: high_calc
+Variable at location 46:
+Variable at location 47:
+Variable at location 48:
+Variable at location 49: thy_cancer
+Variable at location 50: age
+Variable at location 51: high_calc
+Variable at location 52:
+Variable at location 53:
+Variable at location 54:
+Variable at location 55: pos_cancer
+Variable at location 56: fat_weLo
+Variable at location 57: loss_app
+Variable at location 58:
+Variable at location 59:
+Variable at location 60:
+Variable at location 61: pos_bla_cancer
+Variable at location 62: fr_di_paUr
+Variable at location 63:
+Variable at location 64:
+Variable at location 65:
+Variable at location 66:
+Variable at location 67: fr_di_paUr
+Variable at location 68: pos_bla_cancer
+Variable at location 69:
+Variable at location 70:
+Variable at location 71:
+Variable at location 72:
+Variable at location 73: bla_cancer
+Variable at location 74: hiBlIn_LoTeCaUs
+Variable at location 75:
+Variable at location 76:
+Variable at location 77:
+Variable at location 78:
+Variable at location 79: bla_cancer
+Variable at location 80: hiBlIn_LoTeCaUs
+Variable at location 81:
+Variable at location 82:
+Variable at location 83:
+Variable at location 84:
+Variable at location 85: pos_cancer
+Variable at location 86: fat_weLo
+Variable at location 87: loss_app
+Variable at location 88: pers_fever
+Variable at location 89:
+Variable at location 90:
+Variable at location 91: pos_lung_cancer
+Variable at location 92: shBr_chPa_coBl
+Variable at location 93:
+Variable at location 94:
+Variable at location 95:
+Variable at location 96:
+Variable at location 97: shBr_chPa_coBl
+Variable at location 98: pos_lung_cancer
+Variable at location 99:
+Variable at location 100:
+Variable at location 101:
+Variable at location 102:
+Variable at location 103: lung_cancer
+Variable at location 104: hiSm_seHaSmEx
+Variable at location 105:
+Variable at location 106:
+Variable at location 107:
+Variable at location 108:
+Variable at location 109: lung_cancer
+Variable at location 110: hiSm_seHaSmEx
+Variable at location 111: ra_as_urEx
+Variable at location 112:
+Variable at location 113:
+Variable at location 114:
+Variable at location 115: lung_cancer
+Variable at location 116: hiSm_seHaSmEx
+Variable at location 117: ra_as_urEx
+Variable at location 118:
+Variable at location 119:
+Variable at location 120:
+Variable at location 121: pos_cancer
+Variable at location 122: fat_weLo
+Variable at location 123: loss_app
+Variable at location 124: pers_fever
+Variable at location 125: ja_na_ab_shPa
+Variable at location 126:
+Variable at location 127: pos_kid_cancer
+Variable at location 128: CVA_an
+Variable at location 129:
+Variable at location 130:
+Variable at location 131:
+Variable at location 132:
+Variable at location 133: CVA_an
+Variable at location 134: pos_kid_cancer
+Variable at location 135:
+Variable at location 136:
+Variable at location 137:
+Variable at location 138:
+Variable at location 139: kid_cancer
+Variable at location 140: tubules
+Variable at location 141:
+Variable at location 142:
+Variable at location 143:
+Variable at location 144:
+Variable at location 145: kid_cancer
+Variable at location 146: tubules
+Variable at location 147: renal_pelvis
+Variable at location 148:
+Variable at location 149:
+Variable at location 150:
+Variable at location 151: kid_cancer
+Variable at location 152: tubules
+Variable at location 153: renal_pelvis
+Variable at location 154:
+Variable at location 155:
+Variable at location 156:
+Variable at location 157: pos_cancer
+Variable at location 158: fat_weLo
+Variable at location 159: loss_app
+Variable at location 160: pers_fever
+Variable at location 161: ja_na_ab_shPa
+Variable at location 162: sw_ch_buSt_bl
+Variable at location 163: pos_liver_cancer
+Variable at location 164: enLi_sp_it_feFuEa
+Variable at location 165:
+Variable at location 166:
+Variable at location 167:
+Variable at location 168:
+Variable at location 169: pos_liver_cancer
+Variable at location 170: enLi_sp_it_feFuEa
+Variable at location 171:
+Variable at location 172:
+Variable at location 173:
+Variable at location 174:
+Variable at location 175: liver_cancer
+Variable at location 176: grInLi
+Variable at location 177:
+Variable at location 178:
+Variable at location 179:
+Variable at location 180:
+Variable at location 181: liver_cancer
+Variable at location 182: grInLi
+Variable at location 183:
+Variable at location 184:
+Variable at location 185:
+Variable at location 186:
+Variable at location 187: liver_cancer
+Variable at location 188: grInLi
+Variable at location 189: bile_duct
+Variable at location 190:
+Variable at location 191:
+Variable at location 192:
+Variable at location 193: pos_cancer
+Variable at location 194: fat_weLo
+Variable at location 195: loss_app
+Variable at location 196: pers_fever
+Variable at location 197: ja_na_ab_shPa
+Variable at location 198: sw_ch_buSt_bl
+Variable at location 199: panc_cancer
+Variable at location 200: exocrine_component
+Variable at location 201:
+Variable at location 202:
+Variable at location 203:
+Variable at location 204:
+Variable at location 205: panc_cancer
+Variable at location 206: exocrine_component
+Variable at location 207:
+Variable at location 208:
+Variable at location 209:
+Variable at location 210:
+Variable at location 211: panc_exo_tumor
+Variable at location 212: ducts
+Variable at location 213:
+Variable at location 214:
+Variable at location 215:
+Variable at location 216:
+Variable at location 217: panc_exo_tumor
+Variable at location 218: ducts
+Variable at location 219:
+Variable at location 220:
+Variable at location 221:
+Variable at location 222:
+Variable at location 223:
+Variable at location 224:
+

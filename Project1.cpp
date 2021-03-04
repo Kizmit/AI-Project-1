@@ -17,6 +17,9 @@ string clauseVariableList[CLAUSE_VAR_LIST_SIZE];
 stack<Conclusion> conclusionStack;
 stack<Clause> clauseStack;
 
+// Logging
+ofstream log_File;
+
 // TODO: define these functions below main (return types are just placeholder, change if needed)
 void printWelcomeMessage();
 void diagnosis();
@@ -37,7 +40,7 @@ int main() {
 
   // Create Log File
   string logName = "Project1_LOG_ID#" + patientID + ".txt";
-  ofstream log_File;
+  
   log_File.open(logName);
 
   log_File << "Patient #: " << patientID << endl << endl << endl;
@@ -247,6 +250,7 @@ int main() {
   diagnosis();
 
   //cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
+  //log_File << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
   //treatment();
 
   // Close the log stream
@@ -260,44 +264,27 @@ void diagnosis(){
   string conclusion = "cancer";  // Identify the conclusion
   int index, count, i;
   bool terminateFunction = false;    // Will be set to true by knowledge base if we hit a terminating conclusion.
- /*
- cout << "1. Identify the conclusion. " << endl // DONE
-       << "2. Search the conclusion list for the first instance of the conclusion's name. If found, place the rule on the conclusion stack using the rule number and a (1) to represent the clause number. If not found, notify the user that an answer cannot be found." << endl
-       << "3. Instantiate the IF clause (i.e., each condition variable) of the statement." << endl
-       << "4. If one of the IF clause variables is not instantiated, as indicated by the variable list, and is not a conclusion variable, that is, not on the conclusion list, ask the user to enter a value." << endl
-       << "5. If one of the clauses is a conclusion variable, place the conclusion variable's rule number on the top of the stack and go back to step 3." << endl
-       << "6. If the statement on top of the stack cannot be instantiated using the present IF-THEN statement, remove the unit from the top of the stack and search the conclusion list for another instance of that conclusion variable's name." << endl
-       << "7. If such a statement is found, go back to step 3." << endl
-       << "8. If there are no more conclusions left on the conclusion stack with that name, the rule for the previous conclusion is false. If there is no previous conclusion, then notify the user that an answer cannot be found. If there is a previous conclusion, go back to step 6." << endl
-       << "9. If the rule on top of the stack can be instantiated, remove it from the stack. If another conclusion variable is underneath, increment the clause number, and for the remaining clauses go back to step 3. If no other conclusion variable is underneath, we have answered our question. The user can come to a conclusion." << endl;
-  */
   i = 1;
  do{
-  //for(int i = 1; i <= CONCLUSION_LIST_SIZE && terminateFunction == false; i++){
-
-    //cout << "hit top of for loop" << endl;
     count = 0;
 
     // Search for the Conclusion
     
+    log_File << "The Conclusion has not been solved yet, searching for an instance now..." << endl;
     index = searchConclusionList(conclusion, conclusion_Counter);
     conclusion_Counter = index + 1;
-    //cout << "Conclusion List Index: " << index << endl;
-    //cout << "Conclusion Counter: " << conclusion_Counter << endl;
     
     if(index != 0){   // We found the item in the conclusionList
-      conclusionStack.push(conclusionList[index]);    // Step 2 Done?
-      cout << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
+      conclusionStack.push(conclusionList[index]);    // Step 2 Done
+      log_File << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
     }
     else{
-      //cout << "The conclusion '" << conclusion << "' could not be found in the current element of the conclusion list." << endl;
+      cout << "No instances of the conclusion were found in the list. Assuming a non-diagnosis status." << endl;
+      log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
+      terminateFunction = true;
+      finalDiagnosis = conclusionList[4];   // Can't Diagnose Conclusion
     }
-
-/*
-    if(conclusionStack.empty() == false){
-        i = conclusionStack.top().clauseNumber;   // Go to top of the stack
-    }
-*/
+  
   bool entered = false;
 do{
   entered = false;
@@ -308,21 +295,16 @@ do{
         }
     // Step 3
     do{
-        
-        //cout << "i: " << i << endl;
-        //cout << "i + count: " << i + count << endl;
-        //cout << "Clause Variable: " << clauseVariableList[i + count] << endl;
-
         if (clauseVariableList[i + count] != "")
         {
           
           int varIndex = searchVariableList(clauseVariableList[i + count]);    // Index now holds the location of the corresponding symptom in variableList
           if (varIndex != 0)   // Found the item in varaible list
           {
-            //cout << "The variable '" << variableList[varIndex].name << "' was found in element " << index << " of the variable list." << endl;
+            log_File << "The variable '" << variableList[varIndex].name << "' was found in element " << index << " of the variable list." << endl;
             if(variableList[varIndex].instantiated == false)
             {
-              //cout << "Instantiating the variable: " << variableList[varIndex].name << endl;
+              log_File << "The Variable has not been assigned a value yet. Now instantiating the variable: " << variableList[varIndex].name << endl;
               instantiate(variableList[varIndex].name);    // Step 3 and 4 Done?
               entered = true;
               
@@ -333,11 +315,8 @@ do{
               int clauseIndex = searchConclusionList(clauseVariableList[i + count], 1);   // Send 1 to start at the beginning of the list. Index will hold the location of the conclusion in conclusion list.
               if(clauseIndex != 0){   // We found the item in the conclusionList. So now we need to push it to the stack.
                 conclusionStack.push(conclusionList[clauseIndex]);  
-                //cout << "Pushing on to the stack!" << endl;
+                log_File << "Pushing " << conclusionList[clauseIndex].name << " on to the stack!" << endl;
                 entered = true;
-                
-                
-                
               }
               else{
                 continue; // We did not find the conclusion in the conclusion list.
@@ -346,7 +325,6 @@ do{
         }
         // i++;
         count++;
-        cout << endl;
     }while(clauseVariableList[i + count] != "" && count < 6);
     
 
@@ -356,22 +334,12 @@ do{
     {
       terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
     }
-    
-    
-    /*
-    while(!conclusionStack.empty() && !terminateFunction){
-      cout << "Hit!" << endl;
-      terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
-    }
-    */
-    
-    
-  //}
   
  }while(!terminateFunction);
 
  if(terminateFunction == true){
-    cout << endl << endl << "Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
+    cout << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
+    log_File << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
   }
 
 }
@@ -382,15 +350,14 @@ do{
 
 int searchConclusionList(string conc, int conclusion_Counter)
 {
-  // cout << "Conc: " << conc << endl;
   int index = 0;
   for(int i = conclusion_Counter; i <= CONCLUSION_LIST_SIZE; i++)
   {
-    // cout << "Searching conclusion list index: " << i << endl;
+    // log_File << "Searching conclusion list index " << i << " for '" << conc << "' " << endl;
     if(conc == conclusionList[i].name) 
     {
       index = i;
-      //cout << "\nConclusion Found!" << endl;
+      log_File << "***\nConclusion Found!" << endl;
       return index;
     }
     else{
@@ -403,17 +370,19 @@ int searchConclusionList(string conc, int conclusion_Counter)
 
 int searchVariableList(string clauseVariable)
 {
-  //cout << "Variable: " << clauseVariable << endl;
   int index = 0;
   for(int i = 1; i <= VARIABLE_LIST_SIZE; i++)
   {
+    // log_File << "Searching variable list index " << i << " for '" << clauseVariable << "' " << endl;
     if(clauseVariable == variableList[i].name)    
     {
+      log_File << "***\nVariable Found!" << endl;
       index = i;
       return index;
     }
     else{
-      // cout << "The variable '" << clauseVariable << "' was not found in element " << i << "." << endl;
+      // log_File << "ERROR! The variable '" << clauseVariable << "' was not found in element " << i << "." << endl;
+      continue;
     };
   }
   return index;
@@ -434,6 +403,7 @@ void instantiate(string str)
         if (answer == "yes" || answer == "YES" || answer == "Yes")
         {
           variableList[i].experiencing = true;
+          log_File << variableList[i].print << " set to TRUE" << endl;
         }
         break;
       }
@@ -442,6 +412,7 @@ void instantiate(string str)
         cout << "Enter in your age: ";
         cin >> ageInput;
         variableList[i].age = ageInput;
+        log_File << "Patient age was set to " << variableList[i].age << endl;
         break;
       }
       
@@ -457,7 +428,7 @@ void treatment(){
 void testPrintLists()
 {
   cout << "--- Variable List --- " << endl;
-  for(int i = 1; i < VARIABLE_LIST_SIZE; i++){    // Replace 9 with VARIABLE_LIST_SIZE when done with small testing
+  for(int i = 1; i < VARIABLE_LIST_SIZE; i++){    
     cout << i << " Name: " << variableList[i].name << endl;
     cout << i << " Print Name: " << variableList[i].print << endl;
     cout << i << " Instantiated: (0 = False, 1 = True) " << variableList[i].instantiated << endl;
@@ -465,14 +436,14 @@ void testPrintLists()
   }
   cout << endl;
   cout << "--- Conclusion List ---" << endl;
-  for(int i = 1; i < CONCLUSION_LIST_SIZE; i++){    // Replace 9 with CONCLUSION_LIST_SIZE when done with small testing
+  for(int i = 1; i < CONCLUSION_LIST_SIZE; i++){    
     cout << i << " Name: " << conclusionList[i].name << endl;
     cout << i << " Final Conclusion: " << conclusionList[i].finalConclusion << endl;
     cout << i << " Rule Number: " << conclusionList[i].ruleNumber << endl;
   }
   cout << endl;
   cout << "--- Clause Variable List ---" << endl;
-  for(int i = 1; i < CLAUSE_VAR_LIST_SIZE; i++){    // Replace 9 with CLAUSE_VAR_LIST_SIZE when done with small testing
+  for(int i = 1; i < CLAUSE_VAR_LIST_SIZE; i++){    
     cout << "Variable at location " << i << ": " << clauseVariableList[i] << endl;
   }
 
@@ -483,7 +454,7 @@ void testPrintLists()
 bool useKnowledgeBase(int ruleNumber){
   bool terminateDiagnosisAlgorithm = false;
   
-  cout << "Accessing Knowledge Base with Rule Number: " << ruleNumber << endl << endl;
+  log_File << "Accessing Knowledge Base with Rule Number: " << ruleNumber << endl;
 
   // Create a switch statement and all of the if then statements with the cases. Reference example.
 
@@ -492,16 +463,16 @@ bool useKnowledgeBase(int ruleNumber){
   case 1:
     if(variableList[1].experiencing == false)
     {
-      // cout << "Case 1 Value (False = 0/True = 1): " << variableList[1].experiencing << endl;
+      //log_File << endl << conclusionList[1].name << " set to TRUE!" << endl; 
       terminateDiagnosisAlgorithm = true;
-      finalDiagnosis = conclusionList[ruleNumber];
+      finalDiagnosis = conclusionList[1];
     }
     break;
   
   case 2:
     if(variableList[1].experiencing == true)
     {
-      // cout << endl << conclusionList[2].name << " set to TRUE!" << endl; 
+      //log_File << endl << conclusionList[2].name << " set to TRUE!" << endl; 
       conclusionList[2].value = true;
     }
     break;
@@ -509,7 +480,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 3:
     if(conclusionList[2].value == true && variableList[2].experiencing == false)
     {
-      cout << endl << conclusionList[3].name << " set to TRUE!" << endl; 
+      //log_File << endl << conclusionList[3].name << " set to TRUE!" << endl; 
       conclusionList[3].value = true;
     }
     break;
@@ -517,21 +488,16 @@ bool useKnowledgeBase(int ruleNumber){
   case 4: 
     if(conclusionList[3].value == true && variableList[3].experiencing == false)
     {
+      //log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
       terminateDiagnosisAlgorithm = true;
-      finalDiagnosis = conclusionList[ruleNumber];
+      finalDiagnosis = conclusionList[4];
     }
     break;
   
   case 5:
-  //cout << variableList[3].experiencing << endl;
-  //cout << variableList[3].name << endl;
-  //cout << conclusionList[3].value << endl;
-  
   if(variableList[3].experiencing == true && conclusionList[3].value == true)
   {
-   // cout << variableList[3].experiencing << endl;
-    //cout << conclusionList[3].value << endl;
-    //cout << conclusionList[5].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[5].name << " set to TRUE!" << endl; 
     conclusionList[5].value = true;
   }
   break;
@@ -539,21 +505,301 @@ bool useKnowledgeBase(int ruleNumber){
   case 6:
   if(conclusionList[5].value == true && variableList[4].experiencing == true)
   {
+    //log_File << endl << conclusionList[6].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
+    conclusionList[6].value = true;
     finalDiagnosis = conclusionList[6];
   }
   break;
+
+  case 7: 
+  if(conclusionList[3].value == true && variableList[5].age < 51 && variableList[4].experiencing == false)
+  {
+    //log_File << endl << conclusionList[7].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[7].value = true;
+    finalDiagnosis = conclusionList[7];
+  }
+  break;
+
+  case 8:
+  if(conclusionList[3].value == true && variableList[5].age >= 51 && variableList[5].age < 61 && variableList[4].experiencing == false)
+  {
+    //log_File << endl << conclusionList[8].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[8].value = true;
+    finalDiagnosis = conclusionList[8];
+  }
+  break;
+
+  case 9: 
+  if(conclusionList[3].value == true && variableList[5].age > 61 && variableList[4].experiencing == false)
+  {
+    //log_File << endl << conclusionList[9].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[9].value = true;
+    finalDiagnosis = conclusionList[9];
+  }
+  break;
+
+  case 10:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == false)
+  {
+    //log_File << endl << conclusionList[10].name << " set to TRUE!" << endl; 
+    conclusionList[10].value = true;
+  }
+  break;
+
+  case 11:
+  if(conclusionList[10].value == true && variableList[7].experiencing == false)
+  {
+    //log_File << endl << conclusionList[11].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[11].value = true;
+    finalDiagnosis = conclusionList[11];
+  }
+  break;
+
+  case 12:
+  if(conclusionList[10].value == true && variableList[7].experiencing == true)
+  {
+    //log_File << endl << conclusionList[12].name << " set to TRUE!" << endl; 
+    conclusionList[12].value = true;
+  }
+  break;
+
+  case 13:
+  if(conclusionList[12].value == true && variableList[8].experiencing == true)
+  {
+    //log_File << endl << conclusionList[13].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[13].value = true;
+    finalDiagnosis = conclusionList[13];
+  }
+  break;
+
+  case 14:
+  if(conclusionList[12].value == true && variableList[8].experiencing == false)
+  {
+    //log_File << endl << conclusionList[14].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    conclusionList[14].value = true;
+    finalDiagnosis = conclusionList[14];
+  }
+  break;
+
+  case 15:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[9].experiencing == false)
+  {
+    //log_File << endl << conclusionList[15].name << " set to TRUE!" << endl; 
+    conclusionList[15].value = true;
+  }
+  break;
+
+  case 16:
+  if(conclusionList[15].value == true && variableList[10].experiencing == false)
+  {
+    //log_File << endl << conclusionList[16].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[16];
+  }
+  break;
+
+  case 17:
+  if(conclusionList[15].value == true && variableList[10].experiencing == true)
+  {
+    //log_File << endl << conclusionList[17].name << " set to TRUE!" << endl; 
+    conclusionList[17].value = true;
+  }
+  break;
+
+  case 18:
+  if(conclusionList[17].value == true && variableList[11].experiencing == false)
+  {
+    //log_File << endl << conclusionList[18].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[18];
+  }
+  break;
+
+  case 19:
+  if(conclusionList[17].value == true && variableList[11].experiencing == true && variableList[12].experiencing == false)
+  {
+    //log_File << endl << conclusionList[19].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[19];
+  }
+  break;
+
+  case 20:
+  if(conclusionList[17].value == true && variableList[11].experiencing == true && variableList[12].experiencing == true)
+  {
+    //log_File << endl << conclusionList[20].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[20];
+  }
+  break;
+
+  case 21:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == false)
+  {
+    //log_File << endl << conclusionList[21].name << " set to TRUE!" << endl; 
+    conclusionList[21].value = true;
+  }
+  break;
+
+  case 22:
+  if(conclusionList[21].value == true && variableList[14].experiencing == false)
+  {
+    //log_File << endl << conclusionList[22].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[22];
+  }
+  break;
+
+  case 23:
+  if(conclusionList[21].value == true && variableList[14].experiencing == true)
+  {
+    //log_File << endl << conclusionList[23].name << " set to TRUE!" << endl; 
+    conclusionList[23].value = true;
+  }
+  break;
+  
+  case 24:
+  if(conclusionList[23].value == true && variableList[15].experiencing == true)
+  {
+    //log_File << endl << conclusionList[24].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[24];
+  }
+  break;
+
+  case 25:
+  if(conclusionList[23].value == true && variableList[15].experiencing == false && variableList[16].experiencing == true)
+  {
+    //log_File << endl << conclusionList[25].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[25];
+  }
+  break;
+
+  case 26:
+  if(conclusionList[23].value == true && variableList[15].experiencing == false && variableList[16].experiencing == false)
+  {
+    //log_File << endl << conclusionList[26].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[26];
+  }
+  break;
+
+  case 27:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == true && variableList[17].experiencing == false)
+  {
+    //log_File << endl << conclusionList[27].name << " set to TRUE!" << endl; 
+    conclusionList[27].value = true;
+  }
+  break;
+
+  case 28:
+  if(conclusionList[27].value == true && variableList[18].experiencing == false)
+  {
+    //log_File << endl << conclusionList[28].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[28];
+  }
+  break;
+
+  case 29:
+  if(conclusionList[27].value == true && variableList[18].experiencing == true)
+  {
+    //log_File << endl << conclusionList[29].name << " set to TRUE!" << endl; 
+    conclusionList[29].value = true;
+  }
+  break;
+
+  case 30:
+  if(conclusionList[29].value == true && variableList[19].experiencing == true)
+  {
+    //log_File << endl << conclusionList[30].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[30];
+  }
+  break;
+
+  case 31:
+  if(conclusionList[29].value == true && variableList[19].experiencing == false && variableList[20].experiencing == false)
+  {
+    //log_File << endl << conclusionList[31].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[31];
+  }
+  break;
+
+  case 32:
+  if(conclusionList[29].value == true && variableList[19].experiencing == false && variableList[20].experiencing == true)
+  {
+    //log_File << endl << conclusionList[32].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[32];
+  }
+  break;
+
+  case 33:
+  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == true && variableList[17].experiencing == true)
+  {
+    //log_File << endl << conclusionList[33].name << " set to TRUE!" << endl; 
+    conclusionList[33].value = true;
+  }
+  break;
+
+  case 34:
+  if(conclusionList[33].value == true && variableList[21].experiencing == false)
+  {
+    //log_File << endl << conclusionList[34].name << " set to TRUE!" << endl; 
+    conclusionList[34].value = true;
+  }
+  break;
+
+  case 35:
+  if(conclusionList[33].value == true && variableList[21].experiencing == true)
+  {
+    //log_File << endl << conclusionList[35].name << " set to TRUE!" << endl; 
+    conclusionList[35].value = true;
+  }
+  break;
+
+  case 36:
+  if(conclusionList[35].value == true && variableList[22].experiencing == true)
+  {
+    //log_File << endl << conclusionList[36].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[36];
+  }
+  break;
+
+  case 37:
+  if(conclusionList[35].value == true && variableList[22].experiencing == false)
+  {
+    // log_File << endl << conclusionList[37].name << " set to TRUE!" << endl; 
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = conclusionList[37];
+  }
+
+
+
   
   default:
-    cout << "You should not be here!" << endl;
-    break;
+      log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = conclusionList[4];
   }
 
   if(terminateDiagnosisAlgorithm == false){
-    cout << "Continuing with the diagnosis, hopping out of the knowledge base..." << endl << endl;
+    log_File << "Continuing with the diagnosis, hopping out of the knowledge base..." << endl;
   }
   else{
-    cout << "\n\n\n--- Found a terminating conclusion, moving on to treatment recommendation---" << endl;
+    log_File << "--- Found a terminating conclusion, moving on to treatment recommendation---" << endl;
+    cout << "\n--- Found a terminating conclusion, moving on to treatment recommendation---" << endl;
   }
   
   conclusionStack.pop();
