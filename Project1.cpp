@@ -264,22 +264,8 @@ void diagnosis(){
   string conclusion = "cancer";  // Identify the conclusion
   int index, count, i;
   bool terminateFunction = false;    // Will be set to true by knowledge base if we hit a terminating conclusion.
- /*
- cout << "1. Identify the conclusion. " << endl // DONE
-       << "2. Search the conclusion list for the first instance of the conclusion's name. If found, place the rule on the conclusion stack using the rule number and a (1) to represent the clause number. If not found, notify the user that an answer cannot be found." << endl
-       << "3. Instantiate the IF clause (i.e., each condition variable) of the statement." << endl
-       << "4. If one of the IF clause variables is not instantiated, as indicated by the variable list, and is not a conclusion variable, that is, not on the conclusion list, ask the user to enter a value." << endl
-       << "5. If one of the clauses is a conclusion variable, place the conclusion variable's rule number on the top of the stack and go back to step 3." << endl
-       << "6. If the statement on top of the stack cannot be instantiated using the present IF-THEN statement, remove the unit from the top of the stack and search the conclusion list for another instance of that conclusion variable's name." << endl
-       << "7. If such a statement is found, go back to step 3." << endl
-       << "8. If there are no more conclusions left on the conclusion stack with that name, the rule for the previous conclusion is false. If there is no previous conclusion, then notify the user that an answer cannot be found. If there is a previous conclusion, go back to step 6." << endl
-       << "9. If the rule on top of the stack can be instantiated, remove it from the stack. If another conclusion variable is underneath, increment the clause number, and for the remaining clauses go back to step 3. If no other conclusion variable is underneath, we have answered our question. The user can come to a conclusion." << endl;
-  */
   i = 1;
  do{
-  //for(int i = 1; i <= CONCLUSION_LIST_SIZE && terminateFunction == false; i++){
-
-    //cout << "hit top of for loop" << endl;
     count = 0;
 
     // Search for the Conclusion
@@ -287,22 +273,18 @@ void diagnosis(){
     log_File << "The Conclusion has not been solved yet, searching for an instance now..." << endl;
     index = searchConclusionList(conclusion, conclusion_Counter);
     conclusion_Counter = index + 1;
-    //cout << "Conclusion List Index: " << index << endl;
-    //cout << "Conclusion Counter: " << conclusion_Counter << endl;
     
     if(index != 0){   // We found the item in the conclusionList
-      conclusionStack.push(conclusionList[index]);    // Step 2 Done?
+      conclusionStack.push(conclusionList[index]);    // Step 2 Done
       log_File << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
     }
     else{
-      //cout << "The conclusion '" << conclusion << "' could not be found in the current element of the conclusion list." << endl;
+      cout << "No instances of the conclusion were found in the list. Assuming a non-diagnosis status." << endl;
+      log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
+      terminateFunction = true;
+      finalDiagnosis = conclusionList[4];   // Can't Diagnose Conclusion
     }
-
-/*
-    if(conclusionStack.empty() == false){
-        i = conclusionStack.top().clauseNumber;   // Go to top of the stack
-    }
-*/
+  
   bool entered = false;
 do{
   entered = false;
@@ -313,11 +295,6 @@ do{
         }
     // Step 3
     do{
-        
-        //cout << "i: " << i << endl;
-        //cout << "i + count: " << i + count << endl;
-        //cout << "Clause Variable: " << clauseVariableList[i + count] << endl;
-
         if (clauseVariableList[i + count] != "")
         {
           
@@ -357,17 +334,6 @@ do{
     {
       terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
     }
-    
-    
-    /*
-    while(!conclusionStack.empty() && !terminateFunction){
-      cout << "Hit!" << endl;
-      terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
-    }
-    */
-    
-    
-  //}
   
  }while(!terminateFunction);
 
@@ -497,7 +463,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 1:
     if(variableList[1].experiencing == false)
     {
-      log_File << endl << conclusionList[1].name << " set to TRUE!" << endl; 
+      //log_File << endl << conclusionList[1].name << " set to TRUE!" << endl; 
       terminateDiagnosisAlgorithm = true;
       finalDiagnosis = conclusionList[1];
     }
@@ -506,7 +472,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 2:
     if(variableList[1].experiencing == true)
     {
-      log_File << endl << conclusionList[2].name << " set to TRUE!" << endl; 
+      //log_File << endl << conclusionList[2].name << " set to TRUE!" << endl; 
       conclusionList[2].value = true;
     }
     break;
@@ -514,7 +480,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 3:
     if(conclusionList[2].value == true && variableList[2].experiencing == false)
     {
-      log_File << endl << conclusionList[3].name << " set to TRUE!" << endl; 
+      //log_File << endl << conclusionList[3].name << " set to TRUE!" << endl; 
       conclusionList[3].value = true;
     }
     break;
@@ -522,7 +488,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 4: 
     if(conclusionList[3].value == true && variableList[3].experiencing == false)
     {
-      log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
+      //log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
       terminateDiagnosisAlgorithm = true;
       finalDiagnosis = conclusionList[4];
     }
@@ -531,7 +497,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 5:
   if(variableList[3].experiencing == true && conclusionList[3].value == true)
   {
-    log_File << endl << conclusionList[5].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[5].name << " set to TRUE!" << endl; 
     conclusionList[5].value = true;
   }
   break;
@@ -539,7 +505,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 6:
   if(conclusionList[5].value == true && variableList[4].experiencing == true)
   {
-    log_File << endl << conclusionList[6].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[6].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     conclusionList[6].value = true;
     finalDiagnosis = conclusionList[6];
@@ -549,7 +515,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 7: 
   if(conclusionList[3].value == true && variableList[5].age < 51 && variableList[4].experiencing == false)
   {
-    log_File << endl << conclusionList[7].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[7].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     conclusionList[7].value = true;
     finalDiagnosis = conclusionList[7];
@@ -559,7 +525,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 8:
   if(conclusionList[3].value == true && variableList[5].age >= 51 && variableList[5].age < 61 && variableList[4].experiencing == false)
   {
-    log_File << endl << conclusionList[8].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[8].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     conclusionList[8].value = true;
     finalDiagnosis = conclusionList[8];
@@ -569,7 +535,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 9: 
   if(conclusionList[3].value == true && variableList[5].age > 61 && variableList[4].experiencing == false)
   {
-    log_File << endl << conclusionList[9].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[9].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     conclusionList[9].value = true;
     finalDiagnosis = conclusionList[9];
@@ -579,7 +545,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 10:
   if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == false)
   {
-    log_File << endl << conclusionList[10].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[10].name << " set to TRUE!" << endl; 
     conclusionList[10].value = true;
   }
   break;
@@ -587,7 +553,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 11:
   if(conclusionList[10].value == true && variableList[7].experiencing == false)
   {
-    log_File << endl << conclusionList[11].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[11].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     conclusionList[11].value = true;
     finalDiagnosis = conclusionList[11];
@@ -597,7 +563,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 12:
   if(conclusionList[10].value == true && variableList[7].experiencing == true)
   {
-    log_File << endl << conclusionList[12].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[12].name << " set to TRUE!" << endl; 
     conclusionList[12].value = true;
   }
   break;
@@ -605,7 +571,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 13:
   if(conclusionList[12].value == true && variableList[8].experiencing == true)
   {
-    log_File << endl << conclusionList[13].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[13].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     conclusionList[13].value = true;
     finalDiagnosis = conclusionList[13];
@@ -615,7 +581,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 14:
   if(conclusionList[12].value == true && variableList[8].experiencing == false)
   {
-    log_File << endl << conclusionList[14].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[14].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     conclusionList[14].value = true;
     finalDiagnosis = conclusionList[14];
@@ -625,7 +591,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 15:
   if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[9].experiencing == false)
   {
-    log_File << endl << conclusionList[15].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[15].name << " set to TRUE!" << endl; 
     conclusionList[15].value = true;
   }
   break;
@@ -633,7 +599,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 16:
   if(conclusionList[15].value == true && variableList[10].experiencing == false)
   {
-    log_File << endl << conclusionList[16].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[16].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[16];
   }
@@ -642,7 +608,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 17:
   if(conclusionList[15].value == true && variableList[10].experiencing == true)
   {
-    log_File << endl << conclusionList[17].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[17].name << " set to TRUE!" << endl; 
     conclusionList[17].value = true;
   }
   break;
@@ -650,7 +616,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 18:
   if(conclusionList[17].value == true && variableList[11].experiencing == false)
   {
-    log_File << endl << conclusionList[18].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[18].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[18];
   }
@@ -659,7 +625,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 19:
   if(conclusionList[17].value == true && variableList[11].experiencing == true && variableList[12].experiencing == false)
   {
-    log_File << endl << conclusionList[19].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[19].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[19];
   }
@@ -668,7 +634,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 20:
   if(conclusionList[17].value == true && variableList[11].experiencing == true && variableList[12].experiencing == true)
   {
-    log_File << endl << conclusionList[20].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[20].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[20];
   }
@@ -677,7 +643,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 21:
   if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == false)
   {
-    log_File << endl << conclusionList[21].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[21].name << " set to TRUE!" << endl; 
     conclusionList[21].value = true;
   }
   break;
@@ -685,7 +651,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 22:
   if(conclusionList[21].value == true && variableList[14].experiencing == false)
   {
-    log_File << endl << conclusionList[22].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[22].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[22];
   }
@@ -694,7 +660,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 23:
   if(conclusionList[21].value == true && variableList[14].experiencing == true)
   {
-    log_File << endl << conclusionList[23].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[23].name << " set to TRUE!" << endl; 
     conclusionList[23].value = true;
   }
   break;
@@ -702,7 +668,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 24:
   if(conclusionList[23].value == true && variableList[15].experiencing == true)
   {
-    log_File << endl << conclusionList[24].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[24].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[24];
   }
@@ -711,7 +677,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 25:
   if(conclusionList[23].value == true && variableList[15].experiencing == false && variableList[16].experiencing == true)
   {
-    log_File << endl << conclusionList[25].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[25].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[25];
   }
@@ -720,7 +686,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 26:
   if(conclusionList[23].value == true && variableList[15].experiencing == false && variableList[16].experiencing == false)
   {
-    log_File << endl << conclusionList[26].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[26].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[26];
   }
@@ -729,7 +695,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 27:
   if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == true && variableList[17].experiencing == false)
   {
-    log_File << endl << conclusionList[27].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[27].name << " set to TRUE!" << endl; 
     conclusionList[27].value = true;
   }
   break;
@@ -737,7 +703,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 28:
   if(conclusionList[27].value == true && variableList[18].experiencing == false)
   {
-    log_File << endl << conclusionList[28].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[28].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[28];
   }
@@ -746,7 +712,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 29:
   if(conclusionList[27].value == true && variableList[18].experiencing == true)
   {
-    log_File << endl << conclusionList[29].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[29].name << " set to TRUE!" << endl; 
     conclusionList[29].value = true;
   }
   break;
@@ -754,7 +720,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 30:
   if(conclusionList[29].value == true && variableList[19].experiencing == true)
   {
-    log_File << endl << conclusionList[30].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[30].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[30];
   }
@@ -763,7 +729,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 31:
   if(conclusionList[29].value == true && variableList[19].experiencing == false && variableList[20].experiencing == false)
   {
-    log_File << endl << conclusionList[31].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[31].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[31];
   }
@@ -772,7 +738,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 32:
   if(conclusionList[29].value == true && variableList[19].experiencing == false && variableList[20].experiencing == true)
   {
-    log_File << endl << conclusionList[32].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[32].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[32];
   }
@@ -781,7 +747,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 33:
   if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == true && variableList[17].experiencing == true)
   {
-    log_File << endl << conclusionList[33].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[33].name << " set to TRUE!" << endl; 
     conclusionList[33].value = true;
   }
   break;
@@ -789,7 +755,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 34:
   if(conclusionList[33].value == true && variableList[21].experiencing == false)
   {
-    log_File << endl << conclusionList[34].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[34].name << " set to TRUE!" << endl; 
     conclusionList[34].value = true;
   }
   break;
@@ -797,7 +763,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 35:
   if(conclusionList[33].value == true && variableList[21].experiencing == true)
   {
-    log_File << endl << conclusionList[35].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[35].name << " set to TRUE!" << endl; 
     conclusionList[35].value = true;
   }
   break;
@@ -805,7 +771,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 36:
   if(conclusionList[35].value == true && variableList[22].experiencing == true)
   {
-    log_File << endl << conclusionList[36].name << " set to TRUE!" << endl; 
+    //log_File << endl << conclusionList[36].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[36];
   }
@@ -814,7 +780,7 @@ bool useKnowledgeBase(int ruleNumber){
   case 37:
   if(conclusionList[35].value == true && variableList[22].experiencing == false)
   {
-    log_File << endl << conclusionList[37].name << " set to TRUE!" << endl; 
+    // log_File << endl << conclusionList[37].name << " set to TRUE!" << endl; 
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = conclusionList[37];
   }
