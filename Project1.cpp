@@ -113,10 +113,10 @@ int main() {
   clauseVariableList[1] = "symptoms";
   // rule 2:
   clauseVariableList[7] = "symptoms";
-
+  // rule 3:
   clauseVariableList[13] = "pos_cancer";
   clauseVariableList[14] = "fat_weLo";    // We need to line these up
-
+  // rule 4:
   clauseVariableList[19] = "pos_thy_cancer";
   clauseVariableList[20] = "neLu_difBre_swNeGl";
   // rule 5:
@@ -344,10 +344,6 @@ do{
 
 }
 
-    
-  
-
-
 int searchConclusionList(string conc, int conclusion_Counter)
 {
   int index = 0;
@@ -419,7 +415,6 @@ void instantiate(string str)
     }
   }
 }
-
 
 void treatment(){
   cout << "Use Forward Chaining Here!" << endl;
