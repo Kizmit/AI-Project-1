@@ -2,6 +2,6 @@
 
 void Clause::init(string n, string p)
 {
-    name = n;  
-    print = p;
+  name = n;
+  print = p;
 }

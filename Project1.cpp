@@ -11,9 +11,9 @@
 
 using namespace std;
 
-Conclusion conclusionList[CONCLUSION_LIST_SIZE];
-Clause variableList[VARIABLE_LIST_SIZE];
-string clauseVariableList[CLAUSE_VAR_LIST_SIZE];
+Conclusion diagConcList[DIAG_CONC_LIST_SIZE];
+Clause diagVarList[DIAG_VAR_LIST_SIZE];
+string diagClauseVarList[DIAG_CLAUSE_VAR_LIST_SIZE];
 stack<Conclusion> conclusionStack;
 stack<Clause> clauseStack;
 stack<string> TBIVariableStack;
@@ -21,7 +21,6 @@ stack<string> TBIVariableStack;
 // Logging
 ofstream log_File;
 
-// TODO: define these functions below main (return types are just placeholder, change if needed)
 void printWelcomeMessage();
 void diagnosis();
 void treatment();
@@ -31,9 +30,10 @@ void instantiate(string);
 void testPrintLists();
 bool useKnowledgeBase(int);
 
-Conclusion finalDiagnosis;    // This will hold the result of our diagnosis functions.
+Conclusion finalDiagnosis; // This will hold the result of our diagnosis functions.
 
-int main() {
+int main()
+{
   // Gather the Patient ID and set up the logging information
   string patientID;
   cout << "Enter in the ID# for the patient: ";
@@ -41,213 +41,217 @@ int main() {
 
   // Create Log File
   string logName = "Project1_LOG_ID#" + patientID + ".txt";
-  
+
   log_File.open(logName);
 
-  log_File << "Patient #: " << patientID << endl << endl << endl;
+  log_File << "Patient #: " << patientID << endl
+           << endl
+           << endl;
 
   // populating the conclusion list:
-  conclusionList[1].init("cancer", "NONE", 1);
-  conclusionList[2].init("pos_cancer", "SUB", 2);
-  conclusionList[3].init("pos_thy_cancer", "SUB", 3);
-  conclusionList[4].init("cancer", "CAN'T DIAGNOSE", 4);
-  conclusionList[5].init("thy_cancer", "SUB", 5);
-  conclusionList[6].init("cancer", "MEDULLARY THYROID CANCER", 6);
-  conclusionList[7].init("cancer", "PAPILLARY THYROID CANCER", 7);
-  conclusionList[8].init("cancer", "FOLLICULAR THYROID CANCER", 8);
-  conclusionList[9].init("cancer", "ANAPLASTIC THYROID CANCER", 9);
-  conclusionList[10].init("pos_bla_cancer", "SUB", 10);
-  conclusionList[11].init("cancer", "CAN'T DIAGNOSE", 11);
-  conclusionList[12].init("bla_cancer", "SUB", 12);
-  conclusionList[13].init("cancer", "SQUAMOUS CELL CARCINOMA", 13);
-  conclusionList[14].init("cancer", "UROTHELIAL CARCINOMA", 14);
-  conclusionList[15].init("pos_lung_cancer", "SUB", 15);
-  conclusionList[16].init("cancer", "CAN'T DIAGNOSE", 16);
-  conclusionList[17].init("lung_cancer", "SUB", 17);
-  conclusionList[18].init("cancer", "NON-SMALL CELL LUNG CANCER", 18);
-  conclusionList[19].init("cancer", "NON-SMALL CELL LUNG CANCER", 19);
-  conclusionList[20].init("cancer", "SMALL CELL LUNG CANCER", 20);
-  conclusionList[21].init("pos_kid_cancer", "SUB", 21);
-  conclusionList[22].init("cancer", "CAN'T DIAGNOSE", 22);
-  conclusionList[23].init("kid_cancer", "SUB", 23);
-  conclusionList[24].init("cancer", "RENAL CELL CARCINOMA", 24);
-  conclusionList[25].init("cancer", "UROTHELIAL CARCINOMA", 25);
-  conclusionList[26].init("cancer", "SARCOMA OF THE KIDNEY", 26);
-  conclusionList[27].init("pos_liver_cancer", "SUB", 27);
-  conclusionList[28].init("cancer", "CAN'T DIAGNOSE", 28);
-  conclusionList[29].init("liver_cancer", "LIVER CANCER", 29);
-  conclusionList[30].init("cancer", "HEPATOCELLULAR CARCINOMA", 30);
-  conclusionList[31].init("cancer", "ANGIOSARCOMA", 31);
-  conclusionList[32].init("cancer", "CHOLANGIOCARCINOMA", 32);
-  conclusionList[33].init("panc_cancer", "SUB", 33);
-  conclusionList[34].init("cancer", "PANCREATIC NEUROENDOCRINE TUMOR", 34);
-  conclusionList[35].init("panc_exo_tumor", "SUB", 35);
-  conclusionList[36].init("cancer", "DUCTAL ADENOCARCINOMA", 36);
-  conclusionList[37].init("cancer", "ACINAR ADENOCARCINOMA", 37);
+  diagConcList[1].init("cancer", "NONE", 1);
+  diagConcList[2].init("pos_cancer", "SUB", 2);
+  diagConcList[3].init("pos_thy_cancer", "SUB", 3);
+  diagConcList[4].init("cancer", "CAN'T DIAGNOSE", 4);
+  diagConcList[5].init("thy_cancer", "SUB", 5);
+  diagConcList[6].init("cancer", "MEDULLARY THYROID CANCER", 6);
+  diagConcList[7].init("cancer", "PAPILLARY THYROID CANCER", 7);
+  diagConcList[8].init("cancer", "FOLLICULAR THYROID CANCER", 8);
+  diagConcList[9].init("cancer", "ANAPLASTIC THYROID CANCER", 9);
+  diagConcList[10].init("pos_bla_cancer", "SUB", 10);
+  diagConcList[11].init("cancer", "CAN'T DIAGNOSE", 11);
+  diagConcList[12].init("bla_cancer", "SUB", 12);
+  diagConcList[13].init("cancer", "SQUAMOUS CELL CARCINOMA", 13);
+  diagConcList[14].init("cancer", "UROTHELIAL CARCINOMA", 14);
+  diagConcList[15].init("pos_lung_cancer", "SUB", 15);
+  diagConcList[16].init("cancer", "CAN'T DIAGNOSE", 16);
+  diagConcList[17].init("lung_cancer", "SUB", 17);
+  diagConcList[18].init("cancer", "NON-SMALL CELL LUNG CANCER", 18);
+  diagConcList[19].init("cancer", "NON-SMALL CELL LUNG CANCER", 19);
+  diagConcList[20].init("cancer", "SMALL CELL LUNG CANCER", 20);
+  diagConcList[21].init("pos_kid_cancer", "SUB", 21);
+  diagConcList[22].init("cancer", "CAN'T DIAGNOSE", 22);
+  diagConcList[23].init("kid_cancer", "SUB", 23);
+  diagConcList[24].init("cancer", "RENAL CELL CARCINOMA", 24);
+  diagConcList[25].init("cancer", "UROTHELIAL CARCINOMA", 25);
+  diagConcList[26].init("cancer", "SARCOMA OF THE KIDNEY", 26);
+  diagConcList[27].init("pos_liver_cancer", "SUB", 27);
+  diagConcList[28].init("cancer", "CAN'T DIAGNOSE", 28);
+  diagConcList[29].init("liver_cancer", "LIVER CANCER", 29);
+  diagConcList[30].init("cancer", "HEPATOCELLULAR CARCINOMA", 30);
+  diagConcList[31].init("cancer", "ANGIOSARCOMA", 31);
+  diagConcList[32].init("cancer", "CHOLANGIOCARCINOMA", 32);
+  diagConcList[33].init("panc_cancer", "SUB", 33);
+  diagConcList[34].init("cancer", "PANCREATIC NEUROENDOCRINE TUMOR", 34);
+  diagConcList[35].init("panc_exo_tumor", "SUB", 35);
+  diagConcList[36].init("cancer", "DUCTAL ADENOCARCINOMA", 36);
+  diagConcList[37].init("cancer", "ACINAR ADENOCARCINOMA", 37);
 
   // populating the variable list:
-  variableList[1].init("symptoms", "any symptoms");
-  variableList[2].init("fat_weLo", "fatigue or weight loss");
-  variableList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
-  variableList[4].init("high_calc", "high calcitonin levels");
-  variableList[5].init("age", "AGE");           // Different use case for instantiation(). .> See Function Below. (Taking integer input, not setting boolean.   variableList[5].age = userInput. )
-  variableList[6].init("loss_app", "loss of appetite");
-  variableList[7].init("fr_di_paUr", "frequent, difficult, or painful urination");
-  variableList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term catheter use");
-  variableList[9].init("pers_fever", "persistent fever");
-  variableList[10].init("shBr_chPa_coBl", "shortness of breath, chest pain, or coughing up blood");
-  variableList[11].init("hiSm_seHaSmEx", "history of smoking or second-hand smoking exposure");
-  variableList[12].init("ra_as_urEx", "radon, asbestos, or uranium exposure");
-  variableList[13].init("ja_na_ab_shPa", "jaundice, nausea, or abdominal or shoulder pain");
-  variableList[14].init("CVA_an", "CVA mass or anemia");
-  variableList[15].init("tubules", "cancer cells originated tubules");
-  variableList[16].init("renal_pelvis", "cancer cells originated in renal pelvis");
-  variableList[17].init("sw_ch_buSt_bl", "sweats, chills, burning stomach, or bloating");
-  variableList[18].init("enLi_sp_it_feFuEa", "enlarged liver or spleen, itching, or feeling full easily");
-  variableList[19].init("grInLi", "tentacle or nodule growth in liver");
-  variableList[20].init("bile_duct", "cancer cells originated in bile duct");
-  variableList[21].init("exocrine_component", "cancer cells originated in exocrine component of the pancreas");
-  variableList[22].init("ducts", "cancer cells originated in ducts of the pancreas");
-  
+  diagVarList[1].init("symptoms", "any symptoms");
+  diagVarList[2].init("fat_weLo", "fatigue or weight loss");
+  diagVarList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
+  diagVarList[4].init("high_calc", "high calcitonin levels");
+  diagVarList[5].init("age", "AGE"); // Different use case for instantiation(). .> See Function Below. (Taking integer input, not setting boolean.   diagVarList[5].age = userInput. )
+  diagVarList[6].init("loss_app", "loss of appetite");
+  diagVarList[7].init("fr_di_paUr", "frequent, difficult, or painful urination");
+  diagVarList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term catheter use");
+  diagVarList[9].init("pers_fever", "persistent fever");
+  diagVarList[10].init("shBr_chPa_coBl", "shortness of breath, chest pain, or coughing up blood");
+  diagVarList[11].init("hiSm_seHaSmEx", "history of smoking or second-hand smoking exposure");
+  diagVarList[12].init("ra_as_urEx", "radon, asbestos, or uranium exposure");
+  diagVarList[13].init("ja_na_ab_shPa", "jaundice, nausea, or abdominal or shoulder pain");
+  diagVarList[14].init("CVA_an", "CVA mass or anemia");
+  diagVarList[15].init("tubules", "cancer cells originated tubules");
+  diagVarList[16].init("renal_pelvis", "cancer cells originated in renal pelvis");
+  diagVarList[17].init("sw_ch_buSt_bl", "sweats, chills, burning stomach, or bloating");
+  diagVarList[18].init("enLi_sp_it_feFuEa", "enlarged liver or spleen, itching, or feeling full easily");
+  diagVarList[19].init("grInLi", "tentacle or nodule growth in liver");
+  diagVarList[20].init("bile_duct", "cancer cells originated in bile duct");
+  diagVarList[21].init("exocrine_component", "cancer cells originated in exocrine component of the pancreas");
+  diagVarList[22].init("ducts", "cancer cells originated in ducts of the pancreas");
+
   // populate the clause variable list:
   // rule 1:
-  clauseVariableList[1] = "symptoms";
+  diagClauseVarList[1] = "symptoms";
   // rule 2:
-  clauseVariableList[7] = "symptoms";
+  diagClauseVarList[7] = "symptoms";
   // rule 3:
-  clauseVariableList[13] = "pos_cancer";
-  clauseVariableList[14] = "fat_weLo";    // We need to line these up
+  diagClauseVarList[13] = "pos_cancer";
+  diagClauseVarList[14] = "fat_weLo";
   // rule 4:
-  clauseVariableList[19] = "pos_thy_cancer";
-  clauseVariableList[20] = "neLu_difBre_swNeGl";
+  diagClauseVarList[19] = "pos_thy_cancer";
+  diagClauseVarList[20] = "neLu_difBre_swNeGl";
   // rule 5:
-  clauseVariableList[25] = "neLu_difBre_swNeGl";
-  clauseVariableList[26] = "pos_thy_cancer";
+  diagClauseVarList[25] = "neLu_difBre_swNeGl";
+  diagClauseVarList[26] = "pos_thy_cancer";
   // rule 6:
-  clauseVariableList[31] = "thy_cancer";
-  clauseVariableList[32] = "high_calc";
+  diagClauseVarList[31] = "thy_cancer";
+  diagClauseVarList[32] = "high_calc";
   // rule 7:
-  clauseVariableList[37] = "thy_cancer";
-  clauseVariableList[38] = "age";
-  clauseVariableList[39] = "high_calc";
+  diagClauseVarList[37] = "thy_cancer";
+  diagClauseVarList[38] = "age";
+  diagClauseVarList[39] = "high_calc";
   // rule 8:
-  clauseVariableList[43] = "thy_cancer";
-  clauseVariableList[44] = "age";
-  clauseVariableList[45] = "high_calc";
+  diagClauseVarList[43] = "thy_cancer";
+  diagClauseVarList[44] = "age";
+  diagClauseVarList[45] = "high_calc";
   // rule 9:
-  clauseVariableList[49] = "thy_cancer";
-  clauseVariableList[50] = "age";
-  clauseVariableList[51] = "high_calc";
+  diagClauseVarList[49] = "thy_cancer";
+  diagClauseVarList[50] = "age";
+  diagClauseVarList[51] = "high_calc";
   // rule 10:
-  clauseVariableList[55] = "pos_cancer";
-  clauseVariableList[56] = "fat_weLo";
-  clauseVariableList[57] = "loss_app";
+  diagClauseVarList[55] = "pos_cancer";
+  diagClauseVarList[56] = "fat_weLo";
+  diagClauseVarList[57] = "loss_app";
   // rule 11:
-  clauseVariableList[61] = "pos_bla_cancer";
-  clauseVariableList[62] = "fr_di_paUr";
+  diagClauseVarList[61] = "pos_bla_cancer";
+  diagClauseVarList[62] = "fr_di_paUr";
   // rule 12:
-  clauseVariableList[67] = "fr_di_paUr";
-  clauseVariableList[68] = "pos_bla_cancer";
+  diagClauseVarList[67] = "fr_di_paUr";
+  diagClauseVarList[68] = "pos_bla_cancer";
   // rule 13:
-  clauseVariableList[73] = "bla_cancer";
-  clauseVariableList[74] = "hiBlIn_LoTeCaUs";
+  diagClauseVarList[73] = "bla_cancer";
+  diagClauseVarList[74] = "hiBlIn_LoTeCaUs";
   // rule 14:
-  clauseVariableList[79] = "bla_cancer";
-  clauseVariableList[80] = "hiBlIn_LoTeCaUs";
+  diagClauseVarList[79] = "bla_cancer";
+  diagClauseVarList[80] = "hiBlIn_LoTeCaUs";
   // rule 15:
-  clauseVariableList[85] = "pos_cancer";
-  clauseVariableList[86] = "fat_weLo";
-  clauseVariableList[87] = "loss_app";
-  clauseVariableList[88] = "pers_fever";
+  diagClauseVarList[85] = "pos_cancer";
+  diagClauseVarList[86] = "fat_weLo";
+  diagClauseVarList[87] = "loss_app";
+  diagClauseVarList[88] = "pers_fever";
   // rule 16:
-  clauseVariableList[91] = "pos_lung_cancer";
-  clauseVariableList[92] = "shBr_chPa_coBl";
+  diagClauseVarList[91] = "pos_lung_cancer";
+  diagClauseVarList[92] = "shBr_chPa_coBl";
   // rule 17:
-  clauseVariableList[97] = "shBr_chPa_coBl";
-  clauseVariableList[98] = "pos_lung_cancer";
+  diagClauseVarList[97] = "shBr_chPa_coBl";
+  diagClauseVarList[98] = "pos_lung_cancer";
   // rule 18:
-  clauseVariableList[103] = "lung_cancer";
-  clauseVariableList[104] = "hiSm_seHaSmEx";
+  diagClauseVarList[103] = "lung_cancer";
+  diagClauseVarList[104] = "hiSm_seHaSmEx";
   // rule 19:
-  clauseVariableList[109]	= "lung_cancer";
-  clauseVariableList[110]	= "hiSm_seHaSmEx";
-  clauseVariableList[111]	= "ra_as_urEx";
+  diagClauseVarList[109] = "lung_cancer";
+  diagClauseVarList[110] = "hiSm_seHaSmEx";
+  diagClauseVarList[111] = "ra_as_urEx";
   // rule 20:
-  clauseVariableList[115]	= "lung_cancer";
-  clauseVariableList[116]	= "hiSm_seHaSmEx";
-  clauseVariableList[117]	= "ra_as_urEx";
+  diagClauseVarList[115] = "lung_cancer";
+  diagClauseVarList[116] = "hiSm_seHaSmEx";
+  diagClauseVarList[117] = "ra_as_urEx";
   // rule 21:
-  clauseVariableList[121]	= "pos_cancer";
-  clauseVariableList[122]	= "fat_weLo";
-  clauseVariableList[123]	= "loss_app";
-  clauseVariableList[124]	= "pers_fever";
-  clauseVariableList[125]	= "ja_na_ab_shPa";
+  diagClauseVarList[121] = "pos_cancer";
+  diagClauseVarList[122] = "fat_weLo";
+  diagClauseVarList[123] = "loss_app";
+  diagClauseVarList[124] = "pers_fever";
+  diagClauseVarList[125] = "ja_na_ab_shPa";
   // rule 22:
-  clauseVariableList[127]	= "pos_kid_cancer";
-  clauseVariableList[128]	= "CVA_an";
+  diagClauseVarList[127] = "pos_kid_cancer";
+  diagClauseVarList[128] = "CVA_an";
   // rule 23:
-  clauseVariableList[133]	= "CVA_an";
-  clauseVariableList[134]	= "pos_kid_cancer";
+  diagClauseVarList[133] = "CVA_an";
+  diagClauseVarList[134] = "pos_kid_cancer";
   // rule 24:
-  clauseVariableList[139]	= "kid_cancer";
-  clauseVariableList[140]	= "tubules";
+  diagClauseVarList[139] = "kid_cancer";
+  diagClauseVarList[140] = "tubules";
   // rule 25:
-  clauseVariableList[145]	= "kid_cancer";
-  clauseVariableList[146]	= "tubules";
-  clauseVariableList[147]	= "renal_pelvis";
+  diagClauseVarList[145] = "kid_cancer";
+  diagClauseVarList[146] = "tubules";
+  diagClauseVarList[147] = "renal_pelvis";
   // rule 26:
-  clauseVariableList[151]	= "kid_cancer";
-  clauseVariableList[152]	= "tubules";
-  clauseVariableList[153]	= "renal_pelvis";
+  diagClauseVarList[151] = "kid_cancer";
+  diagClauseVarList[152] = "tubules";
+  diagClauseVarList[153] = "renal_pelvis";
   // rule 27:
-  clauseVariableList[157]	= "pos_cancer";
-  clauseVariableList[158]	= "fat_weLo";
-  clauseVariableList[159]	= "loss_app";
-  clauseVariableList[160]	= "pers_fever";
-  clauseVariableList[161]	= "ja_na_ab_shPa";
-  clauseVariableList[162]	= "sw_ch_buSt_bl";
+  diagClauseVarList[157] = "pos_cancer";
+  diagClauseVarList[158] = "fat_weLo";
+  diagClauseVarList[159] = "loss_app";
+  diagClauseVarList[160] = "pers_fever";
+  diagClauseVarList[161] = "ja_na_ab_shPa";
+  diagClauseVarList[162] = "sw_ch_buSt_bl";
   // rule 28:
-  clauseVariableList[163]	= "pos_liver_cancer";
-  clauseVariableList[164]	= "enLi_sp_it_feFuEa";
+  diagClauseVarList[163] = "pos_liver_cancer";
+  diagClauseVarList[164] = "enLi_sp_it_feFuEa";
   // rule 29:
-  clauseVariableList[169]	= "pos_liver_cancer";
-  clauseVariableList[170]	= "enLi_sp_it_feFuEa";
+  diagClauseVarList[169] = "pos_liver_cancer";
+  diagClauseVarList[170] = "enLi_sp_it_feFuEa";
   // rule 30:
-  clauseVariableList[175]	= "liver_cancer";
-  clauseVariableList[176]	= "grInLi";
+  diagClauseVarList[175] = "liver_cancer";
+  diagClauseVarList[176] = "grInLi";
   // rule 31:
-  clauseVariableList[181]	= "liver_cancer";
-  clauseVariableList[182]	= "grInLi";
+  diagClauseVarList[181] = "liver_cancer";
+  diagClauseVarList[182] = "grInLi";
   // rule 32:
-  clauseVariableList[187]	= "liver_cancer";
-  clauseVariableList[188]	= "grInLi";
-  clauseVariableList[189]	= "bile_duct";
+  diagClauseVarList[187] = "liver_cancer";
+  diagClauseVarList[188] = "grInLi";
+  diagClauseVarList[189] = "bile_duct";
   // rule 33:
-  clauseVariableList[193]	= "pos_cancer";
-  clauseVariableList[194]	= "fat_weLo";
-  clauseVariableList[195]	= "loss_app";
-  clauseVariableList[196]	= "pers_fever";
-  clauseVariableList[197]	= "ja_na_ab_shPa";
-  clauseVariableList[198]	= "sw_ch_buSt_bl";
+  diagClauseVarList[193] = "pos_cancer";
+  diagClauseVarList[194] = "fat_weLo";
+  diagClauseVarList[195] = "loss_app";
+  diagClauseVarList[196] = "pers_fever";
+  diagClauseVarList[197] = "ja_na_ab_shPa";
+  diagClauseVarList[198] = "sw_ch_buSt_bl";
   // rule 34:
-  clauseVariableList[199]	= "panc_cancer";
-  clauseVariableList[200]	= "exocrine_component";
+  diagClauseVarList[199] = "panc_cancer";
+  diagClauseVarList[200] = "exocrine_component";
   // rule 35:
-  clauseVariableList[205]	= "panc_cancer";
-  clauseVariableList[206]	= "exocrine_component";
+  diagClauseVarList[205] = "panc_cancer";
+  diagClauseVarList[206] = "exocrine_component";
   // rule 36:
-  clauseVariableList[211]	= "panc_exo_tumor";
-  clauseVariableList[212]	= "ducts";
+  diagClauseVarList[211] = "panc_exo_tumor";
+  diagClauseVarList[212] = "ducts";
   // rule 37:
-  clauseVariableList[217]	= "panc_exo_tumor";
-  clauseVariableList[218]	= "ducts";
+  diagClauseVarList[217] = "panc_exo_tumor";
+  diagClauseVarList[218] = "ducts";
 
   // testPrintLists();
 
   printWelcomeMessage();
- 
-  cout << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
-  log_File << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
+
+  cout << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl
+       << endl;
+  log_File << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl
+           << endl;
   diagnosis();
 
   //cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
@@ -260,115 +264,126 @@ int main() {
   return 0;
 }
 
-void diagnosis(){
-  int conclusion_Counter = 1;  // Keep track of how far the conclusionList has been traversed. We need to advance in our search.
-  string conclusion = "cancer";  // Identify the conclusion
+void diagnosis()
+{
+  int conclusion_Counter = 1;   // Keep track of how far the diagConcList has been traversed. We need to advance in our search.
+  string conclusion = "cancer"; // Identify the conclusion
   int index, count, i;
-  bool terminateFunction = false;    // Will be set to true by knowledge base if we hit a terminating conclusion.
+  bool terminateFunction = false; // Will be set to true by knowledge base if we hit a terminating conclusion.
   i = 1;
- do{
+  do
+  {
     count = 0;
 
     // Search for the Conclusion
-    
+
     log_File << "The Conclusion has not been solved yet, searching for an instance now..." << endl;
     index = searchConclusionList(conclusion, conclusion_Counter);
     conclusion_Counter = index + 1;
-    
-    if(index != 0){   // We found the item in the conclusionList
-      conclusionStack.push(conclusionList[index]);    // Step 2 Done
+
+    if (index != 0)
+    {                                              // We found the item in the diagConcList
+      conclusionStack.push(diagConcList[index]); // Step 2 Done
       log_File << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
     }
-    else{
+    else
+    {
       cout << "No instances of the conclusion were found in the list. Assuming a non-diagnosis status." << endl;
-      log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
+      log_File << endl
+               << diagConcList[4].name << " set to TRUE!" << endl;
       terminateFunction = true;
-      finalDiagnosis = conclusionList[4];   // Can't Diagnose Conclusion
+      finalDiagnosis = diagConcList[4]; // Can't Diagnose Conclusion
     }
-  
-  bool entered = false;
-do{
-  entered = false;
-  count = 0;
 
-   if(conclusionStack.empty() == false){
-          i = conclusionStack.top().clauseNumber;   // Go to top of the stack
-        }
-    // Step 3
-    do{
-        if (clauseVariableList[i + count] != "")
+    bool entered = false;
+    do
+    {
+      entered = false;
+      count = 0;
+
+      if (conclusionStack.empty() == false)
+      {
+        i = conclusionStack.top().clauseNumber; // Go to top of the stack
+      }
+      // Step 3
+      do
+      {
+        if (diagClauseVarList[i + count] != "")
         {
-          
-          int varIndex = searchVariableList(clauseVariableList[i + count]);    // Index now holds the location of the corresponding symptom in variableList
-          if (varIndex != 0)   // Found the item in varaible list
+
+          int varIndex = searchVariableList(diagClauseVarList[i + count]); // Index now holds the location of the corresponding symptom in diagVarList
+          if (varIndex != 0)                                                // Found the item in varaible list
           {
-            log_File << "The variable '" << variableList[varIndex].name << "' was found in element " << index << " of the variable list." << endl;
-            if(variableList[varIndex].markedForInstantiation == true)
+            log_File << "The variable '" << diagVarList[varIndex].name << "' was found in element " << index << " of the variable list." << endl;
+            if (diagVarList[varIndex].markedForInstantiation == true)
             {
-              log_File << "The Variable has not been assigned a value yet. Adding to TBIVarStack: " << variableList[varIndex].name << endl;
-              TBIVariableStack.push(variableList[varIndex].name);
-              variableList[varIndex].markedForInstantiation = false;
+              log_File << "The Variable has not been assigned a value yet. Adding to TBIVarStack: " << diagVarList[varIndex].name << endl;
+              TBIVariableStack.push(diagVarList[varIndex].name);
+              diagVarList[varIndex].markedForInstantiation = false;
               entered = true;
-              /*log_File << "The Variable has not been assigned a value yet. Now instantiating the variable: " << variableList[varIndex].name << endl;
-              instantiate(variableList[varIndex].name);    // Step 3 and 4 Done?
+              /*log_File << "The Variable has not been assigned a value yet. Now instantiating the variable: " << diagVarList[varIndex].name << endl;
+              instantiate(diagVarList[varIndex].name);    // Step 3 and 4 Done?
               entered = true;*/
-              
             }
           }
-          else    // The Item was not on the varaiable list. So it must be a conclusion variable. Handle it!
+          else // The Item was not on the varaiable list. So it must be a conclusion variable. Handle it!
           {
-              int clauseIndex = searchConclusionList(clauseVariableList[i + count], 1);   // Send 1 to start at the beginning of the list. Index will hold the location of the conclusion in conclusion list.
-              if(clauseIndex != 0){   // We found the item in the conclusionList. So now we need to push it to the stack.
-                conclusionStack.push(conclusionList[clauseIndex]);  
-                log_File << "Pushing " << conclusionList[clauseIndex].name << " on to the stack!" << endl;
-                entered = true;
-              }
-              else{
-                continue; // We did not find the conclusion in the conclusion list.
-              }
+            int clauseIndex = searchConclusionList(diagClauseVarList[i + count], 1); // Send 1 to start at the beginning of the list. Index will hold the location of the conclusion in conclusion list.
+            if (clauseIndex != 0)
+            { // We found the item in the diagConcList. So now we need to push it to the stack.
+              conclusionStack.push(diagConcList[clauseIndex]);
+              log_File << "Pushing " << diagConcList[clauseIndex].name << " on to the stack!" << endl;
+              entered = true;
+            }
+            else
+            {
+              continue; // We did not find the conclusion in the conclusion list.
+            }
           }
         }
-        // i++;
         count++;
-    }while(clauseVariableList[i + count] != "" && count < 6);
-    
-    
+      } while (diagClauseVarList[i + count] != "" && count < 6);
 
-    }while(!conclusionStack.empty() && entered == true);
-    
-    while(!TBIVariableStack.empty()){ //Instantiate the necessary variables to come to a conclusion
-        instantiate(TBIVariableStack.top());
-        TBIVariableStack.pop();
-        } 
-    
-    while(!conclusionStack.empty() && !terminateFunction)
+    } while (!conclusionStack.empty() && entered == true);
+
+    while (!TBIVariableStack.empty())
+    { //Instantiate the necessary variables to come to a conclusion
+      instantiate(TBIVariableStack.top());
+      TBIVariableStack.pop();
+    }
+
+    while (!conclusionStack.empty() && !terminateFunction)
     {
-      
       terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
     }
-  
- }while(!terminateFunction);
 
- if(terminateFunction == true){
-    cout << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
-    log_File << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
+  } while (!terminateFunction);
+
+  if (terminateFunction == true)
+  {
+    cout << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl
+         << endl
+         << endl;
+    log_File << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl
+             << endl
+             << endl;
   }
-
 }
 
 int searchConclusionList(string conc, int conclusion_Counter)
 {
   int index = 0;
-  for(int i = conclusion_Counter; i <= CONCLUSION_LIST_SIZE - 1; i++)
+  for (int i = conclusion_Counter; i <= DIAG_CONC_LIST_SIZE - 1; i++)
   {
     // log_File << "Searching conclusion list index " << i << " for '" << conc << "' " << endl;
-    if(conc == conclusionList[i].name) 
+    if (conc == diagConcList[i].name)
     {
       index = i;
       log_File << "***\nConclusion Found!" << endl;
       return index;
     }
-    else{
+    else
+    {
       // cout << "The conclusion '" << conc << "' was not found in this element." << endl << endl;
     };
     index++;
@@ -379,16 +394,17 @@ int searchConclusionList(string conc, int conclusion_Counter)
 int searchVariableList(string clauseVariable)
 {
   int index = 0;
-  for(int i = 1; i <= VARIABLE_LIST_SIZE - 1; i++)
+  for (int i = 1; i <= DIAG_VAR_LIST_SIZE - 1; i++)
   {
     // log_File << "Searching variable list index " << i << " for '" << clauseVariable << "' " << endl;
-    if(clauseVariable == variableList[i].name)    
+    if (clauseVariable == diagVarList[i].name)
     {
       log_File << "***\nVariable Found!" << endl;
       index = i;
       return index;
     }
-    else{
+    else
+    {
       // log_File << "ERROR! The variable '" << clauseVariable << "' was not found in element " << i << "." << endl;
       continue;
     };
@@ -400,67 +416,73 @@ void instantiate(string str)
 {
   string answer;
   int ageInput;
-  for(int i = 1; i <= VARIABLE_LIST_SIZE - 1; i++)
+  for (int i = 1; i <= DIAG_VAR_LIST_SIZE - 1; i++)
   {
-    if (variableList[i].name == str && !variableList[i].instantiated)
+    if (diagVarList[i].name == str && !diagVarList[i].instantiated)
     {
-      if(variableList[i].name != "age"){                      // Everything but age, meaning we are setting a boolean.
-        variableList[i].instantiated = true;
-        cout << "Do you have " << variableList[i].print << ": ";
+      if (diagVarList[i].name != "age")
+      { // Everything but age, meaning we are setting a boolean.
+        diagVarList[i].instantiated = true;
+        cout << "Do you have " << diagVarList[i].print << ": ";
         cin >> (answer);
         if (answer == "yes" || answer == "YES" || answer == "Yes")
         {
-          variableList[i].experiencing = true;
-          log_File << variableList[i].print << " set to TRUE" << endl;
+          diagVarList[i].experiencing = true;
+          log_File << diagVarList[i].print << " set to TRUE" << endl;
         }
         break;
       }
-      else{         // The Variable we are trying to instantiate is for the age. So...we need to handle it as an integer.
-        variableList[i].instantiated = true;
+      else
+      { // The Variable we are trying to instantiate is for the age. So...we need to handle it as an integer.
+        diagVarList[i].instantiated = true;
         cout << "Enter in your age: ";
         cin >> ageInput;
-        variableList[i].age = ageInput;
-        log_File << "Patient age was set to " << variableList[i].age << endl;
+        diagVarList[i].age = ageInput;
+        log_File << "Patient age was set to " << diagVarList[i].age << endl;
         break;
       }
-      
     }
   }
 }
 
-void treatment(){
-  cout << "Use Forward Chaining Here!" << endl;
+void treatment()
+{
+  
 }
 
 void testPrintLists()
 {
   cout << "--- Variable List --- " << endl;
-  for(int i = 1; i < VARIABLE_LIST_SIZE; i++){    
-    cout << i << " Name: " << variableList[i].name << endl;
-    cout << i << " Print Name: " << variableList[i].print << endl;
-    cout << i << " Instantiated: (0 = False, 1 = True) " << variableList[i].instantiated << endl;
-    cout << i << " Experiencing: (0 = False, 1 = True) " << variableList[i].experiencing << endl;
+  for (int i = 1; i < DIAG_VAR_LIST_SIZE; i++)
+  {
+    cout << i << " Name: " << diagVarList[i].name << endl;
+    cout << i << " Print Name: " << diagVarList[i].print << endl;
+    cout << i << " Instantiated: (0 = False, 1 = True) " << diagVarList[i].instantiated << endl;
+    cout << i << " Experiencing: (0 = False, 1 = True) " << diagVarList[i].experiencing << endl;
   }
   cout << endl;
   cout << "--- Conclusion List ---" << endl;
-  for(int i = 1; i < CONCLUSION_LIST_SIZE; i++){    
-    cout << i << " Name: " << conclusionList[i].name << endl;
-    cout << i << " Final Conclusion: " << conclusionList[i].finalConclusion << endl;
-    cout << i << " Rule Number: " << conclusionList[i].ruleNumber << endl;
+  for (int i = 1; i < DIAG_CONC_LIST_SIZE; i++)
+  {
+    cout << i << " Name: " << diagConcList[i].name << endl;
+    cout << i << " Final Conclusion: " << diagConcList[i].finalConclusion << endl;
+    cout << i << " Rule Number: " << diagConcList[i].ruleNumber << endl;
   }
   cout << endl;
   cout << "--- Clause Variable List ---" << endl;
-  for(int i = 1; i < CLAUSE_VAR_LIST_SIZE; i++){    
-    cout << "Variable at location " << i << ": " << clauseVariableList[i] << endl;
+  for (int i = 1; i < DIAG_CLAUSE_VAR_LIST_SIZE; i++)
+  {
+    cout << "Variable at location " << i << ": " << diagClauseVarList[i] << endl;
   }
 
-  cout << endl << endl;
-  
+  cout << endl
+       << endl;
 }
 
-bool useKnowledgeBase(int ruleNumber){
+bool useKnowledgeBase(int ruleNumber)
+{
   bool terminateDiagnosisAlgorithm = false;
-  
+
   log_File << "Accessing Knowledge Base with Rule Number: " << ruleNumber << endl;
 
   // Create a switch statement and all of the if then statements with the cases. Reference example.
@@ -468,347 +490,347 @@ bool useKnowledgeBase(int ruleNumber){
   switch (ruleNumber)
   {
   case 1:
-    if(variableList[1].experiencing == false)
+    if (diagVarList[1].experiencing == false)
     {
-      //log_File << endl << conclusionList[1].name << " set to TRUE!" << endl; 
+      //log_File << endl << diagConcList[1].name << " set to TRUE!" << endl;
       terminateDiagnosisAlgorithm = true;
-      finalDiagnosis = conclusionList[1];
+      finalDiagnosis = diagConcList[1];
     }
     break;
-  
+
   case 2:
-    if(variableList[1].experiencing == true)
+    if (diagVarList[1].experiencing == true)
     {
-      //log_File << endl << conclusionList[2].name << " set to TRUE!" << endl; 
-      conclusionList[2].value = true;
+      //log_File << endl << diagConcList[2].name << " set to TRUE!" << endl;
+      diagConcList[2].value = true;
     }
     break;
-  
+
   case 3:
-    if(conclusionList[2].value == true && variableList[2].experiencing == false)
+    if (diagConcList[2].value == true && diagVarList[2].experiencing == false)
     {
-      //log_File << endl << conclusionList[3].name << " set to TRUE!" << endl; 
-      conclusionList[3].value = true;
+      //log_File << endl << diagConcList[3].name << " set to TRUE!" << endl;
+      diagConcList[3].value = true;
     }
     break;
-  
-  case 4: 
-    if(conclusionList[3].value == true && variableList[3].experiencing == false)
+
+  case 4:
+    if (diagConcList[3].value == true && diagVarList[3].experiencing == false)
     {
-      //log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
+      //log_File << endl << diagConcList[4].name << " set to TRUE!" << endl;
       terminateDiagnosisAlgorithm = true;
-      finalDiagnosis = conclusionList[4];
+      finalDiagnosis = diagConcList[4];
     }
     break;
-  
+
   case 5:
-  if(variableList[3].experiencing == true && conclusionList[3].value == true)
-  {
-    //log_File << endl << conclusionList[5].name << " set to TRUE!" << endl; 
-    conclusionList[5].value = true;
-  }
-  break;
+    if (diagVarList[3].experiencing == true && diagConcList[3].value == true)
+    {
+      //log_File << endl << diagConcList[5].name << " set to TRUE!" << endl;
+      diagConcList[5].value = true;
+    }
+    break;
 
   case 6:
-  if(conclusionList[5].value == true && variableList[4].experiencing == true)
-  {
-    //log_File << endl << conclusionList[6].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    conclusionList[6].value = true;
-    finalDiagnosis = conclusionList[6];
-  }
-  break;
+    if (diagConcList[5].value == true && diagVarList[4].experiencing == true)
+    {
+      //log_File << endl << diagConcList[6].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      diagConcList[6].value = true;
+      finalDiagnosis = diagConcList[6];
+    }
+    break;
 
-  case 7: 
-  if(conclusionList[3].value == true && variableList[5].age < 51 && variableList[4].experiencing == false)
-  {
-    //log_File << endl << conclusionList[7].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    conclusionList[7].value = true;
-    finalDiagnosis = conclusionList[7];
-  }
-  break;
+  case 7:
+    if (diagConcList[3].value == true && diagVarList[5].age < 51 && diagVarList[4].experiencing == false)
+    {
+      //log_File << endl << diagConcList[7].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      diagConcList[7].value = true;
+      finalDiagnosis = diagConcList[7];
+    }
+    break;
 
   case 8:
-  if(conclusionList[3].value == true && variableList[5].age >= 51 && variableList[5].age < 61 && variableList[4].experiencing == false)
-  {
-    //log_File << endl << conclusionList[8].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    conclusionList[8].value = true;
-    finalDiagnosis = conclusionList[8];
-  }
-  break;
+    if (diagConcList[3].value == true && diagVarList[5].age >= 51 && diagVarList[5].age < 61 && diagVarList[4].experiencing == false)
+    {
+      //log_File << endl << diagConcList[8].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      diagConcList[8].value = true;
+      finalDiagnosis = diagConcList[8];
+    }
+    break;
 
-  case 9: 
-  if(conclusionList[3].value == true && variableList[5].age > 61 && variableList[4].experiencing == false)
-  {
-    //log_File << endl << conclusionList[9].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    conclusionList[9].value = true;
-    finalDiagnosis = conclusionList[9];
-  }
-  break;
+  case 9:
+    if (diagConcList[3].value == true && diagVarList[5].age > 61 && diagVarList[4].experiencing == false)
+    {
+      //log_File << endl << diagConcList[9].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      diagConcList[9].value = true;
+      finalDiagnosis = diagConcList[9];
+    }
+    break;
 
   case 10:
-  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == false)
-  {
-    //log_File << endl << conclusionList[10].name << " set to TRUE!" << endl; 
-    conclusionList[10].value = true;
-  }
-  break;
+    if (diagConcList[2].value == true && diagVarList[2].experiencing == true && diagVarList[6].experiencing == false)
+    {
+      //log_File << endl << diagConcList[10].name << " set to TRUE!" << endl;
+      diagConcList[10].value = true;
+    }
+    break;
 
   case 11:
-  if(conclusionList[10].value == true && variableList[7].experiencing == false)
-  {
-    //log_File << endl << conclusionList[11].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    conclusionList[11].value = true;
-    finalDiagnosis = conclusionList[11];
-  }
-  break;
+    if (diagConcList[10].value == true && diagVarList[7].experiencing == false)
+    {
+      //log_File << endl << diagConcList[11].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      diagConcList[11].value = true;
+      finalDiagnosis = diagConcList[11];
+    }
+    break;
 
   case 12:
-  if(conclusionList[10].value == true && variableList[7].experiencing == true)
-  {
-    //log_File << endl << conclusionList[12].name << " set to TRUE!" << endl; 
-    conclusionList[12].value = true;
-  }
-  break;
+    if (diagConcList[10].value == true && diagVarList[7].experiencing == true)
+    {
+      //log_File << endl << diagConcList[12].name << " set to TRUE!" << endl;
+      diagConcList[12].value = true;
+    }
+    break;
 
   case 13:
-  if(conclusionList[12].value == true && variableList[8].experiencing == true)
-  {
-    //log_File << endl << conclusionList[13].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    conclusionList[13].value = true;
-    finalDiagnosis = conclusionList[13];
-  }
-  break;
+    if (diagConcList[12].value == true && diagVarList[8].experiencing == true)
+    {
+      //log_File << endl << diagConcList[13].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      diagConcList[13].value = true;
+      finalDiagnosis = diagConcList[13];
+    }
+    break;
 
   case 14:
-  if(conclusionList[12].value == true && variableList[8].experiencing == false)
-  {
-    //log_File << endl << conclusionList[14].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    conclusionList[14].value = true;
-    finalDiagnosis = conclusionList[14];
-  }
-  break;
+    if (diagConcList[12].value == true && diagVarList[8].experiencing == false)
+    {
+      //log_File << endl << diagConcList[14].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      diagConcList[14].value = true;
+      finalDiagnosis = diagConcList[14];
+    }
+    break;
 
   case 15:
-  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[9].experiencing == false)
-  {
-    //log_File << endl << conclusionList[15].name << " set to TRUE!" << endl; 
-    conclusionList[15].value = true;
-  }
-  break;
+    if (diagConcList[2].value == true && diagVarList[2].experiencing == true && diagVarList[9].experiencing == false)
+    {
+      //log_File << endl << diagConcList[15].name << " set to TRUE!" << endl;
+      diagConcList[15].value = true;
+    }
+    break;
 
   case 16:
-  if(conclusionList[15].value == true && variableList[10].experiencing == false)
-  {
-    //log_File << endl << conclusionList[16].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[16];
-  }
-  break;
+    if (diagConcList[15].value == true && diagVarList[10].experiencing == false)
+    {
+      //log_File << endl << diagConcList[16].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[16];
+    }
+    break;
 
   case 17:
-  if(conclusionList[15].value == true && variableList[10].experiencing == true)
-  {
-    //log_File << endl << conclusionList[17].name << " set to TRUE!" << endl; 
-    conclusionList[17].value = true;
-  }
-  break;
+    if (diagConcList[15].value == true && diagVarList[10].experiencing == true)
+    {
+      //log_File << endl << diagConcList[17].name << " set to TRUE!" << endl;
+      diagConcList[17].value = true;
+    }
+    break;
 
   case 18:
-  if(conclusionList[17].value == true && variableList[11].experiencing == false)
-  {
-    //log_File << endl << conclusionList[18].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[18];
-  }
-  break;
+    if (diagConcList[17].value == true && diagVarList[11].experiencing == false)
+    {
+      //log_File << endl << diagConcList[18].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[18];
+    }
+    break;
 
   case 19:
-  if(conclusionList[17].value == true && variableList[11].experiencing == true && variableList[12].experiencing == false)
-  {
-    //log_File << endl << conclusionList[19].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[19];
-  }
-  break;
+    if (diagConcList[17].value == true && diagVarList[11].experiencing == true && diagVarList[12].experiencing == false)
+    {
+      //log_File << endl << diagConcList[19].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[19];
+    }
+    break;
 
   case 20:
-  if(conclusionList[17].value == true && variableList[11].experiencing == true && variableList[12].experiencing == true)
-  {
-    //log_File << endl << conclusionList[20].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[20];
-  }
-  break;
+    if (diagConcList[17].value == true && diagVarList[11].experiencing == true && diagVarList[12].experiencing == true)
+    {
+      //log_File << endl << diagConcList[20].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[20];
+    }
+    break;
 
   case 21:
-  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == false)
-  {
-    //log_File << endl << conclusionList[21].name << " set to TRUE!" << endl; 
-    conclusionList[21].value = true;
-  }
-  break;
+    if (diagConcList[2].value == true && diagVarList[2].experiencing == true && diagVarList[6].experiencing == true && diagVarList[9].experiencing == true && diagVarList[13].experiencing == false)
+    {
+      //log_File << endl << diagConcList[21].name << " set to TRUE!" << endl;
+      diagConcList[21].value = true;
+    }
+    break;
 
   case 22:
-  if(conclusionList[21].value == true && variableList[14].experiencing == false)
-  {
-    //log_File << endl << conclusionList[22].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[22];
-  }
-  break;
+    if (diagConcList[21].value == true && diagVarList[14].experiencing == false)
+    {
+      //log_File << endl << diagConcList[22].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[22];
+    }
+    break;
 
   case 23:
-  if(conclusionList[21].value == true && variableList[14].experiencing == true)
-  {
-    //log_File << endl << conclusionList[23].name << " set to TRUE!" << endl; 
-    conclusionList[23].value = true;
-  }
-  break;
-  
+    if (diagConcList[21].value == true && diagVarList[14].experiencing == true)
+    {
+      //log_File << endl << diagConcList[23].name << " set to TRUE!" << endl;
+      diagConcList[23].value = true;
+    }
+    break;
+
   case 24:
-  if(conclusionList[23].value == true && variableList[15].experiencing == true)
-  {
-    //log_File << endl << conclusionList[24].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[24];
-  }
-  break;
+    if (diagConcList[23].value == true && diagVarList[15].experiencing == true)
+    {
+      //log_File << endl << diagConcList[24].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[24];
+    }
+    break;
 
   case 25:
-  if(conclusionList[23].value == true && variableList[15].experiencing == false && variableList[16].experiencing == true)
-  {
-    //log_File << endl << conclusionList[25].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[25];
-  }
-  break;
+    if (diagConcList[23].value == true && diagVarList[15].experiencing == false && diagVarList[16].experiencing == true)
+    {
+      //log_File << endl << diagConcList[25].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[25];
+    }
+    break;
 
   case 26:
-  if(conclusionList[23].value == true && variableList[15].experiencing == false && variableList[16].experiencing == false)
-  {
-    //log_File << endl << conclusionList[26].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[26];
-  }
-  break;
+    if (diagConcList[23].value == true && diagVarList[15].experiencing == false && diagVarList[16].experiencing == false)
+    {
+      //log_File << endl << diagConcList[26].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[26];
+    }
+    break;
 
   case 27:
-  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == true && variableList[17].experiencing == false)
-  {
-    //log_File << endl << conclusionList[27].name << " set to TRUE!" << endl; 
-    conclusionList[27].value = true;
-  }
-  break;
+    if (diagConcList[2].value == true && diagVarList[2].experiencing == true && diagVarList[6].experiencing == true && diagVarList[9].experiencing == true && diagVarList[13].experiencing == true && diagVarList[17].experiencing == false)
+    {
+      //log_File << endl << diagConcList[27].name << " set to TRUE!" << endl;
+      diagConcList[27].value = true;
+    }
+    break;
 
   case 28:
-  if(conclusionList[27].value == true && variableList[18].experiencing == false)
-  {
-    //log_File << endl << conclusionList[28].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[28];
-  }
-  break;
+    if (diagConcList[27].value == true && diagVarList[18].experiencing == false)
+    {
+      //log_File << endl << diagConcList[28].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[28];
+    }
+    break;
 
   case 29:
-  if(conclusionList[27].value == true && variableList[18].experiencing == true)
-  {
-    //log_File << endl << conclusionList[29].name << " set to TRUE!" << endl; 
-    conclusionList[29].value = true;
-  }
-  break;
+    if (diagConcList[27].value == true && diagVarList[18].experiencing == true)
+    {
+      //log_File << endl << diagConcList[29].name << " set to TRUE!" << endl;
+      diagConcList[29].value = true;
+    }
+    break;
 
   case 30:
-  if(conclusionList[29].value == true && variableList[19].experiencing == true)
-  {
-    //log_File << endl << conclusionList[30].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[30];
-  }
-  break;
+    if (diagConcList[29].value == true && diagVarList[19].experiencing == true)
+    {
+      //log_File << endl << diagConcList[30].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[30];
+    }
+    break;
 
   case 31:
-  if(conclusionList[29].value == true && variableList[19].experiencing == false && variableList[20].experiencing == false)
-  {
-    //log_File << endl << conclusionList[31].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[31];
-  }
-  break;
+    if (diagConcList[29].value == true && diagVarList[19].experiencing == false && diagVarList[20].experiencing == false)
+    {
+      //log_File << endl << diagConcList[31].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[31];
+    }
+    break;
 
   case 32:
-  if(conclusionList[29].value == true && variableList[19].experiencing == false && variableList[20].experiencing == true)
-  {
-    //log_File << endl << conclusionList[32].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[32];
-  }
-  break;
+    if (diagConcList[29].value == true && diagVarList[19].experiencing == false && diagVarList[20].experiencing == true)
+    {
+      //log_File << endl << diagConcList[32].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[32];
+    }
+    break;
 
   case 33:
-  if(conclusionList[2].value == true && variableList[2].experiencing == true && variableList[6].experiencing == true && variableList[9].experiencing == true && variableList[13].experiencing == true && variableList[17].experiencing == true)
-  {
-    //log_File << endl << conclusionList[33].name << " set to TRUE!" << endl; 
-    conclusionList[33].value = true;
-  }
-  break;
+    if (diagConcList[2].value == true && diagVarList[2].experiencing == true && diagVarList[6].experiencing == true && diagVarList[9].experiencing == true && diagVarList[13].experiencing == true && diagVarList[17].experiencing == true)
+    {
+      //log_File << endl << diagConcList[33].name << " set to TRUE!" << endl;
+      diagConcList[33].value = true;
+    }
+    break;
 
   case 34:
-  if(conclusionList[33].value == true && variableList[21].experiencing == false)
-  {
-    //log_File << endl << conclusionList[34].name << " set to TRUE!" << endl; 
-    conclusionList[34].value = true;
-  }
-  break;
+    if (diagConcList[33].value == true && diagVarList[21].experiencing == false)
+    {
+      //log_File << endl << diagConcList[34].name << " set to TRUE!" << endl;
+      diagConcList[34].value = true;
+    }
+    break;
 
   case 35:
-  if(conclusionList[33].value == true && variableList[21].experiencing == true)
-  {
-    //log_File << endl << conclusionList[35].name << " set to TRUE!" << endl; 
-    conclusionList[35].value = true;
-  }
-  break;
+    if (diagConcList[33].value == true && diagVarList[21].experiencing == true)
+    {
+      //log_File << endl << diagConcList[35].name << " set to TRUE!" << endl;
+      diagConcList[35].value = true;
+    }
+    break;
 
   case 36:
-  if(conclusionList[35].value == true && variableList[22].experiencing == true)
-  {
-    //log_File << endl << conclusionList[36].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[36];
-  }
-  break;
+    if (diagConcList[35].value == true && diagVarList[22].experiencing == true)
+    {
+      //log_File << endl << diagConcList[36].name << " set to TRUE!" << endl;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[36];
+    }
+    break;
 
   case 37:
-  if(conclusionList[35].value == true && variableList[22].experiencing == false)
-  {
-    // log_File << endl << conclusionList[37].name << " set to TRUE!" << endl; 
-    terminateDiagnosisAlgorithm = true;
-    finalDiagnosis = conclusionList[37];
-  }
-
-
-
-  
-  default:
-      log_File << endl << conclusionList[4].name << " set to TRUE!" << endl; 
+    if (diagConcList[35].value == true && diagVarList[22].experiencing == false)
+    {
+      // log_File << endl << diagConcList[37].name << " set to TRUE!" << endl;
       terminateDiagnosisAlgorithm = true;
-      finalDiagnosis = conclusionList[4];
+      finalDiagnosis = diagConcList[37];
+    }
+
+  default:
+    log_File << endl
+             << diagConcList[4].name << " set to TRUE!" << endl;
+    terminateDiagnosisAlgorithm = true;
+    finalDiagnosis = diagConcList[4];
   }
 
-  if(terminateDiagnosisAlgorithm == false){
+  if (terminateDiagnosisAlgorithm == false)
+  {
     log_File << "Continuing with the diagnosis, hopping out of the knowledge base..." << endl;
   }
-  else{
+  else
+  {
     log_File << "--- Found a terminating conclusion, moving on to treatment recommendation---" << endl;
     cout << "\n--- Found a terminating conclusion, moving on to treatment recommendation---" << endl;
   }
-  
+
   conclusionStack.pop();
   return terminateDiagnosisAlgorithm;
 }
@@ -816,8 +838,11 @@ bool useKnowledgeBase(int ruleNumber){
 void printWelcomeMessage()
 {
   cout << "\n----------------------------------------------------------------------------------------------------" << endl;
-  cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
-  cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
+  cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl
+       << endl;
+  cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl
+       << endl;
   cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
-  cout << "----------------------------------------------------------------------------------------------------" << endl << endl;
+  cout << "----------------------------------------------------------------------------------------------------" << endl
+       << endl;
 }
