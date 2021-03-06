@@ -875,41 +875,41 @@ string useTreatmentKnowledgeBase(int ruleNumber, string clause) {
   switch (ruleNumber)
   {
   case 1:
-    if (clause == "NONE") conclusion = "NO TREATMENT NECESSARY";
+    if (clause == "NONE") conclusion = "NO TREATMENT NECESSARY"; break;
   case 2:
-    if (clause == "ANAPLASTIC THYROID CANCER") conclusion = "THYROIDECTOMY";
+    if (clause == "ANAPLASTIC THYROID CANCER") conclusion = "THYROIDECTOMY"; break;
   case 3:
-    if (clause == "PAPILLARY THYROID CANCER") conclusion = "THYROIDECTOMY";
+    if (clause == "PAPILLARY THYROID CANCER") conclusion = "THYROIDECTOMY"; break;
   case 4:
-    if (clause == "MEDULLARY THYROID CANCER") conclusion = "THYROIDECTOMY";
+    if (clause == "MEDULLARY THYROID CANCER") conclusion = "THYROIDECTOMY"; break;
   case 5:
-    if (clause == "FOLLICULAR THYROID CANCER") conclusion = "THYROIDECTOMY";
+    if (clause == "FOLLICULAR THYROID CANCER") conclusion = "THYROIDECTOMY"; break;
   case 6:
-    if (clause == "UROTHELIAL CARCINOMA") conclusion = "TRANSURETHRAL RESECTION OF BLADDER TUMOR";
+    if (clause == "UROTHELIAL CARCINOMA") conclusion = "TRANSURETHRAL RESECTION OF BLADDER TUMOR"; break;
   case 7:
-    if (clause == "SQUAMOUS CELL CARCINOMA") conclusion = "CYSTECTOMY";
+    if (clause == "SQUAMOUS CELL CARCINOMA") conclusion = "CYSTECTOMY"; break;
   case 8:
-    if (clause == "SMALL CELL LUNG CANCER") conclusion = "CHEMOTHERAPY";
+    if (clause == "SMALL CELL LUNG CANCER") conclusion = "CHEMOTHERAPY"; break;
   case 9:
-    if (clause == "NON-SMALL CELL LUNG CANCER") conclusion = "LOBECTOMY";
+    if (clause == "NON-SMALL CELL LUNG CANCER") conclusion = "LOBECTOMY"; break;
   case 10:
-    if (clause == "RENAL CELL CARCINOMA") conclusion = "NEPHRECTOMY";
+    if (clause == "RENAL CELL CARCINOMA") conclusion = "NEPHRECTOMY"; break;
   case 11:
-    if (clause == "SARCOMA OF THE KIDNEY") conclusion = "NEPHRECTOMY";
+    if (clause == "SARCOMA OF THE KIDNEY") conclusion = "NEPHRECTOMY"; break;
   case 12:
-    if (clause == "DUCTAL ADENOCARCINOMA") conclusion = "CHEMOTHERAPY";
+    if (clause == "DUCTAL ADENOCARCINOMA") conclusion = "CHEMOTHERAPY"; break;
   case 13:
-    if (clause == "ACINAR ADENOCARCINOMA") conclusion = "CHEMOTHERAPY";
+    if (clause == "ACINAR ADENOCARCINOMA") conclusion = "CHEMOTHERAPY"; break;
   case 14:
-    if (clause == "PANCREATIC NEUROENDOCRINE TUMOR") conclusion = "PANCREATECTOMY";
+    if (clause == "PANCREATIC NEUROENDOCRINE TUMOR") conclusion = "PANCREATECTOMY"; break;
   case 15:
-    if (clause == "HEPATOCELLULAR CARCINOMA") conclusion = "HEPATECTOMY";
+    if (clause == "HEPATOCELLULAR CARCINOMA") conclusion = "HEPATECTOMY"; break;
   case 16:
-    if (clause == "CHOLANGIOCARCINOMA") conclusion = "HEPATECTOMY";
+    if (clause == "CHOLANGIOCARCINOMA") conclusion = "HEPATECTOMY"; break;
   case 17:
-    if (clause == "ANGIOSARCOMA") conclusion = "SURGERY";
+    if (clause == "ANGIOSARCOMA") conclusion = "SURGERY"; break;
   case 18:
-    if (clause == "CAN'T DIAGNOSE") conclusion = "CAN'T TREAT";
+    if (clause == "CAN'T DIAGNOSE") conclusion = "CAN'T TREAT"; break;
   default:
     conclusion = "NO RULE FOUND";
   }
