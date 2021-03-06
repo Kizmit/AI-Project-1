@@ -16,6 +16,7 @@ Clause variableList[VARIABLE_LIST_SIZE];
 string clauseVariableList[CLAUSE_VAR_LIST_SIZE];
 stack<Conclusion> conclusionStack;
 stack<Clause> clauseStack;
+stack<string> TBIVariableStack;
 
 // Logging
 ofstream log_File;
@@ -302,11 +303,15 @@ do{
           if (varIndex != 0)   // Found the item in varaible list
           {
             log_File << "The variable '" << variableList[varIndex].name << "' was found in element " << index << " of the variable list." << endl;
-            if(variableList[varIndex].instantiated == false)
+            if(variableList[varIndex].markedForInstantiation == true)
             {
-              log_File << "The Variable has not been assigned a value yet. Now instantiating the variable: " << variableList[varIndex].name << endl;
-              instantiate(variableList[varIndex].name);    // Step 3 and 4 Done?
+              log_File << "The Variable has not been assigned a value yet. Adding to TBIVarStack: " << variableList[varIndex].name << endl;
+              TBIVariableStack.push(variableList[varIndex].name);
+              variableList[varIndex].markedForInstantiation = false;
               entered = true;
+              /*log_File << "The Variable has not been assigned a value yet. Now instantiating the variable: " << variableList[varIndex].name << endl;
+              instantiate(variableList[varIndex].name);    // Step 3 and 4 Done?
+              entered = true;*/
               
             }
           }
@@ -327,8 +332,14 @@ do{
         count++;
     }while(clauseVariableList[i + count] != "" && count < 6);
     
+    
 
-}while(!conclusionStack.empty() && entered == true);
+    }while(!conclusionStack.empty() && entered == true);
+    
+    while(!TBIVariableStack.empty()){
+        instantiate(TBIVariableStack.top());
+        TBIVariableStack.pop();
+        } 
     
     while(!conclusionStack.empty() && !terminateFunction)
     {
@@ -347,7 +358,7 @@ do{
 int searchConclusionList(string conc, int conclusion_Counter)
 {
   int index = 0;
-  for(int i = conclusion_Counter; i <= CONCLUSION_LIST_SIZE; i++)
+  for(int i = conclusion_Counter; i <= CONCLUSION_LIST_SIZE - 1; i++)
   {
     // log_File << "Searching conclusion list index " << i << " for '" << conc << "' " << endl;
     if(conc == conclusionList[i].name) 
@@ -367,7 +378,7 @@ int searchConclusionList(string conc, int conclusion_Counter)
 int searchVariableList(string clauseVariable)
 {
   int index = 0;
-  for(int i = 1; i <= VARIABLE_LIST_SIZE; i++)
+  for(int i = 1; i <= VARIABLE_LIST_SIZE - 1; i++)
   {
     // log_File << "Searching variable list index " << i << " for '" << clauseVariable << "' " << endl;
     if(clauseVariable == variableList[i].name)    
@@ -388,7 +399,7 @@ void instantiate(string str)
 {
   string answer;
   int ageInput;
-  for(int i = 1; i <= VARIABLE_LIST_SIZE; i++)
+  for(int i = 1; i <= VARIABLE_LIST_SIZE - 1; i++)
   {
     if (variableList[i].name == str && !variableList[i].instantiated)
     {
