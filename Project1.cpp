@@ -34,7 +34,7 @@ void testPrintLists();
 bool useDiagnosisKnowledgeBase(int, Conclusion&);
 
 void treatment();
-string useTreatmentKnowledgeBase(string);
+string useTreatmentKnowledgeBase(string, int);
 
 int main()
 {
