@@ -219,6 +219,7 @@ int main()
   // rule 31:
   diagClauseVarList[181] = "liver_cancer";
   diagClauseVarList[182] = "grInLi";
+  diagClauseVarList[183] = "bile_duct";
   // rule 32:
   diagClauseVarList[187] = "liver_cancer";
   diagClauseVarList[188] = "grInLi";
@@ -822,6 +823,7 @@ bool useDiagnosisKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
       terminateDiagnosisAlgorithm = true;
       finalDiagnosis = diagConcList[37];
     }
+    
 
   default:
     logFile << endl << diagConcList[4].name << " set to TRUE!" << endl;
