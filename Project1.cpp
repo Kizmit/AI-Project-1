@@ -250,6 +250,9 @@ int main()
   logFile << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
   Conclusion finalDiagnosis = diagnosis();
 
+  cout << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
+  logFile << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
+
   // treatment data initialization:
   const int TREAT_CLAUSE_VAR_LIST_SIZE = 19; // 18 rules + 1
   string treatClauseVarList[TREAT_CLAUSE_VAR_LIST_SIZE] = {"", "NONE", "ANAPLASTIC THYROID CANCER",
@@ -375,13 +378,6 @@ Conclusion diagnosis()
     }
 
   } while (!terminateFunction);
-
-  // FIXME: remove this portion and place couts in main().
-  if (terminateFunction == true)
-  {
-    cout << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
-    logFile << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
-  }
 
   return finalDiagnosis;
 }
