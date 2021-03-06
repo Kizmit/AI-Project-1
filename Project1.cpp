@@ -19,9 +19,6 @@ stack<Conclusion> diagConcStack;
 stack<Clause> diagClauseStack;
 stack<string> diagTBIVarStack; // to-be-instantiated variable stack
 
-// treatment data structures:
-string treatClauseVarList[TREAT_CLAUSE_VAR_LIST_SIZE];
-
 ofstream logFile;
 
 // function declaration:
@@ -33,8 +30,8 @@ void instantiate(string);
 void testPrintLists();
 bool useDiagnosisKnowledgeBase(int, Conclusion&);
 
-void treatment();
-string useTreatmentKnowledgeBase(string, int);
+string treatment(string, string*, int);
+string useTreatmentKnowledgeBase(int, string);
 
 int main()
 {
@@ -43,16 +40,14 @@ int main()
   cout << "Enter in the ID# for the patient: ";
   cin >> patientID;
 
+  printWelcomeMessage();
+
   // Create Log File
   string logName = "Project1_LOG_ID#" + patientID + ".txt";
-
   logFile.open(logName);
+  logFile << "Patient #: " << patientID << endl << endl << endl;
 
-  logFile << "Patient #: " << patientID << endl
-           << endl
-           << endl;
-
-  // populating the conclusion list:
+  // populating the diagnosis conclusion list:
   diagConcList[1].init("cancer", "NONE", 1);
   diagConcList[2].init("pos_cancer", "SUB", 2);
   diagConcList[3].init("pos_thy_cancer", "SUB", 3);
@@ -91,7 +86,7 @@ int main()
   diagConcList[36].init("cancer", "DUCTAL ADENOCARCINOMA", 36);
   diagConcList[37].init("cancer", "ACINAR ADENOCARCINOMA", 37);
 
-  // populating the variable list:
+  // populating the diagnosis variable list:
   diagVarList[1].init("symptoms", "any symptoms");
   diagVarList[2].init("fat_weLo", "fatigue or weight loss");
   diagVarList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
@@ -115,7 +110,7 @@ int main()
   diagVarList[21].init("exocrine_component", "cancer cells originated in exocrine component of the pancreas");
   diagVarList[22].init("ducts", "cancer cells originated in ducts of the pancreas");
 
-  // populate the clause variable list:
+  // populate the diagnosis clause variable list:
   // rule 1:
   diagClauseVarList[1] = "symptoms";
   // rule 2:
@@ -250,17 +245,24 @@ int main()
 
   // testPrintLists();
 
-  printWelcomeMessage();
-
-  cout << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl
-       << endl;
-  logFile << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl
-           << endl;
+  cout << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
+  logFile << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
   Conclusion finalDiagnosis = diagnosis();
 
-  //cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
-  //logFile << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
-  //treatment();
+  // treatment data initialization:
+  const int TREAT_CLAUSE_VAR_LIST_SIZE = 19; // 18 rules + 1
+  string treatClauseVarList[TREAT_CLAUSE_VAR_LIST_SIZE] = {"", "NONE", "ANAPLASTIC THYROID CANCER",
+    "PAPILLARY THYROID CANCER", "MEDULLARY THYROID CANCER", "FOLLICULAR THYROID CANCER", 
+    "UROTHELIAL CARCINOMA", "SQUAMOUS CELL CARCINOMA", "SMALL CELL LUNG CANCER",
+    "NON-SMALL CELL LUNG CANCER", "RENAL CELL CARCINOMA", "SARCOMA OF THE KIDNEY",
+    "DUCTAL ADENOCARCINOMA", "ACINAR ADENOCARCINOMA", "PANCREATIC NEUROENDOCRINE TUMOR",
+    "HEPATOCELLULAR CARCINOMA", "CHOLANGIOCARCINOMA", "ANGIOSARCOMA", "CAN'T DIAGNOSE"};
+
+  cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
+  logFile << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
+  string finalTreatment = treatment(finalDiagnosis.finalConclusion, treatClauseVarList, TREAT_CLAUSE_VAR_LIST_SIZE);
+
+  cout << finalTreatment << endl;
 
   // Close the log stream
   logFile.close();
@@ -271,13 +273,10 @@ int main()
 void printWelcomeMessage()
 {
   cout << "\n----------------------------------------------------------------------------------------------------" << endl;
-  cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl
-       << endl;
-  cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl
-       << endl;
+  cout << "--- Cancer Diagnosis and Treatment Recommendation ---" << endl << endl;
+  cout << "You will be prompted to enter information regarding the patient, answer to the best of your ability." << endl << endl;
   cout << "Answer Symptom Related Questions with either 'YES' or 'NO'" << endl;
-  cout << "----------------------------------------------------------------------------------------------------" << endl
-       << endl;
+  cout << "----------------------------------------------------------------------------------------------------" << endl << endl;
 }
 
 Conclusion diagnosis()
@@ -306,8 +305,7 @@ Conclusion diagnosis()
     else
     {
       cout << "No instances of the conclusion were found in the list. Assuming a non-diagnosis status." << endl;
-      logFile << endl
-               << diagConcList[4].name << " set to TRUE!" << endl;
+      logFile << endl << diagConcList[4].name << " set to TRUE!" << endl;
       terminateFunction = true;
       finalDiagnosis = diagConcList[4]; // Can't Diagnose Conclusion
     }
@@ -377,14 +375,11 @@ Conclusion diagnosis()
 
   } while (!terminateFunction);
 
+  // FIXME: remove this portion and place couts in main().
   if (terminateFunction == true)
   {
-    cout << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl
-         << endl
-         << endl;
-    logFile << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl
-             << endl
-             << endl;
+    cout << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
+    logFile << "\n*** Final Diagnosis: " << finalDiagnosis.name << " = " << finalDiagnosis.finalConclusion << endl << endl << endl;
   }
 
   return finalDiagnosis;
@@ -490,8 +485,7 @@ void testPrintLists()
     cout << "Variable at location " << i << ": " << diagClauseVarList[i] << endl;
   }
 
-  cout << endl
-       << endl;
+  cout << endl << endl;
 }
 
 bool useDiagnosisKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
@@ -830,8 +824,7 @@ bool useDiagnosisKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
     }
 
   default:
-    logFile << endl
-             << diagConcList[4].name << " set to TRUE!" << endl;
+    logFile << endl << diagConcList[4].name << " set to TRUE!" << endl;
     terminateDiagnosisAlgorithm = true;
     finalDiagnosis = diagConcList[4];
   }
@@ -850,44 +843,33 @@ bool useDiagnosisKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
   return terminateDiagnosisAlgorithm;
 }
 
-string treatment(string cancerType)
+string treatment(string cancerType, string* clauseVarList, int listSize)
 {
-  // 1. get IF clause (cancerType)
-  // 2. scan rules (clauseVarList) for one with cancerType in the IF clause
-  //  - if found, add its THEN clause to queue and perform the list traversal with that clause
-  // 3. once the queue is empty, all clauses have been resolved, leaving the final conclusion
-
   queue<string> treatConcQueue;
-  bool terminateFunction = false; // flags true when conclusion reached, exits loop
-  bool varFound;
-  string newClause;
+  string newClause = "INIT VALUE, NO TREATMENT FOUND";
 
   treatConcQueue.push(cancerType);
 
-  while (!terminateFunction) {
-    varFound = false; // reset flag
-    for (int i = 1; i < TREAT_CLAUSE_VAR_LIST_SIZE && !treatConcQueue.empty(); i++)
+  while (!treatConcQueue.empty()) {
+    for (int i = 1; i < listSize; i++)
     {
-      if (treatConcQueue.front() == treatClauseVarList[i])
+      if (treatConcQueue.front() == clauseVarList[i])
       {
         //logFile << "***\nVariableFound!" << endl;
-        varFound = true;
-        newClause = useTreatmentKnowledgeBase(treatClauseVarList[i], i);
+        newClause = useTreatmentKnowledgeBase(i, clauseVarList[i]);
         if (treatConcQueue.back() != newClause)
         { // add to queue if it wasn't already added this round:
           treatConcQueue.push(newClause);
         }
       }
     }
-
-    if (varFound) // if a matching variable was found this round
-    {
-      treatConcQueue.pop(); // remove the front var that has finished its traversal through the list
-    }
+    treatConcQueue.pop();
   }
+
+  return newClause;
 }
 
-string useTreatmentKnowledgeBase(string clause, int ruleNumber) {
+string useTreatmentKnowledgeBase(int ruleNumber, string clause) {
   string conclusion;
 
   switch (ruleNumber)
@@ -926,8 +908,10 @@ string useTreatmentKnowledgeBase(string clause, int ruleNumber) {
     if (clause == "CHOLANGIOCARCINOMA") conclusion = "HEPATECTOMY";
   case 17:
     if (clause == "ANGIOSARCOMA") conclusion = "SURGERY";
+  case 18:
+    if (clause == "CAN'T DIAGNOSE") conclusion = "CAN'T TREAT";
   default:
-    conclusion = "CAN'T TREAT";
+    conclusion = "NO RULE FOUND";
   }
 
   return conclusion;
