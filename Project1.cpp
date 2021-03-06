@@ -791,7 +791,8 @@ bool useDiagnosisKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
     if (diagConcList[33].value == true && diagVarList[21].experiencing == false)
     {
       //logFile << endl << diagConcList[34].name << " set to TRUE!" << endl;
-      diagConcList[34].value = true;
+      terminateDiagnosisAlgorithm = true;
+      finalDiagnosis = diagConcList[34];
     }
     break;
 
