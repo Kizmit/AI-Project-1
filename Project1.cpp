@@ -846,6 +846,10 @@ string treatment(string cancerType, string* clauseVarList, int listSize)
 {
   queue<string> treatConcQueue;
   string newClause = "INIT VALUE, NO TREATMENT FOUND";
+  Clause varList[2];
+  varList[0].init("cancer", cancerType);
+  varList[0].instantiated = true;
+  varList[1].init("treatment", "");
 
   treatConcQueue.push(cancerType);
 
@@ -855,7 +859,7 @@ string treatment(string cancerType, string* clauseVarList, int listSize)
       if (treatConcQueue.front() == clauseVarList[i])
       {
         //logFile << "***\nVariableFound!" << endl;
-        newClause = useTreatmentKnowledgeBase(i, clauseVarList[i]);
+        newClause = useTreatmentKnowledgeBase(i, clauseVarList[i], varList);
         if (treatConcQueue.back() != newClause)
         { // add to queue if it wasn't already added this round:
           treatConcQueue.push(newClause);
@@ -868,47 +872,155 @@ string treatment(string cancerType, string* clauseVarList, int listSize)
   return newClause;
 }
 
-string useTreatmentKnowledgeBase(int ruleNumber, string clause) {
+string useTreatmentKnowledgeBase(int ruleNumber, string clause, Clause* varList) {
   string conclusion;
 
   switch (ruleNumber)
   {
   case 1:
-    if (clause == "NONE") conclusion = "NO TREATMENT NECESSARY"; break;
+    if (clause == "NONE")
+    {
+      conclusion = "NO TREATMENT NECESSARY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 2:
-    if (clause == "ANAPLASTIC THYROID CANCER") conclusion = "THYROIDECTOMY"; break;
+    if (clause == "ANAPLASTIC THYROID CANCER")
+    {
+      conclusion = "THYROIDECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 3:
-    if (clause == "PAPILLARY THYROID CANCER") conclusion = "THYROIDECTOMY"; break;
+    if (clause == "PAPILLARY THYROID CANCER")
+    {
+      conclusion = "THYROIDECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 4:
-    if (clause == "MEDULLARY THYROID CANCER") conclusion = "THYROIDECTOMY"; break;
+    if (clause == "MEDULLARY THYROID CANCER")
+    {
+      conclusion = "THYROIDECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 5:
-    if (clause == "FOLLICULAR THYROID CANCER") conclusion = "THYROIDECTOMY"; break;
+    if (clause == "FOLLICULAR THYROID CANCER")
+    {
+      conclusion = "THYROIDECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 6:
-    if (clause == "UROTHELIAL CARCINOMA") conclusion = "TRANSURETHRAL RESECTION OF BLADDER TUMOR"; break;
+    if (clause == "UROTHELIAL CARCINOMA")
+    {
+      conclusion = "TRANSURETHRAL RESECTION OF BLADDER TUMOR";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 7:
-    if (clause == "SQUAMOUS CELL CARCINOMA") conclusion = "CYSTECTOMY"; break;
+    if (clause == "SQUAMOUS CELL CARCINOMA")
+    {
+      conclusion = "CYSTECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 8:
-    if (clause == "SMALL CELL LUNG CANCER") conclusion = "CHEMOTHERAPY"; break;
+    if (clause == "SMALL CELL LUNG CANCER")
+    {
+      conclusion = "CHEMOTHERAPY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 9:
-    if (clause == "NON-SMALL CELL LUNG CANCER") conclusion = "LOBECTOMY"; break;
+    if (clause == "NON-SMALL CELL LUNG CANCER")
+    {
+      conclusion = "LOBECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 10:
-    if (clause == "RENAL CELL CARCINOMA") conclusion = "NEPHRECTOMY"; break;
+    if (clause == "RENAL CELL CARCINOMA")
+    {
+      conclusion = "NEPHRECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 11:
-    if (clause == "SARCOMA OF THE KIDNEY") conclusion = "NEPHRECTOMY"; break;
+    if (clause == "SARCOMA OF THE KIDNEY")
+    {
+      conclusion = "NEPHRECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 12:
-    if (clause == "DUCTAL ADENOCARCINOMA") conclusion = "CHEMOTHERAPY"; break;
+    if (clause == "DUCTAL ADENOCARCINOMA")
+    {
+      conclusion = "CHEMOTHERAPY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 13:
-    if (clause == "ACINAR ADENOCARCINOMA") conclusion = "CHEMOTHERAPY"; break;
+    if (clause == "ACINAR ADENOCARCINOMA")
+    {
+      conclusion = "CHEMOTHERAPY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 14:
-    if (clause == "PANCREATIC NEUROENDOCRINE TUMOR") conclusion = "PANCREATECTOMY"; break;
+    if (clause == "PANCREATIC NEUROENDOCRINE TUMOR")
+    {
+      conclusion = "PANCREATECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 15:
-    if (clause == "HEPATOCELLULAR CARCINOMA") conclusion = "HEPATECTOMY"; break;
+    if (clause == "HEPATOCELLULAR CARCINOMA")
+    {
+      conclusion = "HEPATECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 16:
-    if (clause == "CHOLANGIOCARCINOMA") conclusion = "HEPATECTOMY"; break;
+    if (clause == "CHOLANGIOCARCINOMA")
+    {
+      conclusion = "HEPATECTOMY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 17:
-    if (clause == "ANGIOSARCOMA") conclusion = "SURGERY"; break;
+    if (clause == "ANGIOSARCOMA")
+    {
+      conclusion = "SURGERY";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   case 18:
-    if (clause == "CAN'T DIAGNOSE") conclusion = "CAN'T TREAT"; break;
+    if (clause == "CAN'T DIAGNOSE")
+    {
+      conclusion = "CAN'T TREAT";
+      varList[1].print = conclusion;
+      varList[1].instantiated = true;
+    }
+    break;
   default:
     conclusion = "NO RULE FOUND";
   }
