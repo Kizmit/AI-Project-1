@@ -21,19 +21,20 @@ stack<string> TBIVariableStack;
 // Logging
 ofstream log_File;
 
+// function declaration:
 void printWelcomeMessage();
-void diagnosis();
+Conclusion diagnosis();
 void treatment();
 int searchConclusionList(string, int);
 int searchVariableList(string);
 void instantiate(string);
 void testPrintLists();
-bool useKnowledgeBase(int);
-
-Conclusion finalDiagnosis; // This will hold the result of our diagnosis functions.
+bool useKnowledgeBase(int, Conclusion&);
 
 int main()
 {
+  // variable declaration:
+
   // Gather the Patient ID and set up the logging information
   string patientID;
   cout << "Enter in the ID# for the patient: ";
@@ -252,7 +253,7 @@ int main()
        << endl;
   log_File << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl
            << endl;
-  diagnosis();
+  Conclusion finalDiagnosis = diagnosis();
 
   //cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
   //log_File << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
@@ -264,25 +265,26 @@ int main()
   return 0;
 }
 
-void diagnosis()
+Conclusion diagnosis()
 {
-  int conclusion_Counter = 1;   // Keep track of how far the diagConcList has been traversed. We need to advance in our search.
+  int conclusionCounter = 1;   // Keep track of how far the diagConcList has been traversed. We need to advance in our search.
   string conclusion = "cancer"; // Identify the conclusion
   int index, count, i;
   bool terminateFunction = false; // Will be set to true by knowledge base if we hit a terminating conclusion.
+  Conclusion finalDiagnosis; // holds the to-be-returned Conclusion of the function
+
   i = 1;
   do
   {
     count = 0;
 
     // Search for the Conclusion
-
     log_File << "The Conclusion has not been solved yet, searching for an instance now..." << endl;
-    index = searchConclusionList(conclusion, conclusion_Counter);
-    conclusion_Counter = index + 1;
+    index = searchConclusionList(conclusion, conclusionCounter);
+    conclusionCounter = index + 1;
 
     if (index != 0)
-    {                                              // We found the item in the diagConcList
+    { // We found the item in the diagConcList
       conclusionStack.push(diagConcList[index]); // Step 2 Done
       log_File << "The conclusion '" << conclusion << "' was found in element " << index << " of the conclusion list." << endl;
     }
@@ -305,6 +307,7 @@ void diagnosis()
       {
         i = conclusionStack.top().clauseNumber; // Go to top of the stack
       }
+
       // Step 3
       do
       {
@@ -354,7 +357,7 @@ void diagnosis()
 
     while (!conclusionStack.empty() && !terminateFunction)
     {
-      terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber);
+      terminateFunction = useKnowledgeBase(conclusionStack.top().ruleNumber, finalDiagnosis);
     }
 
   } while (!terminateFunction);
@@ -368,12 +371,14 @@ void diagnosis()
              << endl
              << endl;
   }
+
+  return finalDiagnosis;
 }
 
-int searchConclusionList(string conc, int conclusion_Counter)
+int searchConclusionList(string conc, int conclusionCounter)
 {
   int index = 0;
-  for (int i = conclusion_Counter; i <= DIAG_CONC_LIST_SIZE - 1; i++)
+  for (int i = conclusionCounter; i <= DIAG_CONC_LIST_SIZE - 1; i++)
   {
     // log_File << "Searching conclusion list index " << i << " for '" << conc << "' " << endl;
     if (conc == diagConcList[i].name)
@@ -479,7 +484,7 @@ void testPrintLists()
        << endl;
 }
 
-bool useKnowledgeBase(int ruleNumber)
+bool useKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
 {
   bool terminateDiagnosisAlgorithm = false;
 
