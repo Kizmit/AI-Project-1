@@ -89,26 +89,26 @@ int main()
   // populating the diagnosis variable list:
   diagVarList[1].init("symptoms", "any symptoms");
   diagVarList[2].init("fat_weLo", "fatigue or weight loss");
-  diagVarList[3].init("neLu_difBre_swNeGl", "neck lump, difficulty breathing, or swollen neck glands");
+  diagVarList[3].init("neLu_difBre_swNeGl", "a neck lump, difficulty breathing, or swollen neck glands");
   diagVarList[4].init("high_calc", "high calcitonin levels");
   diagVarList[5].init("age", "AGE"); // Different use case for instantiation(). .> See Function Below. (Taking integer input, not setting boolean.   diagVarList[5].age = userInput. )
   diagVarList[6].init("loss_app", "loss of appetite");
   diagVarList[7].init("fr_di_paUr", "frequent, difficult, or painful urination");
-  diagVarList[8].init("hiBlIn_LoTeCaUs", "history of bladder infection or long term catheter use");
+  diagVarList[8].init("hiBlIn_LoTeCaUs", "a history of bladder infection or long term catheter use");
   diagVarList[9].init("pers_fever", "persistent fever");
   diagVarList[10].init("shBr_chPa_coBl", "shortness of breath, chest pain, or coughing up blood");
-  diagVarList[11].init("hiSm_seHaSmEx", "history of smoking or second-hand smoking exposure");
-  diagVarList[12].init("ra_as_urEx", "radon, asbestos, or uranium exposure");
-  diagVarList[13].init("ja_na_ab_shPa", "jaundice, nausea, or abdominal or shoulder pain");
-  diagVarList[14].init("CVA_an", "CVA mass or anemia");
-  diagVarList[15].init("tubules", "cancer cells originated tubules");
-  diagVarList[16].init("renal_pelvis", "cancer cells originated in renal pelvis");
+  diagVarList[11].init("hiSm_seHaSmEx", "a history of smoking or second-hand smoking exposure");
+  diagVarList[12].init("ra_as_urEx", "a history of exposure to radon, asbestos, or uranium");
+  diagVarList[13].init("ja_na_ab_shPa", "jaundice, nausea, abdominal pain or shoulder pain");
+  diagVarList[14].init("CVA_an", "a CVA mass or anemia");
+  diagVarList[15].init("tubules", "cancer cells that originated in the tubules of the kidney");
+  diagVarList[16].init("renal_pelvis", "cancer cells that originated in the renal pelvis");
   diagVarList[17].init("sw_ch_buSt_bl", "sweats, chills, burning stomach, or bloating");
-  diagVarList[18].init("enLi_sp_it_feFuEa", "enlarged liver or spleen, itching, or feeling full easily");
-  diagVarList[19].init("grInLi", "tentacle or nodule growth in liver");
-  diagVarList[20].init("bile_duct", "cancer cells originated in bile duct");
-  diagVarList[21].init("exocrine_component", "cancer cells originated in exocrine component of the pancreas");
-  diagVarList[22].init("ducts", "cancer cells originated in ducts of the pancreas");
+  diagVarList[18].init("enLi_sp_it_feFuEa", "an enlarged liver or spleen, itching, or feeling full easily");
+  diagVarList[19].init("grInLi", "tentacle-like growths or nodules throughout the liver");
+  diagVarList[20].init("bile_duct", "cancer cells that originated in the bile duct of the liver");
+  diagVarList[21].init("exocrine_component", "cancer cells that originated in the exocrine component of the pancreas");
+  diagVarList[22].init("ducts", "cancer cells that originated in the ducts of the pancreas");
 
   // populate the diagnosis clause variable list:
   // rule 1:
@@ -262,11 +262,11 @@ int main()
     "DUCTAL ADENOCARCINOMA", "ACINAR ADENOCARCINOMA", "PANCREATIC NEUROENDOCRINE TUMOR",
     "HEPATOCELLULAR CARCINOMA", "CHOLANGIOCARCINOMA", "ANGIOSARCOMA", "CAN'T DIAGNOSE"};
 
-  cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
+  cout << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " to recommend a treatment for " << finalDiagnosis.finalConclusion << " ---" << endl << endl;
   logFile << "--- Starting Treatment Recommendation Process For Patient #" << patientID << " ---" << endl << endl;
   string finalTreatment = treatment(finalDiagnosis.finalConclusion, treatClauseVarList, TREAT_CLAUSE_VAR_LIST_SIZE);
 
-  cout << finalTreatment << endl;
+  cout << "The recommended treatment for " << finalDiagnosis.finalConclusion << " is " << finalTreatment << endl << endl;
 
   // Close the log stream
   logFile.close();
@@ -435,7 +435,7 @@ void instantiate(string str)
       if (diagVarList[i].name != "age")
       { // Everything but age, meaning we are setting a boolean.
         diagVarList[i].instantiated = true;
-        cout << "Do you have " << diagVarList[i].print << ": ";
+        cout << "Does the patient have " << diagVarList[i].print << ": ";
         cin >> (answer);
         if (answer == "yes" || answer == "YES" || answer == "Yes")
         {
@@ -447,7 +447,7 @@ void instantiate(string str)
       else
       { // The Variable we are trying to instantiate is for the age. So...we need to handle it as an integer.
         diagVarList[i].instantiated = true;
-        cout << "Enter in your age: ";
+        cout << "Enter the patient's age: ";
         cin >> ageInput;
         diagVarList[i].age = ageInput;
         logFile << "Patient age was set to " << diagVarList[i].age << endl;
