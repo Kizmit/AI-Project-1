@@ -6,7 +6,6 @@
 #include "Conclusion.h"
 #include "Clause.h"
 
-// TODO: remove overhead for arrays? test if it breaks any of the logic
 // constants for data structures:
 #define DIAG_VAR_LIST_SIZE 25
 #define DIAG_CONC_LIST_SIZE 40

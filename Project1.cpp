@@ -76,7 +76,7 @@ int main()
   diagConcList[26].init("cancer", "SARCOMA OF THE KIDNEY", 26);
   diagConcList[27].init("pos_liver_cancer", "SUB", 27);
   diagConcList[28].init("cancer", "CAN'T DIAGNOSE", 28);
-  diagConcList[29].init("liver_cancer", "LIVER CANCER", 29); // FIXME: does this need to be changed to SUB?
+  diagConcList[29].init("liver_cancer", "LIVER CANCER", 29);
   diagConcList[30].init("cancer", "HEPATOCELLULAR CARCINOMA", 30);
   diagConcList[31].init("cancer", "ANGIOSARCOMA", 31);
   diagConcList[32].init("cancer", "CHOLANGIOCARCINOMA", 32);
