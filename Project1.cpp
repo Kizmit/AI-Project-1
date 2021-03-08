@@ -15,9 +15,7 @@ using namespace std;
 Conclusion diagConcList[DIAG_CONC_LIST_SIZE];
 Clause diagVarList[DIAG_VAR_LIST_SIZE];
 string diagClauseVarList[DIAG_CLAUSE_VAR_LIST_SIZE];
-stack<Conclusion> diagConcStack;
-stack<Clause> diagClauseStack;
-stack<string> diagTBIVarStack; // to-be-instantiated variable stack
+
 
 ofstream logFile;
 
@@ -285,6 +283,8 @@ void printWelcomeMessage()
 
 Conclusion diagnosis()
 {
+  stack<Conclusion> diagConcStack;
+  stack<string> diagTBIVarStack; // to-be-instantiated variable stack
   int conclusionCounter = 1;   // Keep track of how far the diagConcList has been traversed. We need to advance in our search.
   string conclusion = "cancer"; // Identify the conclusion
   int index, count, i;
@@ -375,6 +375,7 @@ Conclusion diagnosis()
     while (!diagConcStack.empty() && !terminateFunction)
     {
       terminateFunction = useDiagnosisKnowledgeBase(diagConcStack.top().ruleNumber, finalDiagnosis);
+      diagConcStack.pop();
     }
 
   } while (!terminateFunction);
@@ -820,6 +821,7 @@ bool useDiagnosisKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
       terminateDiagnosisAlgorithm = true;
       finalDiagnosis = diagConcList[37];
     }
+    break;
     
 
   default:
@@ -838,7 +840,7 @@ bool useDiagnosisKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
     cout << "\n--- Found a terminating conclusion, moving on to treatment recommendation---" << endl;
   }
 
-  diagConcStack.pop();
+  
   return terminateDiagnosisAlgorithm;
 }
 
