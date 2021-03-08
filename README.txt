@@ -15,3 +15,8 @@ g++ -std=c++11 Clause.h Clause.cpp Conclusion.h Conclusion.cpp Project1.h Projec
 ./proj1
 
 From there, follow the on-screen prompts to navigate the program.
+
+[LOG]
+Please note that this program also outputs a log file titled Project1-LOG_ID#(id number).txt, with (id number)
+being specified by the user at runtime. This log serves as the way to view intermediate steps of the inference
+engine, so as to no clog up the output of the program.

@@ -25,7 +25,6 @@ Conclusion diagnosis();
 int searchConclusionList(string, int);
 int searchVariableList(string);
 void instantiate(string);
-void testPrintLists();
 bool useDiagnosisKnowledgeBase(int, Conclusion&);
 
 string treatment(string, string*, int);
@@ -242,8 +241,6 @@ int main()
   diagClauseVarList[217] = "panc_exo_tumor";
   diagClauseVarList[218] = "ducts";
 
-  // testPrintLists();
-
   cout << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
   logFile << "--- Starting Diagnosis Process For Patient #" << patientID << " ---" << endl << endl;
   Conclusion finalDiagnosis = diagnosis();
@@ -449,34 +446,6 @@ void instantiate(string str)
       }
     }
   }
-}
-
-void testPrintLists()
-{
-  cout << "--- Variable List --- " << endl;
-  for (int i = 1; i < DIAG_VAR_LIST_SIZE; i++)
-  {
-    cout << i << " Name: " << diagVarList[i].name << endl;
-    cout << i << " Print Name: " << diagVarList[i].print << endl;
-    cout << i << " Instantiated: (0 = False, 1 = True) " << diagVarList[i].instantiated << endl;
-    cout << i << " Experiencing: (0 = False, 1 = True) " << diagVarList[i].experiencing << endl;
-  }
-  cout << endl;
-  cout << "--- Conclusion List ---" << endl;
-  for (int i = 1; i < DIAG_CONC_LIST_SIZE; i++)
-  {
-    cout << i << " Name: " << diagConcList[i].name << endl;
-    cout << i << " Final Conclusion: " << diagConcList[i].finalConclusion << endl;
-    cout << i << " Rule Number: " << diagConcList[i].ruleNumber << endl;
-  }
-  cout << endl;
-  cout << "--- Clause Variable List ---" << endl;
-  for (int i = 1; i < DIAG_CLAUSE_VAR_LIST_SIZE; i++)
-  {
-    cout << "Variable at location " << i << ": " << diagClauseVarList[i] << endl;
-  }
-
-  cout << endl << endl;
 }
 
 bool useDiagnosisKnowledgeBase(int ruleNumber, Conclusion& finalDiagnosis)
