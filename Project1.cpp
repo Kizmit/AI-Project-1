@@ -16,7 +16,6 @@ Conclusion diagConcList[DIAG_CONC_LIST_SIZE];
 Clause diagVarList[DIAG_VAR_LIST_SIZE];
 string diagClauseVarList[DIAG_CLAUSE_VAR_LIST_SIZE];
 
-
 ofstream logFile;
 
 // function declaration:
